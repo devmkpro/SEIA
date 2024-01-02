@@ -1,0 +1,127 @@
+.sidebar-divider{
+    border-top:1px solid  var(--seia-grey) !important;    
+}
+
+.navbar-light{
+    background-color: #ffffffcc !important;
+    border-right: 1px solid rgba(206, 206, 205, 1);
+    box-shadow: var(--seia-shadow) !important;
+    padding-left: 0px !important;
+}
+
+.navbar-light .top{
+    padding-left: -40px !important;
+    margin: 0;
+    width: 100%;
+
+}
+
+.navbar-light, .navbar-light i {
+    color: var(--seia-darkack) !important;
+}
+
+.logo-seia-retraido{
+    width: 50px !important;
+}
+
+.navbar-light .info_perfil_nav .name{
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+}
+
+.navbar-light .info_perfil_nav .info{
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.navbar-nav .menu-title{
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 19px;
+    color: var(--seia-grey) !important;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+/* Button toggle */
+
+
+#sidebarToggle:hover{
+    background-color: var(--seia-darkblue) !important;
+    color: white !important;
+}
+
+.sidebar #sidebarToggle::after{
+    content: "" !important;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: "Phosphoricons" !important;
+    transition: all 0.3s ease-in-out;
+    color: var(--seia-oceanblue) !important;
+}
+
+#sidebarToggle:hover::after{
+    content: "" !important;
+    color: white !important;
+}
+
+
+
+.navbar-nav .blue{
+    color: var(--seia-darkblue) !important;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.navbar-nav .blue:hover{
+    color: white !important;
+    background-color: var(--seia-oceanblue) !important;
+
+}
+
+.navbar-nav .red{
+    color: var(--seia-darkred) !important;
+}
+
+.navbar-nav .red:hover{
+    color: white !important;
+    background-color: var(--seia-red)  !important;
+}
+
+.navbar-nav .green{
+    color: var(--seia-green) !important;
+}
+
+.navbar-nav .green:hover{
+    color: white !important;
+    background-color: var(--seia-greenligth) !important;
+}
+
+.navbar-nav .yellow{
+    color: var(--seia-ambar) !important;
+}
+
+.navbar-nav .yellow:hover{
+    color: white !important;
+    background-color: var(--seia-yellow)  !important;
+}
+
+
+
+.exit a{
+    color: var(--seia-ligthred) !important;
+}
+
+.exit a:hover{
+    color: rgba(255, 0, 0, 0.541) !important;
+}
+
+.exit .icons-menu{
+    font-size: 1.5em !important;
+    margin-right: 10px;
+}
+
+.exit .icons-menu-retraido{
+    font-size: 25px !important;
+}

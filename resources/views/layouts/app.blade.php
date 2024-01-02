@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="SEIA - Sistema Escola de Integração Acadêmica oferece soluções completas para a gestão escolar.">
+    <meta name="keywords" content="SEIA, educação, gestão escolar, soluções">
+    <meta name="author" content="Equipe SEIA">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}" id="dark-theme" disabled>
+    <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}" id="light-theme">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg">
+    <link rel="manifest"
+        href="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg">
+    <link rel="mask-icon"
+        href="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg" color="#5bbad5">
+    <link rel="shortcut icon"
+        href="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg">
+    <link rel="stylesheet"
+        href="https://res.cloudinary.com/dnjjcvwx5/raw/upload/v1675776364/assets/seia/css/Bootstrap%205.2.x/bootstrap522.min_fag1ma.css">
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js">
+    </script>
+
+
+    @yield('styles')
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://unpkg.com/phosphor-icons"></script>
+</head>
+
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-light align-items-start sidebar sidebar-dark accordion p-0" id="sidebar">
+            <div class="container-fluid d-flex flex-column p-0">
+                <div class="top">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                        href="#">
+                        <div class="sidebar-brand-icon mx-3 center">
+                            <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
+                                alt="Logo" class="w-50 logo-seia animated--fade-in">
+                        </div>
+                    </a>
+
+                    <div class="d-flex info_perfil_nav gap-2 mt-3 mb-4 align-items-center p-0 center ">
+                        <img class="sidebar-brand-icon img-perfil animated--grow-in "
+                            src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640049/samples/people/boy-snow-hoodie.jpg"
+                            alt="imagem de perfil"
+                            srcset="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675701885/assets/seia/img/profiles/default/undraw_profile_zc6h9i.svg">
+                        <div class="d-flex flex-column   a-name ">
+                            <div class="name text-black a-name ">
+                                {{ auth()->user()->name }}
+                            </div>
+                            <span class="info  text-dark text-capitalize a-name">
+                                Curso / turma
+                            </span>
+                        </div>
+                        <span>
+                            <button id="sidebarToggle" type="button" aria-label="Sidebar abrir/fechar">
+                                <i class="ph-caret-left-bold icons-menu" id="btnSidebarToggle"></i>
+
+                            </button>
+                        </span>
+                    </div>
+
+
+                    <hr class="sidebar-divider my-3 shadow-sm">
+
+                </div>
+
+                <ul class="navbar-nav center animated--fade-in" id="accordionSidebar">
+                    <span class="menu-title align-self-start">Menu</span>
+                    <li class="nav-item "><a class="nav-link blue center" href="{{ route('panel') }}"><i
+                                class="ph-house-fill icons-menu"></i></i><span class="a-name">Início</span></a></li>
+
+
+                    @schoolRole('student', optional($school_home)->uuid)
+                    @include('layouts.partials.nav-li-itens-for-students')
+                @endrole
+
+
+                @role('admin')
+                    @include('layouts.partials.nav-li-itens-for-admin')
+                @endrole
+
+
+
+                <hr class="sidebar-divider my-3 shadow-sm">
+                <span class="menu-title align-self-start">Pessoal</span>
+                <li class="nav-item"><a class="nav-link green center" href="{{ route('profile.edit') }}"><i
+                            class="ph-user-circle-fill icons-menu"></i></i><span class="a-name">Minhas
+                            Informações</span></a></li>
+                <li class="nav-item"><a class="nav-link red center" href="#"><i
+                            class="ph-gear icons-menu"></i></i><span class="a-name">Configurações</span></a></li>
+
+
+
+                <hr class="sidebar-divider my-3 shadow-sm">
+            </ul>
+
+            <div class="exit">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                    <a class="nav-link d-flex justify-content-center align-items-center center"
+                        href="{{ route('logout') }}">
+                        <i class="ph-sign-out icons-menu"></i>
+                        <span class="a-name">Sair</span>
+                    </a>
+
+                    <span class="copyright">SEIA 2023</span>
+                </div>
+            </div>
+
+
+        </div>
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top" id="nav-content">
+                <div class="container-fluid">
+                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop"
+                        type="button" aria-label="Fechar/Abrir sidebar"><i class="fas fa-bars"></i></button>
+                    <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <div class="d-flex flex-column align-items-start">
+                                <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
+                                    alt="LogoDaEscola" height="12px">
+                                <span class="">
+                                    {{ $school_home ? $school_home->name : null }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        <li class="nav-item dropdown d-sm-none no-arrow">
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                href="#" aria-label="Escola">
+                                <i class="ph-bank"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <div class="me-auto navbar-search w-100">
+                                    <div class="d-flex flex-column align-items-start">
+                                        <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
+                                            alt="LogoDaEscola" height="12px">
+                                        <span class="">Nome da Escola</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown mx-1 no-arrow">
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                href="#" aria-label="Periodo letivo">
+                                <i class="ph-calendar fs-5"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <div class="me-auto navbar-search w-100">
+                                    <div class="d-flex flex-column align-items-start">
+                                        <span class="">
+                                            {{ $school_year ? $school_year->name : 'Nenhum período letivo ativo' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item no-arrow mx-1">
+                            <div class="nav-item no-arrow">
+                                <button class="nav-link border-0" href="" onclick="switchTheme()"
+                                    aria-label="Trocar tema">
+                                    <i id="sun-icon" class="ph-sun-fill darkMode "></i>
+                                    <i id="moon-icon" class="ph-moon-fill darkMode "></i>
+                                </button>
+                            </div>
+                        </li>
+
+                        @if ($school_home)
+                            <li class="nav-item no-arrow mx-1">
+                                <div class="nav-item no-arrow">
+
+                                    <form action="{{ route('delete-school-home') }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="nav-link border-0 darkMode fs-5" href=""
+                                            aria-label="Trocar escola" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" title="Trocar escola">
+                                            <i class="ph-bank"></i>
+                                    </form>
+                                </div>
+
+                            </li>
+                        @endif
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <div class="nav-item dropdown no-arrow">
+                                <a class="dropdown-toggle nav-link" aria-expanded="false"
+                                    data-bs-toggle="dropdown" href="#">
+                                    <span class="badge bg-danger badge-counter">3+</span><i
+                                        class="ph-bell fs-5"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                                    <h6 class="dropdown-header text-center">Notificações</h6><a
+                                        class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="me-3">
+                                            <div class="bg-primary icon-circle"><i class="ph-file text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div><span class="small text-gray-500">December 12, 2019</span>
+                                            <p>A new monthly report is ready to download!</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="me-3">
+                                            <div class="bg-success icon-circle"><i
+                                                    class="ph-donate text-white"></i></div>
+                                        </div>
+                                        <div><span class="small text-gray-500">December 7, 2019</span>
+                                            <p>$290.29 has been deposited into your account!</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="me-3">
+                                            <div class="bg-warning icon-circle"><i
+                                                    class="fas fa-exclamation-triangle text-white"></i></div>
+                                        </div>
+                                        <div><span class="small text-gray-500">December 2, 2019</span>
+                                            <p>Spending Alert: We've noticed unusually high spending for your
+                                                account.</p>
+                                        </div>
+                                    </a><a class="dropdown-item text-center small text-gray-500"
+                                        href="#">Show All
+                                        Alerts</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
+                                    aria-expanded="false" data-bs-toggle="dropdown" href="#"><span
+                                        class="badge bg-danger badge-counter">7</span><i
+                                        class="ph-envelope fs-5"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                                    <h6 class="dropdown-header text-center">Mensagens</h6><a
+                                        class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3"><img class="rounded-circle"
+                                                src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640049/samples/people/boy-snow-hoodie.jpg"
+                                                alt="foto1">
+                                            <div class="bg-success status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>Hi there! I am wondering if you can
+                                                    help me with a problem I've been having.</span></div>
+                                            <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3"><img class="rounded-circle"
+                                                src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640049/samples/people/boy-snow-hoodie.jpg"
+                                                alt="foto2">
+                                            <div class="status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>I have the photos that you ordered
+                                                    last
+                                                    month!</span></div>
+                                            <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3"><img class="rounded-circle"
+                                                src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640049/samples/people/boy-snow-hoodie.jpg"
+                                                alt="foto3">
+                                            <div class="bg-warning status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>Last month's report looks great, I am
+                                                    very happy with the progress so far, keep up the good
+                                                    work!</span></div>
+                                            <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3">
+                                            <img class="rounded-circle"
+                                                src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640049/samples/people/boy-snow-hoodie.jpg"
+                                                alt="foto4">
+                                            <div class="bg-success status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>Am I a good boy? The reason I ask is
+                                                    because someone told me that people say this to all dogs, even
+                                                    if they aren't good...</span></div>
+                                            <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
+                                        </div>
+                                    </a><a class="dropdown-item text-center small text-gray-500"
+                                        href="#">Ver todas
+                                        as mensagens </a>
+                                </div>
+                            </div>
+                            <div class="shadow dropdown-list dropdown-menu dropdown-menu-end"
+                                aria-labelledby="alertsDropdown"></div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="container">
+
+                {{ $slot }}
+
+            </main>
+        </div>
+
+    </div>
+    <a class="border rounded d-inline scroll-to-top text-decoration-none" href="#page-top"><i
+            class="ph-caret-up"></i></a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade modalDiario1" id="bimestre2" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="bimestre2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bimestre2Label">2º Bimestre - 5ª ano B - Língua portuguesa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="post" id="modalDiario">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Faltas</th>
+                                    <th scope="col">Nota 1</th>
+                                    <th scope="col">Nota 2</th>
+                                    <th scope="col">Nota 3</th>
+                                    <th scope="col">Nota 4</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>João Pedro da silva</td>
+                                    <td><span>0</span></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Carmen lucien da silva</td>
+                                    <td><span>5</span></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                    <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                                <th scope="row">2</th>
+                                <td>Carmen lucien da silva</td>
+                                <td><span>5</span></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                                <th scope="row">2</th>
+                                <td>Carmen lucien da silva</td>
+                                <td><span>5</span></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                                <th scope="row">2</th>
+                                <td>Carmen lucien da silva</td>
+                                <td><span>5</span></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                                <th scope="row">2</th>
+                                <td>Carmen lucien da silva</td>
+                                <td><span>5</span></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                                <th scope="row">2</th>
+                                <td>Carmen lucien da silva</td>
+                                <td><span>5</span></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                                <th scope="row">2</th>
+                                <td>Carmen lucien da silva</td>
+                                <td><span>5</span></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                <td><input type="number" class="form-control" placeholder="0" disabled></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="disabledFalse"
+                        onclick="removeDisabled()">Editar</button>
+                    <button type="button" class="btn btn-danger d-none" id="disabledTrue"
+                        onclick="cancelDiarioAlterar()">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/home/index.js') }}"></script>
+@yield('scripts')
+
+
+</body>
+
+</html>

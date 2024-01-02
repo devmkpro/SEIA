@@ -1,0 +1,479 @@
+body{ 
+    background: var(--seia-darkback) !important;
+    color: white !important; 
+}
+
+.text-dark-seia{
+    color: white !important;
+}
+
+.scroll-to-top{
+    background-color: var(--seia-oceanblue) !important;
+    color: white !important;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.scroll-to-top:hover{
+    background-color: var(--seia-yellow) !important;
+    color: white !important;
+}
+
+#wrapper, #content-wrapper{
+    background-color: var(--seia-darkback) !important;
+}
+
+#nav-content,
+.navbar-light,
+.navbar-light .navbar-nav,
+.navbar-light .navbar-nav .nav-link{
+    background-color: var(--seia-darkback) !important;
+}
+
+#nav-content{
+    background-color: var(--seia-darkback) !important;
+    box-shadow: var(--seia-shadow) !important;
+}
+
+.sidebar-divider{
+    border-top:1px solid  var(--seia-grey) !important;    
+}
+
+.navbar{
+    background-color: var(--seia-darkback) !important;
+    box-shadow: var(--seia-shadow) !important;
+    padding-left: 0px !important;
+}
+
+.navbar-light .top{
+    padding-left: -40px !important;
+    margin: 0;
+    width: 100%;
+
+}
+
+.navbar-light, .navbar-light i {
+    color: var(--seia-darkack) !important;
+}
+
+.navbar-light .info_perfil_nav .name{
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    color: white !important;
+}
+
+.navbar-light .info_perfil_nav .info{
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ededed !important;
+}
+
+.navbar-nav .menu-title{
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 19px;
+    color: white !important;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+/* Button toggle */
+
+#sidebarToggle:hover{
+    background-color: var(--seia-ambar) !important;
+    color: white !important;
+}
+
+#sidebarToggle::after{
+    content: ">";
+    font-size: 1em;
+    font-weight: 900;
+    transition: all 0.3s ease-in-out;
+    color: var(--seia-oceanblue) !important;
+}
+
+#sidebarToggle:hover::after{
+    content: "<";
+    color: white !important;
+}
+
+
+.navbar-nav .blue:hover{
+    color: white !important;
+    background-color: var(--seia-oceanblue)  !important;
+
+}
+
+
+.navbar-nav .red:hover{
+    color: white !important;
+    background-color: var(--seia-red) !important;
+}
+
+
+.navbar-nav .green:hover{
+    color: white !important;
+    background-color: var(--seia-greenligth) !important;
+}
+
+
+
+.navbar-nav .yellow:hover{
+    color: white !important;
+    background-color: var(--seia-yellow) !important;
+}
+
+/* active  navbar*/
+
+.navbar-nav .active-blue{
+    background-color: var(--seia-darkblue)!important;
+    color: white !important;
+}
+
+.navbar-nav .active-red{
+    background-color: var(--seia-darkred) !important;
+    color: white !important;
+}
+
+.navbar-nav .active-green{
+    background-color: var(--seia-green);
+    color: white !important;
+}
+
+.navbar-nav .active-yellow{
+    background-color: var(--seia-ambar);
+    color: white !important;
+}
+
+/* menu sair */
+
+
+.exit a{
+    color: var(--seia-yellow) !important;
+}
+
+.exit a:hover{
+    color: var(--seia-ambar) !important;
+}
+
+
+
+/* dropdown */
+
+.dropdown-menu{
+    box-shadow: var(--seia-shadow) !important;
+    background: rgba(56,55,55,0.5) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+    
+    
+}
+
+.dropdown-item{
+    color: white !important;
+    border: 1px solid rgba(56,55,55,0.25) !important;
+}
+
+
+
+
+/* avisos */
+.avisos {
+    background: rgba(56,55,55,0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(56,55,55,0.25);
+}
+
+/* cards */
+main .card{
+    background: var(--seia-darkack);
+    box-shadow: var(--seia-shadow);
+    border: none;
+}
+
+main .card .title{
+    color: white !important;
+}
+
+main .card ul li a{
+    color: white !important;
+}
+
+main .card ul li a:hover{
+    color: var(--seia-yellow) !important;
+}
+
+.dados-pessoais label,
+.filiacao label,
+.dados-endereco label,
+.responsaval label,
+.observacao label{
+    color: white !important;
+}
+
+.dados-pessoais input,
+.filiacao input,
+.dados-endereco input,
+.responsaval input{
+    background: var(--seia-darkback) !important;
+}
+
+.observacao textarea{
+    background: var(--seia-darkback) !important;
+    color: var(--seia-yellow);
+}
+
+.boletim table{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.boletim table:hover{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+/* disciplinas */
+
+.disciplinas .seia-card .title,
+.disciplinas .seia-card .horario,
+.disciplinas .seia-card .cod,
+.disciplinas .seia-card .turma,
+.disciplinas .seia-card i{
+    color: white !important;
+}
+
+/* mensagens */
+
+.mensagens .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+    color: white !important;
+    background: var(--seia-darkack) !important;
+}
+
+.mensagens .nav-tabs .nav-link{
+    color: white !important;
+    background: var(--seia-darkack) !important;;
+}
+
+.mensagens .nav-tabs .nav-link:hover{
+    color: white !important;
+    background: var(--seia-grey) !important;
+}
+  
+
+#nav-inbox .assunto,
+#nav-inbox .remetente{
+    font-weight: 500 !important;
+    color: white !important;
+}
+
+#nav-inbox .previa{
+    color: rgba(255, 255, 255, 0.54);
+}
+
+#nav-inbox .data{
+    color: rgba(255, 255, 255, 0.54);
+}
+
+#nav-inbox .line:hover .assunto,
+#nav-inbox .line:hover .remetente,
+#nav-inbox .line:hover .previa{
+    color: white !important;
+}
+
+#nav-inbox .line.active{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.mensagens .dropdown-menu{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+    border: none;
+}
+
+.mensagens .dropdown-menu a{
+    color: white !important;
+}
+
+.mensagens .dropdown-menu a:hover{
+    color: var(--seia-yellow) !important;
+}
+
+.mensagens .dropdown-menu .dropdown-item{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.mensagens .dropdown-menu .dropdown-item:hover{
+    background: var(--seia-grey) !important;
+    color: white !important;
+}
+
+.mensagens .dropdown-menu .dropdown-item.active{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.mensagens .dropdown-menu .dropdown-item.active:hover{
+    background: var(--seia-grey) !important;
+    color: white !important;
+}
+
+
+.mensagens .btn-circle{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.mensagens .btn-circle:hover{
+    background: var(--seia-grey) !important;
+    color: white !important;
+}
+
+.mensagens .unread .line{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.mensagens .lido .line{
+    background: var(--seia-ligthgrey) !important;
+    color: white !important;
+}
+
+.mensagens .lido .line:hover,
+.mensagens .unread .line:hover{
+    background-color: var(--seia-oceanblue) !important;
+}
+
+/* send-mensagens */
+
+.send-mensagens .form-group label{
+    color: white !important;
+}
+
+.send-mensagens .form-group input{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.send-mensagens .form-group textarea{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+/* turmas */
+
+.turmas a{
+    color: white !important;
+    border: 1px solid #ededed;
+}
+
+.turmas a:hover{
+    background-color: var(--seia-ligthgrey) !important;
+}
+
+.turmas a i{
+    color: rgba(255, 255, 255, 0.24) !important;
+}
+
+.turmasDisplay .menu button { 
+    background: var(--seia-darkback) !important;
+    box-shadow: var(--seia-shadow);
+    color: white !important;
+}
+
+.turmasDisplay input,
+.turmasDisplay select,
+.turmasDisplay textarea{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.turmasDisplay table {
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.turmasDisplay input[type="radio"]:checked{
+    border: 1px solid var(--seia-yellow) !important;
+    background: var(--seia-ambar) !important;
+    color: white !important;
+}
+
+.turmasDisplay input[type="radio"]:not(:checked) {
+    border: 1px solid var(--seia-yellow) !important;
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+/* diario */
+
+.turmasDisplay .diarioSelect:hover{
+    background: var(--seia-grey) !important;
+    color: white !important;
+    transition: background 0.2s ease-in-out;
+}
+
+/* modal */
+
+.modal-content{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.modal-content .modal-header{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.modal-content .modal-header .close{
+    color: white !important;
+}
+
+.modal-content .modal-header .close:hover{
+    color: var(--seia-yellow) !important;
+}
+
+.modal-content .modal-body{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.modal-content .modal-footer{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+
+
+
+/* Tables */
+
+.table{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.table thead th{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.table tbody tr{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.table tbody tr:hover{
+    background: var(--seia-grey) !important;
+    color: white !important;
+}
+
+.table tbody tr td{
+    background: var(--seia-darkback) !important;
+    color: white !important;
+}
+
