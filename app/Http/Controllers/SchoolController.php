@@ -107,6 +107,19 @@ class SchoolController extends Controller
         return Redirect::route('panel')->with('info', 'Escolha uma escola para acessar o sistema!');
     }
 
+    /**
+     * Get School Home Cookie.
+     */
+    public function getHome(Request $request): ?School
+    {
+        $school_home = $request->cookie('school_home');
+        if (!$school_home) {
+            return null;
+        }
+
+        return School::where('uuid', decrypt($school_home))->first();
+    }
+
 
 
 

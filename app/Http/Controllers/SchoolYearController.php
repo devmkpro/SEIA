@@ -32,6 +32,8 @@ class SchoolYearController extends Controller
     {
         return view('admin.schools_years.index', [
             'schoolsyears' => SchoolYear::all(),
+            'title' => 'Anos letivos',
+            'slot' => 'Olá, nesta página você pode gerenciar os anos letivos da sua escola! Filtrando por ano letivo, você pode adicionar e editar os anos letivos.',
         ]);
     }
 

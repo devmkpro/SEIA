@@ -44,7 +44,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Alunos com Deficiência
+                            Alunos Especiais
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                             {{ $school_home->students->filter(function ($student) {
@@ -58,5 +58,23 @@
                 <i class="fas fa-comments fa-2x text-gray-300"></i>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="col-sm-4">
+    <div class="card">
+        <div class="title">
+            Gestão
+        </div>
+
+        @schoolPermission('manage-curricula', optional($school_home)->uuid)
+        <ul class="list-group list-group-flush">
+            <div class="mt-2">
+                <li><a href="{{route('manage.curriculum')}}">
+                    <i class="ph-list-checks-fill icons-menu"></i>
+                    <span>Matriz Curricular</span></a></li>
+            </div>
+        </ul>
+        @endschoolPermission
     </div>
 </div>

@@ -24,7 +24,12 @@ class SchoolHomeServiceProvider extends ServiceProvider
             $school_home = null;
 
             if ($school_cookie) {
-                $school_home = \App\Models\School::where('uuid', decrypt($school_cookie))->first();
+                try {
+                    $decrypted_uuid = decrypt($school_cookie);
+                    $school_home = \App\Models\School::where('uuid', $decrypted_uuid)->first();
+                } catch (\Exception $e) {
+                    report($e);
+                }
             }
 
             $view->with('school_home', $school_home);

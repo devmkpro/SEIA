@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CheckSchoolCookie::class,
+
         ],
 
         'api' => [
@@ -45,6 +46,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \App\Http\Middleware\CheckSchoolCookie::class,
+        ],
+        'school_home' => [
+            \App\Http\Middleware\RequireSchoolHome::class,
         ],
     ];
 

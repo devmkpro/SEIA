@@ -24,4 +24,5 @@ class CookieController extends Controller
         Cookie::queue(Cookie::forget($name));
         return;
     }
+
 }

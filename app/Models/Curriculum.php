@@ -6,20 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Classes extends Model
+class Curriculum extends Model
 {
     use HasFactory;
-
     protected $primaryKey = 'uuid';
     public $incrementing = false;
+    protected $table = 'curricula';
 
     protected $fillable = [
         'school_uuid',
-        'name',
-        'code',
-        'slug',
+        'series',
+        'weekly_hours',
+        'total_hours',
+        'start_time',
+        'end_time',
         'description',
-        'active',
+        'modality',
+        'complementary_information',
     ];
 
     /**
@@ -33,12 +36,14 @@ class Classes extends Model
             $model->uuid = Str::uuid()->toString();
         });
     }
-
+    
     /**
-     * Get the school that owns the class.
+     * Get the school that owns the curriculum.
      */
     public function school()
     {
         return $this->belongsTo(School::class);
     }
+
+
 }

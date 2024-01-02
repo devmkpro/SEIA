@@ -29,7 +29,7 @@ class CityController extends Controller
     {
         return view('admin.cities.edit', [
             'title' => 'Gerenciar Cidades',
-            'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de cidades. Aqui você pode visualizar, editar e excluir as cidades cadastradas no sistema.'
+            'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de cidades. Aqui você pode visualizar as cidades cadastradas. Todas são efetivamente brasileiras, e possuem um código IBGE único.',
         ]);
     }
 

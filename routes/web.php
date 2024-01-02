@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
 use Illuminate\Support\Facades\Route;
@@ -39,15 +40,13 @@ Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
     Route::get('/gerenciar/escolas/nova', [SchoolController::class, 'create'])->name('manage.schools.create')->middleware('permission:create-any-school');
     Route::get('/gerenciar/escolas', [SchoolController::class, 'schools'])->name('manage.schools')->middleware('permission:update-any-school');
     Route::get('/gerenciar/anos-letivos', [SchoolYearController::class, 'schoolsyears'])->name('manage.school-years')->middleware('permission:update-any-school-year');
-    Route::get('/gerenciar/anos-letivos/{schoolYear}', [SchoolYearController::class, 'show'])->name('manage.school-years.show')->middleware('permission:update-any-school-year');
 
 });
 
 
-//Route::middleware(['auth', 'school.role:teacher'])->group(function () {
-    // EXEMPLO! PARA FUNCIONAR REQUER school_home NO COOKIE COM encrypt
-    // verifica a role especifica para a escola ou se é admin
-//});
+Route::middleware(['auth', 'school_home', 'web', 'school.role:secretary'])->group(function () {
+    Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'curriculum'])->name('manage.curriculum')->middleware('permission:manage-curricula');
+});
 
 
 

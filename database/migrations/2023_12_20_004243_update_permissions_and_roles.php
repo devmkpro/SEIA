@@ -34,6 +34,11 @@ return new class extends Migration
         $secretaryPermissions = [
             'manage-students', 
             'manage-teachers', 
+            'manage-curricula',
+            'create-any-curriculum',
+            'update-any-curriculum',
+
+
             'manage-classes', 
         ];
 

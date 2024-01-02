@@ -22,6 +22,10 @@
                 @include('layouts.partials.index-card-for-secretary')
             @endschoolRole
 
+            @schoolRole('secretary', optional($school_home)->uuid)
+                @include('layouts.partials.index-card-for-secretary')
+            @endschoolRole
+
             @schoolRole('student', optional($school_home)->uuid)
                 @include('layouts.partials.index-card-for-student')
             @endschoolRole

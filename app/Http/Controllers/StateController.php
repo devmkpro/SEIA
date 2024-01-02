@@ -31,7 +31,7 @@ class StateController extends Controller
 
         return view('admin.states.index', [
             'title' => 'Gerenciar Estados',
-            'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de estados. Aqui você pode visualizar, editar e excluir os estados cadastrados no sistema.'
+            'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de estados. Todos os estados são efetivamente brasileiros, e possuem um código IBGE único.',
         ]);
     }
 

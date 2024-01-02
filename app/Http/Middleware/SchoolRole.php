@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class SchoolRole
 {
@@ -16,14 +17,14 @@ class SchoolRole
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        $schoolUUID = $request->input('school_home');
+        $schoolUUID = Cookie::get('school_home');
         $schoolUUID = decrypt($schoolUUID);
 
         if (Auth::check() && Auth::user()->hasRole('admin')) {
             return $next($request);
         }
 
-        if ($school && Auth::check() && Auth::user()->hasRoleForSchool($role, $schoolUUID)) {
+        if ($schoolUUID && Auth::check() && Auth::user()->hasRoleForSchool($role, $schoolUUID)) {
             return $next($request);
         }
 

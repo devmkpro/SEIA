@@ -67,9 +67,11 @@
                             <div class="name text-black a-name ">
                                 {{ auth()->user()->name }}
                             </div>
-                            <span class="info  text-dark text-capitalize a-name">
-                                Curso / turma
-                            </span>
+                            @schoolRole('student', optional($school_home)->uuid)
+                                <span class="info  text-dark text-capitalize a-name">
+                                    Curso / turma
+                                </span>
+                            @endschoolRole
                         </div>
                         <span>
                             <button id="sidebarToggle" type="button" aria-label="Sidebar abrir/fechar">
@@ -90,14 +92,18 @@
                                 class="ph-house-fill icons-menu"></i></i><span class="a-name">Início</span></a></li>
 
 
+                    @schoolRole('secretary', optional($school_home)->uuid)
+                        @include('layouts.partials.nav-li-itens-for-secretary')
+                    @endschoolRole
+                                
                     @schoolRole('student', optional($school_home)->uuid)
-                    @include('layouts.partials.nav-li-itens-for-students')
-                @endrole
+                        @include('layouts.partials.nav-li-itens-for-students')
+                    @endrole
 
 
-                @role('admin')
-                    @include('layouts.partials.nav-li-itens-for-admin')
-                @endrole
+                    @role('admin')
+                        @include('layouts.partials.nav-li-itens-for-admin')
+                    @endrole
 
 
 
@@ -174,7 +180,7 @@
                                 <div class="me-auto navbar-search w-100">
                                     <div class="d-flex flex-column align-items-start">
                                         <span class="">
-                                            {{ $school_year ? $school_year->name : 'Nenhum período letivo ativo' }}
+                                            {{ $school_year ? $school_year->name : 'Sem periodo letivo' }}
                                         </span>
                                     </div>
                                 </div>
