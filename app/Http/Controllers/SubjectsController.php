@@ -128,13 +128,20 @@ class SubjectsController extends Controller
         ]);
     }
 
+
     /**
      * Store a new subject
      */
     public function store(StoreSubjectsRequest $request)
     {
         $curriculum = Curriculum::where('code', $request->curriculum)->where('school_uuid', (new SchoolController)->getHome($request)->uuid)->first();
-        $curriculum->subjects()->create($request->validated());
+        $curriculum->subjects()->create([
+            'name' => $request->nome,
+            'ch' => $request->carga_horaria,
+            'ch_week' => $request->carga_horaria_semanal,
+            'description' => $request->descricao,
+            'modality' => $request->modalidade,
+        ]);
         return redirect()->route('manage.subjects', ['code' => $curriculum->code])->with('message', 'Disciplina criada com sucesso');
     }
 
@@ -144,7 +151,13 @@ class SubjectsController extends Controller
     public function update(StoreSubjectsRequest $request)
     {
         $subject = Subjects::where('uuid', decrypt($request->subject))->first();
-        $subject->update($request->validated());
+        $subject->update([
+            'name' => $request->nome,
+            'ch' => $request->carga_horaria,
+            'ch_week' => $request->carga_horaria_semanal,
+            'description' => $request->descricao,
+            'modality' => $request->modalidade,
+        ]);
         return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])->with('message', 'Disciplina atualizada com sucesso');
     }
 }

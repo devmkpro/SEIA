@@ -45,13 +45,13 @@
                     <div class="row mb-3">
 
                         <div class="col-md-12 mb-3">
-                            <label for="description" class="form-label">Descrição</label>
-                            <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <textarea class="form-control" name="descricao" rows="3">{{ old('descricao') }}</textarea>
                         </div>
 
                         <div class="col-md-6">
                             <label for="serie" class="form-label">Série/Etapa</label>
-                            <select class="form-select" name="series" value="{{ old('series') }}" required>
+                            <select class="form-select" name="serie" value="{{ old('serie') }}" required>
                                 <option selected>Selecione uma série</option>
                                 <option value="educ_infa_cc_0_3">Educacao Infantil - Creche (0 a 3 anos)</option>
                                 <option value="educ_infa_cc_4_5">Educacao Infantil - Pre-escola (4 a 5 anos)</option>
@@ -65,8 +65,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="modality" class="form-label">Modalidade</label>
-                            <select class="form-select" name="modality" value="{{ old('modality') }}" required>
+                            <label for="modalidade" class="form-label">Modalidade</label>
+                            <select class="form-select" name="modalidade" value="{{ old('modalidade') }}" required>
                                 <option selected>Selecione uma modalidade</option>
                                 <option value="bercario">Berçário</option>
                                 <option value="creche">Creche</option>
@@ -83,36 +83,36 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="weekly_hours" class="form-label" required>Horas semanais</label>
-                            <input type="text" class="form-control" name="weekly_hours" placeholder="Ex. 40"
-                                value="{{ old('weekly_hours') }}" required>
+                            <label for="horas_semanais" class="form-label" required>Horas Semanais</label>
+                            <input type="text" class="form-control" name="horas_semanais" placeholder="Ex. 40"
+                                value="{{ old('horas_semanais') }}" required>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="total_hours" class="form-label" required>Total de horas</label>
-                            <input type="text" class="form-control" name="total_hours" placeholder="Ex. 2000"
-                                value="{{ old('total_hours') }}" required>
+                            <label for="horas_totais" class="form-label" required>Horas Totais</label>
+                            <input type="text" class="form-control" name="horas_totais" placeholder="Ex. 2000"
+                                value="{{ old('horas_totais') }}" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="start_time" class="form-label" required>Hora início</label>
-                            <input type="time" class="form-control" name="start_time" placeholder="Ex. 40"
-                                value="{{ old('start_time') }}" required>
+                            <label for="hora_início" class="form-label" required>Hora de aula inicial</label>
+                            <input type="time" class="form-control" name="hora_início" placeholder="Ex. 40"
+                                value="{{ old('hora_início') }}" required>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="end_time" class="form-label" required>Hora final</label>
-                            <input type="time" class="form-control" name="end_time" placeholder="Ex. 2000"
-                                value="{{ old('end_time') }}" required>
+                            <label for="hora_final" class="form-label" required>Hora de aula Final</label>
+                            <input type="time" class="form-control" name="hora_final" placeholder="Ex. 2000"
+                                value="{{ old('hora_final') }}" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="complementary_information" class="form-label">Informações complementares</label>
-                            <textarea class="form-control" name="complementary_information" rows="3">{{ old('complementary_information') }}</textarea>
+                            <label for="informacoes_complementares" class="form-label">Informações complementares</label>
+                            <textarea class="form-control" name="informacoes_complementares" rows="3">{{ old('informacoes_complementares') }}</textarea>
                         </div>
                     </div>
 
@@ -132,14 +132,13 @@
                     <div class="row mb-3">
 
                         <div class="col-md-12 mb-3">
-                            <label for="description" class="form-label">Descrição</label>
-                            <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <textarea class="form-control" name="descricao" id="description" rows="3"></textarea>
                         </div>
 
                         <div class="col-md-6">
                             <label for="serie" class="form-label">Série/Etapa</label>
-                            <select class="form-select" name="series" id="series" value="{{ old('series') }}"
-                                required>
+                            <select class="form-select" name="serie" id="series" required>
                                 <option selected>Selecione uma série</option>
                                 <option value="educ_infa_cc_0_3">Educacao Infantil - Creche (0 a 3 anos)</option>
                                 <option value="educ_infa_cc_4_5">Educacao Infantil - Pre-escola (4 a 5 anos)</option>
@@ -153,9 +152,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="modality" class="form-label">Modalidade</label>
-                            <select class="form-select" id="modality" name="modality" value="{{ old('modality') }}"
-                                required>
+                            <label for="modalidade" class="form-label">Modalidade</label>
+                            <select class="form-select" name="modalidade" id="modality" required>
                                 <option selected>Selecione uma modalidade</option>
                                 <option value="bercario">Berçário</option>
                                 <option value="creche">Creche</option>
@@ -168,47 +166,44 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6">
-                            <label for="weekly_hours" class="form-label" required>Horas semanais</label>
-                            <input type="text" class="form-control" id="weekly_hours" name="weekly_hours"
-                                placeholder="Ex. 40" value="{{ old('weekly_hours') }}" required>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="horas_semanais" class="form-label" required>Horas Semanais</label>
+                                <input type="text" class="form-control" name="horas_semanais" id="weekly_hours"
+                                    placeholder="Ex. 40" value="{{ old('horas_semanais') }}" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="horas_totais" class="form-label" required>Horas Totais</label>
+                                <input type="text" class="form-control" name="horas_totais" id="total_hours"
+                                    placeholder="Ex. 2000" value="{{ old('horas_totais') }}" required>
+                            </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <label for="total_hours" class="form-label" required>Total de horas</label>
-                            <input type="text" class="form-control" name="total_hours" id="total_hours"
-                                placeholder="Ex. 2000" value="{{ old('total_hours') }}" required>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="hora_início" class="form-label" required>Hora de aula inicial</label>
+                                <input type="time" class="form-control" name="hora_início" id="start_time"
+                                    placeholder="Ex. 40" value="{{ old('hora_início') }}" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="hora_final" class="form-label" required>Hora de aula Final</label>
+                                <input type="time" class="form-control" name="hora_final" id="end_time"
+                                    placeholder="Ex. 2000" value="{{ old('hora_final') }}" required>
+                            </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <label for="start_time" class="form-label" required>Hora início</label>
-                            <input type="time" class="form-control" name="start_time" id="start_time"
-                                placeholder="Ex. 40" value="{{ old('start_time') }}" required>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="end_time" class="form-label" required>Hora final</label>
-                            <input type="time" class="form-control" name="end_time" id="end_time"
-                                placeholder="Ex. 2000" value="{{ old('end_time') }}" required>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label for="complementary_information" class="form-label">Informações complementares</label>
-                            <textarea class="form-control" name="complementary_information" id="complementary_information" rows="3">{{ old('complementary_information') }}</textarea>
-                        </div>
                     </div>
                 </div>
         </x-modal>
         </form>
     @endschoolPermission
 
- 
+
 
 
     @section('scripts')
-
-        
-
         <script>
             function showCurriculum(code) {
                 $.ajax({
@@ -233,7 +228,8 @@
                         $('#editCurriculumForm #end_time').val(data.end_time);
                         $('#editCurriculumForm #complementary_information').val(data.complementary_information);
 
-                    }, error: function(data) {
+                    },
+                    error: function(data) {
                         location.reload();
                     }
                 });
@@ -283,7 +279,7 @@
                                                 Disciplinas
                                             </a>
                                             @schoolPermission('delete-any-curriculum', optional($school_home)->uuid)
-                                                <form action="{{ route('manage.curriculum.destroy') }}" method="POST">
+<form action="{{ route('manage.curriculum.destroy') }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <input type="hidden" name="curriculum" value="${row.code}">
@@ -291,8 +287,7 @@
                                                         Excluir
                                                     </button>
                                                 </form>
-
-                                            @endschoolPermission
+@endschoolPermission
                                         </div>
                                     </div>
                                 `;

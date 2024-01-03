@@ -22,11 +22,11 @@ class StoreSubjectsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'in:artes,biologia,ciencias,educacao-fisica,filosofia,fisica,geografia,historia,ingles,literatura,matematica,portugues,quimica,sociologia,ensino-religioso,other'],
-            'ch' => ['required', 'integer'],
-            'ch_week' => ['required', 'integer'],
-            'description' => ['nullable', 'string'],
-            'modality' => ['nullable', 'string', 'in:linguagens-e-suas-tecnologias,ciencias-da-natureza-e-suas-tecnologias,ciencias-humanas-e-suas-tecnologias,estudos-literarios,ensino-religioso,parte-diversificada'],
+            'nome' => ['required', 'string', 'in:artes,biologia,ciencias,educacao-fisica,filosofia,fisica,geografia,historia,ingles,literatura,matematica,portugues,quimica,sociologia,ensino-religioso,other'],
+            'carga_horaria' => ['required', 'integer'],
+            'carga_horaria_semanal' => ['required', 'integer', 'lte:carga_horaria'],
+            'descricao' => ['nullable', 'string'],
+            'modalidade' => ['nullable', 'string', 'in:linguagens-e-suas-tecnologias,ciencias-da-natureza-e-suas-tecnologias,ciencias-humanas-e-suas-tecnologias,estudos-literarios,ensino-religioso,parte-diversificada'],
         ];
     }
 }

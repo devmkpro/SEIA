@@ -60,8 +60,8 @@
                     <input type="hidden" name="curriculum" value="{{ $curriculum->code }}">
 
                     <div class="col-md-12 mb-3">
-                        <label for="name" class="form-label">Nome</label>
-                        <select class="form-select" name="name" value="{{ old('name') }}" required>
+                        <label for="nome" class="form-label">Nome</label>
+                        <select class="form-select" name="nome" value="{{ old('nome') }}" required>
                             <option selected>Selecione uma disciplina</option>
                             <option value="artes">Artes</option>
                             <option value="biologia">Biologia</option>
@@ -84,28 +84,28 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="ch" class="form-label">Carga Horária</label>
-                            <input type="number" class="form-control" name="ch" value="{{ old('ch') }}"
+                            <label for="carga_horaria" class="form-label">Carga Horária</label>
+                            <input type="number" class="form-control" name="carga_horaria" value="{{ old('carga_horaria') }}"
                                 placeholder="Ex: 200" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="ch_week" class="form-label">Carga Horária Semanal</label>
-                            <input type="number" class="form-control" name="ch_week" value="{{ old('ch_week') }}"
+                            <label for="carga_horaria_semanal" class="form-label">Carga Horária Semanal</label>
+                            <input type="number" class="form-control" name="carga_horaria_semanal" value="{{ old('carga_horaria_semanal') }}"
                                 placeholder="Ex: 15" required>
                         </div>
                     </div>
 
                     <div class="col-md-12 mb-3">
-                        <label for="description" class="form-label">Descrição</label>
-                        <textarea class="form-control" name="description" rows="3" placeholder="Ex: Disciplina de Matemática" required>{{ old('description') }}</textarea>
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" name="descricao" rows="3" placeholder="Ex: Disciplina de Matemática" required>{{ old('descricao') }}</textarea>
                         <small class="text-muted">* Por favor, adicione uma descrição caso tenha escolhido a opção
                             "Outra" no campo "Nome".</small>
                     </div>
 
                     <div class="col-md-12 mb-3">
-                        <label for="modality" class="form-label">Modalidade</label>
-                        <select class="form-select" name="modality" value="{{ old('modality') }}" required>
+                        <label for="modalidade" class="form-label">Modalidade</label>
+                        <select class="form-select" name="modalidade" value="{{ old('modalidade') }}" required>
                             <option selected>Selecione uma modalidade</option>
                             <option value="linguagens-e-suas-tecnologias">Linguagens e suas tecnologias</option>
                             <option value="ciencias-da-natureza-e-suas-tecnologias">Ciências da Natureza e suas
@@ -134,8 +134,8 @@
 
                 <div class="row ms-2 me-2">
                     <div class="col-md-12 mb-3">
-                        <label for="name" class="form-label">Nome</label>
-                        <select class="form-select" name="name" id="name" value="#" required>
+                        <label for="nome" class="form-label">Nome</label>
+                        <select class="form-select" name="nome" id="name" value="#" required>
                             <option selected>Selecione uma disciplina</option>
                             <option value="artes">Artes</option>
                             <option value="biologia">Biologia</option>
@@ -158,29 +158,29 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="ch" class="form-label">Carga Horária</label>
-                            <input type="number" class="form-control" name="ch" id="ch" value=""
+                            <label for="carga_horaria" class="form-label">Carga Horária</label>
+                            <input type="number" class="form-control" name="carga_horaria" id="ch" value=""
                                 placeholder="Ex: 200" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="ch_week" class="form-label">Carga Horária Semanal</label>
-                            <input type="number" class="form-control" name="ch_week" id="ch_week" value=""
+                            <label for="carga_horaria_semanal" class="form-label">Carga Horária Semanal</label>
+                            <input type="number" class="form-control" name="carga_horaria_semanal" id="ch_week" value=""
                                 placeholder="Ex: 15" required>
                         </div>
                     </div>
 
                     <div class="col-md-12 mb-3">
-                        <label for="description" class="form-label">Descrição</label>
-                        <textarea class="form-control" name="description" id="description" rows="3"
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" name="descricao" id="description" rows="3"
                             placeholder="Ex: Disciplina de Matemática" required></textarea>
                         <small class="text-muted">* Por favor, adicione uma descrição caso tenha escolhido a opção
                             "Outra" no campo "Nome".</small>
                     </div>
 
                     <div class="col-md-12 mb-3">
-                        <label for="modality" class="form-label">Modalidade</label>
-                        <select class="form-select" name="modality" id="modality" value="" required>
+                        <label for="modalidade" class="form-label">Modalidade</label>
+                        <select class="form-select" name="modalidade" id="modality" value="" required>
                             <option selected>Selecione uma modalidade</option>
                             <option value="linguagens-e-suas-tecnologias">Linguagens e suas tecnologias</option>
                             <option value="ciencias-da-natureza-e-suas-tecnologias">Ciências da Natureza e suas

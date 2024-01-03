@@ -79,6 +79,7 @@ class CurriculumController extends Controller
         return $modalityMap[$modality] ?? '';
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -87,18 +88,20 @@ class CurriculumController extends Controller
         $school_home = (new SchoolController)->getHome($request);
         Curriculum::create([
             'school_uuid' => $school_home->uuid,
-            'series' => $request->series,
-            'modality' => $request->modality,
-            'weekly_hours' => $request->weekly_hours,
-            'total_hours' => $request->total_hours,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'description' => $request->description,
-            'complementary_information' => $request->complementary_information,
+            'series' => $request->serie,
+            'modality' => $request->modalidade,
+            'weekly_hours' => $request->horas_semanais,
+            'total_hours' => $request->horas_totais,
+            'start_time' => $request->hora_início,
+            'end_time' => $request->hora_final,
+            'description' => $request->descricao,
+            'complementary_information' => $request->informacoes_complementares,
         ]);
 
         return redirect()->route('manage.curriculum')->with('message', 'Matriz curricular criada com sucesso!');
     }
+
+
 
     /**
      * Show the curriculum.
@@ -122,17 +125,17 @@ class CurriculumController extends Controller
      * Update the curriculum.
      */
     public function update(StoreCurriculumRequest $request)
-    {    
+    {
         $curriculum = Curriculum::where('code', $request->curriculum)->firstOrFail();
         $curriculum->update([
-            'series' => $request->series,
-            'modality' => $request->modality,
-            'weekly_hours' => $request->weekly_hours,
-            'total_hours' => $request->total_hours,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'description' => $request->description,
-            'complementary_information' => $request->complementary_information,
+            'series' => $request->serie,
+            'modality' => $request->modalidade,
+            'weekly_hours' => $request->horas_semanais,
+            'total_hours' => $request->horas_totais,
+            'start_time' => $request->hora_início,
+            'end_time' => $request->hora_final,
+            'description' => $request->descricao,
+            'complementary_information' => $request->informacoes_complementares,
         ]);
 
         return redirect()->route('manage.curriculum')->with('message', 'Matriz curricular atualizada com sucesso!');
@@ -144,7 +147,7 @@ class CurriculumController extends Controller
     public function destroy(Request $request)
     {
         $curriculum = Curriculum::where('code', $request->curriculum)->first();
-        
+
         if ($curriculum->subjects()->count() > 0) {
             return Redirect::route('manage.curriculum')->withErrors(['error' => 'Não é possível excluir uma matriz curricular que possui disciplinas!']);
         }
