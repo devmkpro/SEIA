@@ -36,8 +36,8 @@ class CurriculumController extends Controller
     public function curriculum()
     {
         return view('secretary.curriculum.index', [
-            'title' => 'Matriz curricular',
-            'slot' => 'Olá, nesta página você pode gerenciar a matriz curricular da sua escola! Filtrando por modalidade e série, você pode adicionar, editar e excluir as disciplinas que compõem a matriz curricular.',
+            'title' => 'Matrizes Curriculares',
+            'slot' => 'Olá, nesta página você pode gerenciar as matrizes curriculares da sua escola! Filtrando por modalidade e série, você pode adicionar, editar e excluir as disciplinas que compõem a matriz curricular.',
         ]);
     }
 

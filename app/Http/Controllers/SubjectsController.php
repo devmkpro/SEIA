@@ -123,7 +123,7 @@ class SubjectsController extends Controller
             return redirect()->route('manage.curriculum');
         }
         return view('secretary.subjects.index', ['curriculum' => $curriculum,
-        'title' => 'Disciplinas da Matriz',
+        'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
         'slot' => 'Aqui você pode gerenciar as disciplinas da matriz curricular',
         ]);
     }

@@ -126,6 +126,8 @@
                         $('#editSchoolYearForm input[name=schoolYear]').remove();
                         $('#editSchoolYearForm').append('<input type="hidden" name="schoolYear" value="' + data.uuid +
                             '">');
+                    } , error: function(data) {
+                        location.reload();
                     }
 
 

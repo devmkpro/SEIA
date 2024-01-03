@@ -216,7 +216,9 @@
                         $('#editSubjectForm').append('<input type="hidden" name="subject" value="' + data.uuid +
                             '">');
                         $('#editSubjectForm').attr('action', '{{ route("manage.subjects.update") }}');
-                    },
+                    } , error: function(data) {
+                        location.reload();
+                    }
                 });
             }
         </script>
