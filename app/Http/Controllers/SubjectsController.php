@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSubjectsRequest;
 use App\Models\Curriculum;
+use App\Models\Subjects;
 use Illuminate\Http\Request;
 
 class SubjectsController extends Controller
@@ -17,12 +18,12 @@ class SubjectsController extends Controller
         $curriculum = Curriculum::where('code', $curriculumCode)->first();
         $school_home = (new SchoolController)->getHome($request);
         if (!$curriculum || $curriculum->school_uuid !== $school_home->uuid) {
-            return response()->json(['error' => 'Matriz curricular não encontrada'], 404);
+            return redirect()->route('manage.curriculum');
         }
         $subjects = $curriculum->subjects()->get();
         return response()->json($subjects->map(function ($subject) {
             return [
-                'uuid' => $subject->uuid,
+                'uuid' => encrypt($subject->uuid),
                 'name' => $this->formatName($subject->name),
                 'ch' => $subject->ch,
                 'ch_week' => $subject->ch_week,
@@ -99,16 +100,35 @@ class SubjectsController extends Controller
 
         return $modality;    
     }
+    
+    /**
+     * Show a subject
+     */
+    public function show(Request $request, $subjectUuid)
+    {
+        $subject = Subjects::where('uuid', decrypt($subjectUuid))->first();
+        $school_home = (new SchoolController)->getHome($request);
+        if (!$subject || $subject->curriculum->school_uuid !== $school_home->uuid) {
+            return redirect()->route('manage.curriculum');
+        }
+        return response()->json([
+            'uuid' => encrypt($subject->uuid), 
+            'name' => $subject->name,
+            'ch' => $subject->ch,
+            'ch_week' => $subject->ch_week,
+            'description' => $subject->description,
+            'modality' => $subject->modality
+        ]);
+    }
 
     /**
      * Render a views subjects
      */
     public function subjects(Request $request, $curriculumCode)
     {
-        $curriculum = Curriculum::where('code', $curriculumCode)->first();
-        $school_home = (new SchoolController)->getHome($request);
-        if (!$curriculum || $curriculum->school_uuid !== $school_home->uuid) {
-            return response()->json(['error' => 'Matriz curricular não encontrada'], 404);
+        $curriculum = Curriculum::where('code', $curriculumCode)->where('school_uuid', (new SchoolController)->getHome($request)->uuid)->first();
+        if (!$curriculum) {
+            return redirect()->route('manage.curriculum');
         }
         return view('secretary.subjects.index', ['curriculum' => $curriculum,
         'title' => 'Disciplinas da Matriz',
@@ -121,12 +141,29 @@ class SubjectsController extends Controller
      */
     public function store(StoreSubjectsRequest $request, $curriculumCode)
     {
-        $curriculum = Curriculum::where('code', $curriculumCode)->first();
-        $school_home = (new SchoolController)->getHome($request);
-        if (!$curriculum || $curriculum->school_uuid !== $school_home->uuid) {
-            return response()->json(['error' => 'Matriz curricular não encontrada'], 404);
+        $curriculum = Curriculum::where('code', $curriculumCode)->where('school_uuid', (new SchoolController)->getHome($request)->uuid)->first();
+        if (!$curriculum) {
+            return redirect()->route('manage.curriculum');
         }
         $curriculum->subjects()->create($request->validated());
         return redirect()->route('manage.subjects', ['code' => $curriculum->code])->with('message', 'Disciplina criada com sucesso');
+    }
+
+    /**
+     * Update a subject
+     */
+    public function update(StoreSubjectsRequest $request)
+    {
+        $request->validate([
+            'subject' => 'required'
+        ]);
+
+        $subject = Subjects::where('uuid', decrypt($request->subject))->first();
+        $school_home = (new SchoolController)->getHome($request);
+        if (!$subject || $subject->curriculum->school_uuid !== $school_home->uuid) {
+            return redirect()->route('manage.curriculum');
+        }
+        $subject->update($request->validated());
+        return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])->with('message', 'Disciplina atualizada com sucesso');
     }
 }

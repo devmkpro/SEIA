@@ -34,5 +34,12 @@ class Subjects extends Model
         });
     }
 
+    /**
+     * Get the curriculum that owns the subject.
+     */
+    public function curriculum()
+    {
+        return $this->belongsTo(Curriculum::class, 'curriculum_uuid', 'uuid');
+    }
    
 }
