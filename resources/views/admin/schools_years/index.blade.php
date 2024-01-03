@@ -123,6 +123,7 @@
                         $('#editSchoolYearForm #start_date').val(data.start_date);
                         $('#editSchoolYearForm #end_date').val(data.end_date);
                         $('#editSchoolYearForm #status').val(data.status);
+                        $('#editSchoolYearForm input[name=schoolYear]').remove();
                         $('#editSchoolYearForm').append('<input type="hidden" name="schoolYear" value="' + data.uuid +
                             '">');
                     }

@@ -14,6 +14,8 @@ class Curriculum extends Model
     protected $table = 'curricula';
 
     protected $fillable = [
+        'uuid',
+        'code',
         'school_uuid',
         'series',
         'weekly_hours',
@@ -34,7 +36,17 @@ class Curriculum extends Model
 
         static::creating(function ($model) {
             $model->uuid = Str::uuid()->toString();
+            $model->code = $model->generateCode();
         });
+    }
+
+    protected function generateCode(): int
+    {
+        $code = rand(100000, 999999);
+        if (Curriculum::where('code', $code)->exists()) {
+            return $this->generateCode();
+        }
+        return $code;
     }
     
     /**
@@ -43,6 +55,22 @@ class Curriculum extends Model
     public function school()
     {
         return $this->belongsTo(School::class);
+    }
+
+    /**
+     * Subjects that belong to the curriculum.
+     */
+    public function subjects()
+    {
+        return $this->hasMany(Subjects::class, 'curriculum_uuid', 'uuid');
+    }
+
+    /**
+     * Get classes that belong to the curriculum.
+     */
+    public function classes()
+    {
+        return $this->hasMany(Classes::class, 'curriculum_uuid', 'uuid');
     }
 
 

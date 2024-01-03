@@ -82,7 +82,11 @@ class SchoolController extends Controller
         ]);
 
         $user = $request->user();
-        $school = School::where('uuid', decrypt($request->school))->first();
+        try{
+            $school = School::where('uuid', decrypt($request->school))->first();
+        } catch (\Exception $e) {
+            return Redirect::route('panel')->withErrors(['school' => 'Escola não encontrada!']);
+        }
 
         if (!$school) {
             return Redirect::route('panel')->withErrors(['school' => 'Escola não encontrada!']);

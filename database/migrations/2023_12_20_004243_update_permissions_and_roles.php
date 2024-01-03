@@ -37,6 +37,10 @@ return new class extends Migration
             'manage-curricula',
             'create-any-curriculum',
             'update-any-curriculum',
+            'delete-any-curriculum',
+            'manage.subjects',
+            'create-any-subject',
+            'update-any-subject',
 
 
             'manage-classes', 

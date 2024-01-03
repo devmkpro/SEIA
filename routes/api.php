@@ -9,6 +9,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\SubjectsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,7 @@ Route::middleware(['api', 'school_home', 'school.role:secretary'])->group(functi
     Route::post('/gerenciar/matriz-curricular/nova', [CurriculumController::class, 'store'])->name('manage.curriculum.store')->middleware('permission:create-any-curriculum');
     Route::get('/gerenciar/matriz-curricular/{curriculum}', [CurriculumController::class, 'show'])->name('manage.curriculum.show')->middleware('permission:update-any-curriculum');
     Route::put('/gerenciar/matriz-curricular/', [CurriculumController::class, 'update'])->name('manage.curriculum.update')->middleware('permission:update-any-curriculum');
+    Route::post('/gerenciar/matriz-curricular/{curriculum}/disciplinas', [SubjectsController::class, 'store'])->name('manage.subjects.store')->middleware('permission:create-any-subject');
+    Route::get('/verify/subjects/{curriculum}', [SubjectsController::class, 'index'])->name('manage.subjects.index')->middleware('permission:manage.subjects');
+    Route::delete('/gerenciar/matriz-curricular/deletar', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
 });

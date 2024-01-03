@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Curriculum;
 use App\Http\Requests\StoreCurriculumRequest;
-use App\Models\School;
+use Illuminate\Support\Facades\Redirect;
 
 class CurriculumController extends Controller
 {
@@ -14,20 +14,20 @@ class CurriculumController extends Controller
      */
     public function index(Request $request)
     {
-        $school_home = $request->cookie('school_home'); 
-        $school_home = decrypt($school_home);
-        return response()->json(Curriculum::where('school_uuid', $school_home)->get()->map(function ($curriculum) {
+        $school_home = decrypt($request->cookie('school_home'));
+        $curriculums = Curriculum::where('school_uuid', $school_home)->get()->map(function ($curriculum) {
             return [
-                'uuid' => encrypt($curriculum->uuid),
+                'code' => $curriculum->code,
                 'series' => $this->formatSeries($curriculum->series),
                 'modality' => $this->formatModality($curriculum->modality),
                 'weekly_hours' => $curriculum->weekly_hours,
                 'start_time' => $curriculum->start_time,
                 'end_time' => $curriculum->end_time,
                 'total_hours' => $curriculum->total_hours,
-
             ];
-        }));
+        });
+
+        return response()->json($curriculums);
     }
 
     /**
@@ -44,54 +44,40 @@ class CurriculumController extends Controller
     /**
      * Format the series.
      */
-    public function formatSeries($series)
+    private function formatSeries($series)
     {
-        switch ($series) {
-            case 'educ_infa_cc_0_3':
-                return 'Educação Infantil - Creche (0 a 3 anos)';
-            case 'educ_infa_cc_4_5':
-                return 'Educação Infantil - Creche (4 a 5 anos)';
-            case 'educ_ini_1_5':
-                return 'Ensino Fundamental - Anos Iniciais (1º ao 5º ano)';
-            case 'educ_ini_6_9':
-                return 'Ensino Fundamental - Anos Finais (6º ao 9º ano)';
-            case 'educ_med_1':
-                return 'Ensino Médio - 1º ano';
-            case 'educ_med_2':
-                return 'Ensino Médio - 2º ano';
-            case 'educ_med_3':
-                return 'Ensino Médio - 3º ano';
-            case 'other':
-                return 'Outro';
-        }
+        $seriesMap = [
+            'educ_infa_cc_0_3' => 'Educação Infantil - Creche (0 a 3 anos)',
+            'educ_infa_cc_4_5' => 'Educação Infantil - Creche (4 a 5 anos)',
+            'educ_ini_1_5' => 'Ensino Fundamental - Anos Iniciais (1º ao 5º ano)',
+            'educ_ini_6_9' => 'Ensino Fundamental - Anos Finais (6º ao 9º ano)',
+            'educ_med_1' => 'Ensino Médio - 1º ano',
+            'educ_med_2' => 'Ensino Médio - 2º ano',
+            'educ_med_3' => 'Ensino Médio - 3º ano',
+            'other' => 'Outro',
+        ];
+
+        return $seriesMap[$series] ?? '';
     }
 
     /**
      * Format the modality.
      */
-
-    public function formatModality($modality)
+    private function formatModality($modality)
     {
-        switch ($modality) {
-            case 'bercario':
-                return 'Berçário';
-            case 'creche':
-                return 'Creche';
-            case 'pre_escola':
-                return 'Pré-escola';
-            case 'fundamental':
-                return 'Ensino Fundamental';
-            case 'medio':
-                return 'Ensino Médio';
-            case 'eja':
-                return 'EJA';
-            case 'educacao_especial':
-                return 'Educação Especial';
-            case 'other':
-                return 'Outro';
-        }
-    }
+        $modalityMap = [
+            'bercario' => 'Berçário',
+            'creche' => 'Creche',
+            'pre_escola' => 'Pré-escola',
+            'fundamental' => 'Ensino Fundamental',
+            'medio' => 'Ensino Médio',
+            'eja' => 'EJA',
+            'educacao_especial' => 'Educação Especial',
+            'other' => 'Outro',
+        ];
 
+        return $modalityMap[$modality] ?? '';
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -117,18 +103,16 @@ class CurriculumController extends Controller
     /**
      * Show the curriculum.
      */
-    public function show(Request $request, $uuidEncoded)
+    public function show(Request $request, $code)
     {
-        $uuid = decrypt($uuidEncoded);
-        $curriculum = Curriculum::where('uuid', $uuid)->firstOrFail();
+        $curriculum = Curriculum::where('code', $code)->firstOrFail();
         $school_home = (new SchoolController)->getHome($request);
-        
+
         if ($curriculum->school_uuid != $school_home->uuid) {
-            return redirect()->route('manage.curriculum')->withErros(['error' => 'Você não tem permissão para acessar essa página!']);
+            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
         }
 
         return response()->json([
-            'uuid' => encrypt($curriculum->uuid),
             'series' => $curriculum->series,
             'modality' => $curriculum->modality,
             'weekly_hours' => $curriculum->weekly_hours,
@@ -145,12 +129,11 @@ class CurriculumController extends Controller
      */
     public function update(StoreCurriculumRequest $request)
     {
-        $uuid = decrypt($request->curriculum);
-        $curriculum = Curriculum::where('uuid', $uuid)->firstOrFail();
+        $curriculum = Curriculum::where('code', $request->curriculum)->firstOrFail();
         $school_home = (new SchoolController)->getHome($request);
 
         if ($curriculum->school_uuid != $school_home->uuid) {
-            return redirect()->route('manage.curriculum')->withErros(['error' => 'Você não tem permissão para acessar essa página!']);
+            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
         }
 
         $curriculum->update([
@@ -166,5 +149,28 @@ class CurriculumController extends Controller
 
         return redirect()->route('manage.curriculum')->with('message', 'Matriz curricular atualizada com sucesso!');
     }
-    
+
+    /**
+     * Destroy the curriculum.
+     */
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'curriculum' => 'required|exists:curricula,code',
+        ]);
+
+        $curriculum = Curriculum::where('code', $request->curriculum)->first();
+        $school_home = (new SchoolController)->getHome($request);
+
+        if ($curriculum->school_uuid != $school_home->uuid) {
+            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
+        }
+        if ($curriculum->subjects()->count() > 0) {
+            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Não é possível excluir uma matriz curricular que possui disciplinas!']);
+        }
+
+        $curriculum->delete();
+
+        return redirect()->route('manage.curriculum')->with('message', 'Matriz curricular excluída com sucesso!');
+    }
 }

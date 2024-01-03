@@ -7,6 +7,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\SubjectsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,9 @@ Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'school_home', 'web', 'school.role:secretary'])->group(function () {
     Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'curriculum'])->name('manage.curriculum')->middleware('permission:manage-curricula');
+    Route::get('/gerenciar/matriz-curricular/{code}/disciplinas', [SubjectsController::class, 'subjects'])->name('manage.subjects')->middleware('permission:update-any-subject');
+
+
 });
 
 
