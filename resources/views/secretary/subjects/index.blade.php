@@ -27,23 +27,25 @@
         <div class="col-sm-12">
             <div class="card">
 
-                @schoolPermission('create-any-subject', optional($school_home)->uuid)
-                    <div class="col-md-12">
-                        <div class="d-flex justify-content-end mb-3">
-                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                                data-bs-target="#createSubjectModal">
-                                Cadastrar Disciplina
-                            </button>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ route('manage.curriculum') }}" class="btn btn-primary">Voltar </a>
                     </div>
-                @endschoolPermission
+                    @schoolPermission('create-any-subject', optional($school_home)->uuid)
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-end mb-3">
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#createSubjectModal">
+                                    Cadastrar Disciplina
+                                </button>
+                            </div>
+                        </div>
+                    @endschoolPermission
+                </div>
+            
 
                 <x-grid-datatables identifier="subjectsTable" :columns="['Nome', 'Carga Horária', 'Carga Horária Semanal', 'Modalidade', 'Descrição', 'Ações']" />
 
-                <div class="card-footer">
-                    <a href="{{ route('manage.curriculum') }}" class="btn btn-primary">Voltar para o Gerenciamento de
-                        Matriz</a>
-                </div>
             </div>
         </div>
     </div>

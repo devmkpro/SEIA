@@ -122,7 +122,7 @@ class CurriculumController extends Controller
      * Update the curriculum.
      */
     public function update(StoreCurriculumRequest $request)
-    {
+    {    
         $curriculum = Curriculum::where('code', $request->curriculum)->firstOrFail();
         $curriculum->update([
             'series' => $request->series,

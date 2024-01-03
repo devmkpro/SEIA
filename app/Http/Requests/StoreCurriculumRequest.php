@@ -24,8 +24,8 @@ class StoreCurriculumRequest extends FormRequest
         return [
             'series' => 'required|string|in:educ_infa_cc_0_3,educ_infa_cc_4_5,educ_ini_1_5,educ_ini_6_9,educ_med_1,educ_med_2,educ_med_3,other',
             'modality' => 'required|string|in:bercario,creche,pre_escola,fundamental,medio,eja,educacao_especial,other',
-            'weekly_hours' => 'required|integer',
-            'total_hours' => 'required|integer',
+            'weekly_hours' => 'required|numeric|lte:total_hours',
+            'total_hours' => 'required|numeric',
             'start_time' => 'required',
             'end_time' => 'required',
             'complementary_information' => 'nullable|string',
