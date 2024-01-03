@@ -31,14 +31,14 @@
         <div class="dropdown-menu collapse navbar-collapse" aria-labelledby="navbarDropdownSchools">
 
             @can('update-any-school')
-                <a class="dropdown-item" href="{{route('manage.schools')}}">
+                <a class="dropdown-item blue" href="{{route('manage.schools')}}">
                     <i class="ph-bank-fill icons-menu"></i>
                     <span >Gerenciar</span>
                 </a>
             @endcan
 
             @can('create-any-school')
-                <a class="dropdown-item" href="{{route('manage.schools.create')}}">
+                <a class="dropdown-item blue" href="{{route('manage.schools.create')}}">
                     <i class="ph-bank-fill icons-menu"></i>
                     <span >Cadastrar</span>
                 </a>
@@ -57,7 +57,7 @@
         <div class="dropdown-menu collapse navbar-collapse" aria-labelledby="navbarDropdownSchoolYears">
 
             @can('update-any-school-year')
-                <a class="dropdown-item" href="{{route('manage.school-years')}}">
+                <a class="dropdown-item green" href="{{route('manage.school-years')}}">
                     <i class="ph-calendar-fill icons-menu"></i>
                     <span >Gerenciar</span>
                 </a>
