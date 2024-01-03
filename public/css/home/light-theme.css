@@ -9,6 +9,11 @@
     padding-left: 0px !important;
 }
 
+#sidebarToggle{
+    background-color: white !important;
+    color: var(--seia-darkblue) !important;
+}
+
 .navbar-light .top{
     padding-left: -40px !important;
     margin: 0;
@@ -67,7 +72,14 @@
     color: white !important;
 }
 
+.navbar-nav .lime{
+    color: var(--seia-green) !important;
+}
 
+.navbar-nav .lime:hover{
+    color: white !important;
+    background-color: var(--seia-green) !important;
+}
 
 .navbar-nav .blue{
     color: var(--seia-darkblue) !important;
@@ -124,4 +136,8 @@
 
 .exit .icons-menu-retraido{
     font-size: 25px !important;
+}
+
+.exit .copyrigth{
+    color: var(--seia-grey) !important;
 }

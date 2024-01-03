@@ -1,13 +1,13 @@
-<div class="row">
+<div class="row informacoesRapidas">
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-sm border-left-primary shadow py-2">
+    <div class="col-xl-4 col-md-6 col-sm-6 mb-4">
+        <div class="card card-sm border-left-primary shadow-sm py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Nº de alunos</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        <div class="h5 mb-0 font-weight-bold test-dark-seia">
                             {{ $school_home->students->count() }}</div>
                     </div>
                     <div class="col-auto">
@@ -18,15 +18,15 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-sm border-left-success shadow  py-2">
+    <div class="col-xl-4 col-md-6 col-sm-6 mb-4">
+        <div class="card card-sm border-left-success shadow-sm  py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Nº de professores</div>
 
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        <div class="h5 mb-0 font-weight-bold test-dark-seia">
                             {{ $school_home->teachers->count() }}</div>
 
                     </div>
@@ -38,15 +38,15 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-sm border-left-warning shadow py-2">
+    <div class="col-xl-4 col-md-6 col-sm-12 mb-4">
+        <div class="card card-sm border-left-warning shadow-sm py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                             Alunos Especiais
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        <div class="h5 mb-0 font-weight-bold test-dark-seia">
                             {{ $school_home->students->filter(function ($student) {
                                     return $student->datauser->deficiency != null;
                                 })->count() }}

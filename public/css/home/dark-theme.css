@@ -80,9 +80,14 @@ body{
 
 /* Button toggle */
 
-#sidebarToggle:hover{
-    background-color: var(--seia-ambar) !important;
+.sidebar-dark #sidebarToggle:hover{
+    background-color: var(--seia-red) !important;
     color: white !important;
+}
+
+.sidebar-dark #sidebarToggle{
+    background-color: white !important;
+    color: var(--seia-grey) !important;
 }
 
 #sidebarToggle::after{
@@ -90,7 +95,7 @@ body{
     font-size: 1em;
     font-weight: 900;
     transition: all 0.3s ease-in-out;
-    color: var(--seia-oceanblue) !important;
+    color: var(--seia-green) !important;
 }
 
 #sidebarToggle:hover::after{
@@ -98,6 +103,11 @@ body{
     color: white !important;
 }
 
+
+.navbar-nav .lime:hover{
+    color: white !important;
+    background-color: var(--seia-greenligth) !important;
+}
 
 .navbar-nav .blue:hover{
     color: white !important;
@@ -156,6 +166,7 @@ body{
 .exit a:hover{
     color: var(--seia-ambar) !important;
 }
+
 
 
 
@@ -477,3 +488,12 @@ main .card ul li a:hover{
     color: white !important;
 }
 
+
+
+/* admin cards de informações */
+
+.informacoesRapidas .card{
+    background: var(--seia-darkback) !important;
+    box-shadow: var(--seia-shadow) !important;
+    color: white !important;
+}

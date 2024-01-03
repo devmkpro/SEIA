@@ -86,7 +86,7 @@
 
                 </div>
 
-                <ul class="navbar-nav center animated--fade-in" id="accordionSidebar">
+            <ul class="navbar-nav center animated--fade-in" id="accordionSidebar">
                     <span class="menu-title align-self-start">Menu</span>
                     <li class="nav-item "><a class="nav-link blue center" href="{{ route('panel') }}"><i
                                 class="ph-house-fill icons-menu"></i></i><span class="a-name">Início</span></a></li>
@@ -109,11 +109,16 @@
 
                 <hr class="sidebar-divider my-3 shadow-sm">
                 <span class="menu-title align-self-start">Pessoal</span>
-                <li class="nav-item"><a class="nav-link green center" href="{{ route('profile.edit') }}"><i
-                            class="ph-user-circle-fill icons-menu"></i></i><span class="a-name">Minhas
-                            Informações</span></a></li>
-                <li class="nav-item"><a class="nav-link red center" href="#"><i
-                            class="ph-gear icons-menu"></i></i><span class="a-name">Configurações</span></a></li>
+                <li class="nav-item">
+                    <a class="nav-link green center" href="{{ route('profile.edit') }}">
+                        <i class="ph-user-circle-fill icons-menu"></i>
+                        <span class="a-name">Minhas Informações</span>
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link blue center" href="#"><i
+                            class="ph-gear icons-menu"></i>
+                            <span class="a-name">Configurações</span></a>
+                </li>
 
 
 
@@ -122,13 +127,16 @@
 
             <div class="exit">
                 <div class="d-flex flex-column align-items-center justify-content-center">
-                    <a class="nav-link d-flex justify-content-center align-items-center center"
-                        href="{{ route('logout') }}">
-                        <i class="ph-sign-out icons-menu"></i>
-                        <span class="a-name">Sair</span>
-                    </a>
+                    <ul class="navbar-nav center animated--fade-in">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex justify-content-center align-items-center center red" href="{{ route('logout') }}">
+                                <i class="ph-sign-out icons-menu"></i>
+                                <span class="a-name">Sair</span>
+                            </a>
+                        </li>
+                    </ul>
 
-                    <span class="copyright">SEIA 2023</span>
+                    <span class="copyright text-dark-seia">SEIA {{ date('Y') }} </span>
                 </div>
             </div>
 
@@ -143,35 +151,45 @@
                         type="button" aria-label="Fechar/Abrir sidebar"><i class="fas fa-bars"></i></button>
                     <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <div class="d-flex flex-column align-items-start">
-                                <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
-                                    alt="LogoDaEscola" height="12px">
-                                <span class="">
-                                    {{ $school_home ? $school_home->name : null }}
-                                </span>
-                            </div>
+                            <form action="{{ route('delete-school-home') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="d-flex flex-column align-items-start">
+                                    <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
+                                        alt="LogoDaEscola" class="img-fluid" style="height: 12px">
+                                    <span class="">
+                                        {{ $school_home ? $school_home->name : null }}
+                                    </span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <ul class="navbar-nav flex-nowrap ms-auto">
                         <li class="nav-item dropdown d-sm-none no-arrow">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                            <a class="dropdown-toggle nav-link lime" aria-expanded="false" data-bs-toggle="dropdown"
                                 href="#" aria-label="Escola">
                                 <i class="ph-bank"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
                                 aria-labelledby="searchDropdown">
                                 <div class="me-auto navbar-search w-100">
-                                    <div class="d-flex flex-column align-items-start">
-                                        <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
-                                            alt="LogoDaEscola" height="12px">
-                                        <span class="">Nome da Escola</span>
-                                    </div>
+
+                                    <form action="{{ route('delete-school-home') }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="d-flex flex-column align-items-start">
+                                            <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
+                                                alt="LogoDaEscola" height="12px">
+                                            <span class="">Nome da Escola</span>
+                                        </button>
+                                    
+                                    </form>
                                 </div>
                             </div>
                         </li>
 
                         <li class="nav-item dropdown mx-1 no-arrow">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                            <a class="dropdown-toggle nav-link green" aria-expanded="false" data-bs-toggle="dropdown"
                                 href="#" aria-label="Periodo letivo">
                                 <i class="ph-calendar fs-5"></i>
                             </a>
@@ -179,7 +197,7 @@
                                 aria-labelledby="searchDropdown">
                                 <div class="me-auto navbar-search w-100">
                                     <div class="d-flex flex-column align-items-start">
-                                        <span class="">
+                                        <span class="text-dark-seia">
                                             {{ $school_year ? $school_year->name : 'Sem periodo letivo' }}
                                         </span>
                                     </div>
@@ -189,7 +207,7 @@
 
                         <li class="nav-item no-arrow mx-1">
                             <div class="nav-item no-arrow">
-                                <button class="nav-link border-0" href="" onclick="switchTheme()"
+                                <button class="nav-link border-0 red" href="" onclick="switchTheme()"
                                     aria-label="Trocar tema">
                                     <i id="sun-icon" class="ph-sun-fill darkMode "></i>
                                     <i id="moon-icon" class="ph-moon-fill darkMode "></i>
@@ -204,7 +222,7 @@
                                     <form action="{{ route('delete-school-home') }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="nav-link border-0 darkMode fs-5" href=""
+                                        <button class="nav-link border-0 darkMode fs-5 blue" href=""
                                             aria-label="Trocar escola" data-bs-toggle="tooltip"
                                             data-bs-placement="bottom" title="Trocar escola">
                                             <i class="ph-bank"></i>
@@ -216,7 +234,7 @@
 
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="nav-item dropdown no-arrow">
-                                <a class="dropdown-toggle nav-link" aria-expanded="false"
+                                <a class="dropdown-toggle nav-link yellow" aria-expanded="false"
                                     data-bs-toggle="dropdown" href="#">
                                     <span class="badge bg-danger badge-counter">3+</span><i
                                         class="ph-bell fs-5"></i>
@@ -228,7 +246,7 @@
                                             <div class="bg-primary icon-circle"><i class="ph-file text-white"></i>
                                             </div>
                                         </div>
-                                        <div><span class="small text-gray-500">December 12, 2019</span>
+                                        <div><span class="small text-seia-dark">December 12, 2019</span>
                                             <p>A new monthly report is ready to download!</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
@@ -236,7 +254,7 @@
                                             <div class="bg-success icon-circle"><i
                                                     class="ph-donate text-white"></i></div>
                                         </div>
-                                        <div><span class="small text-gray-500">December 7, 2019</span>
+                                        <div><span class="small text-seia-dark">December 7, 2019</span>
                                             <p>$290.29 has been deposited into your account!</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
@@ -244,18 +262,18 @@
                                             <div class="bg-warning icon-circle"><i
                                                     class="fas fa-exclamation-triangle text-white"></i></div>
                                         </div>
-                                        <div><span class="small text-gray-500">December 2, 2019</span>
+                                        <div><span class="small text-seia-dark">December 2, 2019</span>
                                             <p>Spending Alert: We've noticed unusually high spending for your
                                                 account.</p>
                                         </div>
-                                    </a><a class="dropdown-item text-center small text-gray-500"
+                                    </a><a class="dropdown-item text-center small text-seia-dark"
                                         href="#">Show All
                                         Alerts</a>
                                 </div>
                             </div>
                         </li>
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link lime"
                                     aria-expanded="false" data-bs-toggle="dropdown" href="#"><span
                                         class="badge bg-danger badge-counter">7</span><i
                                         class="ph-envelope fs-5"></i></a>
@@ -270,7 +288,7 @@
                                         <div class="fw-bold">
                                             <div class="text-truncate"><span>Hi there! I am wondering if you can
                                                     help me with a problem I've been having.</span></div>
-                                            <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
+                                            <p class="small text-seia-dark mb-0">Emily Fowler - 58m</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
@@ -282,7 +300,7 @@
                                             <div class="text-truncate"><span>I have the photos that you ordered
                                                     last
                                                     month!</span></div>
-                                            <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
+                                            <p class="small text-seia-dark mb-0">Jae Chun - 1d</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
@@ -294,7 +312,7 @@
                                             <div class="text-truncate"><span>Last month's report looks great, I am
                                                     very happy with the progress so far, keep up the good
                                                     work!</span></div>
-                                            <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
+                                            <p class="small text-seia-dark mb-0">Morgan Alvarez - 2d</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image me-3">
@@ -307,9 +325,9 @@
                                             <div class="text-truncate"><span>Am I a good boy? The reason I ask is
                                                     because someone told me that people say this to all dogs, even
                                                     if they aren't good...</span></div>
-                                            <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
+                                            <p class="small text-seia-dark mb-0">Chicken the Dog · 2w</p>
                                         </div>
-                                    </a><a class="dropdown-item text-center small text-gray-500"
+                                    </a><a class="dropdown-item text-center small text-seia-dark"
                                         href="#">Ver todas
                                         as mensagens </a>
                                 </div>

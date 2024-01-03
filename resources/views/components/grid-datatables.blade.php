@@ -1,10 +1,10 @@
 <div class="grid-container">
-    <div class="card seia-border-darkback">
-        <table class="table" id="{{ $identifier }}">
+    <div class="table-responsive text-dark-seia">
+        <table class=" table w-100 table-striped table-hover my-2" id="{{ $identifier }}">
             <thead>
-                <tr>
+                <tr class="text-dark-seia">
                     @foreach ($columns as $column)
-                        <th>{{ $column }}</th>
+                        <th class="text-dark-seia">{{ $column }}</th>
                     @endforeach
                 </tr>
             </thead>

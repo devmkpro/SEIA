@@ -28,6 +28,10 @@ body, #content-wrapper{
     font-family: 'Quicksand', sans-serif !important;
 }
 
+.text-dark-seia{
+    color: #121212 !important;
+}
+
 .sidebar-dark #sidebarToggle::after {
     display: none
 }
@@ -114,7 +118,6 @@ body, #content-wrapper{
     outline: none;
     z-index: 100;
     border-radius: 6px 0 0 6px;
-    background-color: white !important;
 
     box-shadow: 0px 3px 9px 1px rgba(0, 0, 0, 0.25);
     align-items: center;
@@ -239,7 +242,7 @@ body, #content-wrapper{
     font-weight: 300;
     font-size: 12px;
     line-height: 15px;
-    color: var(--seia-grey) !important;
+    
     margin-bottom: 10px;
     margin-left: 0 !important;
     display: flex !important;
@@ -330,6 +333,14 @@ main .card li a i{
     margin-right: 0.5em;
 }
 
+main .card-footer{
+    background: transparent !important;
+    border: none !important;
+}
+
+main .card-sm{
+    min-height: 7em !important;
+}
 /********* Pagina de dados *******/
 
 .dados-pessoais label,
@@ -683,6 +694,14 @@ main .card li a i{
     padding: 1em;
 }
 
+/* datatables */
+
+.dataTables_wrapper .dataTables_length select {
+    width: 4em;
+}
+
+
+
 /* Medias*/
 
 @media (max-width: 991px) {
@@ -859,13 +878,11 @@ main .card li a i{
         margin-left: 25px !important;
         font-size: 11px !important;
     }
+    
+    /* admin cards de informações */
 
-}
-.card-footer{
-    background: transparent !important;
-    border: none !important;
-}
-
-.card-sm{
-    min-height: 7em !important;
+    .informacoesRapidas .col-sm-6 {
+        flex: 0 0 auto;
+        width: 50%;
+    }
 }
