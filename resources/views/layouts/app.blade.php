@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -147,8 +148,9 @@
         <div id="content">
             <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top" id="nav-content">
                 <div class="container-fluid">
-                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop"
-                        type="button" aria-label="Fechar/Abrir sidebar"><i class="fas fa-bars"></i></button>
+                    <button class="btn btn-link d-md-none me-3 px-2" id="sidebarToggleTop" type="button" aria-label="Fechar/Abrir sidebar">
+                        <i class="ph-fill ph-list fs-3"></i>
+                    </button>
                     <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <form action="{{ route('delete-school-home') }}" method="POST">
