@@ -50,11 +50,13 @@
 
     @schoolPermission('create-any-subject', optional($school_home)->uuid)
         <x-modal titleModal="Cadastro de Disciplinas" identifier="createSubjectModal" id="createSubjectModal">
-            <form action="{{ route('manage.subjects.store', $curriculum->code) }}" method="POST" id="addSubjectForm">
+            <form action="{{ route('manage.subjects.store') }}" method="POST" id="addSubjectForm">
                 @csrf
                 @method('POST')
-
                 <div class="row ms-2 me-2">
+
+                    <input type="hidden" name="curriculum" value="{{ $curriculum->code }}">
+
                     <div class="col-md-12 mb-3">
                         <label for="name" class="form-label">Nome</label>
                         <select class="form-select" name="name" value="{{ old('name') }}" required>
@@ -122,9 +124,11 @@
 
     @schoolPermission('update-any-subject', optional($school_home)->uuid)
         <x-modal titleModal="Editar Disciplina" identifier="editSchoolYear" id="editSchoolYear">
-            <form action="{{ route('manage.subjects.update', $curriculum->code) }}" method="POST" id="editSubjectForm">
+            <form action="{{ route('manage.subjects.update') }}" method="POST" id="editSubjectForm">
                 @csrf
                 @method('PUT')
+
+                <input type="hidden" name="curriculum" value="{{ $curriculum->code }}">
 
                 <div class="row ms-2 me-2">
                     <div class="col-md-12 mb-3">
@@ -196,7 +200,10 @@
         <script>
             function editSubjectCurriculum(uuid) {
                 $.ajax({
-                    url: '/api/verify/subjects/'.concat(uuid),
+                    url: '{{route("manage.subjects.show")}}',
+                    data: {
+                        'subject': uuid
+                    },
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -208,7 +215,7 @@
                         $('#editSubjectForm').find('input[name="subject"]').remove();
                         $('#editSubjectForm').append('<input type="hidden" name="subject" value="' + data.uuid +
                             '">');
-                        $('#editSubjectForm').attr('action', '{{ route('manage.subjects.update') }}');
+                        $('#editSubjectForm').attr('action', '{{ route("manage.subjects.update") }}');
                     },
                 });
             }
@@ -216,45 +223,45 @@
     @endschoolPermission
 
 
-
     @section('scripts')
         <script>
-            $(document).ready(function() {
-                $('#subjectsTable').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+            $('#subjectsTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+                },
+                "ajax": {
+                    "url": "{{ route('manage.subjects.index') }}",
+                    "data": {
+                        "curriculum": "{{ $curriculum->code }}"
                     },
-                    "ajax": {
-                        "url": "/api/verify/subjects/curriculum/".concat({{ $curriculum->code }}),
-                        "type": "GET",
-                        "dataSrc": ""
+                    "type": "GET",
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "name"
                     },
-                    "columns": [{
-                            "data": "name"
-                        },
-                        {
-                            "data": "ch"
-                        },
-                        {
-                            "data": "ch_week"
-                        },
-                        {
-                            "data": "modality"
-                        },
-                        {
-                            "data": "description"
-                        },
-                        {
-                            "data": "id",
-                            "render": function(data, type, row, meta) {
-                                return `
-                                    <button  type="button" class="btn btn-outline-primary btn-sm " data-bs-toggle="modal" data-bs-target="#editSchoolYear" onclick="editSubjectCurriculum('${row.uuid}')">Editar</button>
-                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-danger">Excluir</button>
-                                `;
-                            }
+                    {
+                        "data": "ch"
+                    },
+                    {
+                        "data": "ch_week"
+                    },
+                    {
+                        "data": "modality"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "id",
+                        "render": function(data, type, row, meta) {
+                            return `
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editSchoolYear" onclick="editSubjectCurriculum('${row.uuid}')">Editar</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm btn-danger">Excluir</button>
+                `;
                         }
-                    ]
-                });
+                    }
+                ]
             });
         </script>
     @endsection

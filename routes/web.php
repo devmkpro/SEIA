@@ -50,6 +50,8 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
         Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'curriculum'])->name('manage.curriculum')->middleware('permission:manage-curricula');
         Route::get('/gerenciar/matriz-curricular/{code}/disciplinas', [SubjectsController::class, 'subjects'])->name('manage.subjects')->middleware('permission:update-any-subject');
     });
+
+
 });
 
 

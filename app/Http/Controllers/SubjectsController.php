@@ -13,13 +13,9 @@ class SubjectsController extends Controller
     /**
      * Display a listing of the school years.
      */
-    public function index(Request $request, $curriculumCode)
+    public function index(Request $request)
     {
-        $curriculum = Curriculum::where('code', $curriculumCode)->first();
-        $school_home = (new SchoolController)->getHome($request);
-        if (!$curriculum || $curriculum->school_uuid !== $school_home->uuid) {
-            return redirect()->route('manage.curriculum');
-        }
+        $curriculum = Curriculum::where('code', $request->curriculum)->first();
         $subjects = $curriculum->subjects()->get();
         return response()->json($subjects->map(function ($subject) {
             return [
@@ -104,13 +100,9 @@ class SubjectsController extends Controller
     /**
      * Show a subject
      */
-    public function show(Request $request, $subjectUuid)
+    public function show(Request $request)
     {
-        $subject = Subjects::where('uuid', decrypt($subjectUuid))->first();
-        $school_home = (new SchoolController)->getHome($request);
-        if (!$subject || $subject->curriculum->school_uuid !== $school_home->uuid) {
-            return redirect()->route('manage.curriculum');
-        }
+        $subject = Subjects::where('uuid', decrypt($request->subject))->firstOrFail();
         return response()->json([
             'uuid' => encrypt($subject->uuid), 
             'name' => $subject->name,
@@ -139,12 +131,9 @@ class SubjectsController extends Controller
     /**
      * Store a new subject
      */
-    public function store(StoreSubjectsRequest $request, $curriculumCode)
+    public function store(StoreSubjectsRequest $request)
     {
-        $curriculum = Curriculum::where('code', $curriculumCode)->where('school_uuid', (new SchoolController)->getHome($request)->uuid)->first();
-        if (!$curriculum) {
-            return redirect()->route('manage.curriculum');
-        }
+        $curriculum = Curriculum::where('code', $request->curriculum)->where('school_uuid', (new SchoolController)->getHome($request)->uuid)->first();
         $curriculum->subjects()->create($request->validated());
         return redirect()->route('manage.subjects', ['code' => $curriculum->code])->with('message', 'Disciplina criada com sucesso');
     }
@@ -154,15 +143,7 @@ class SubjectsController extends Controller
      */
     public function update(StoreSubjectsRequest $request)
     {
-        $request->validate([
-            'subject' => 'required'
-        ]);
-
         $subject = Subjects::where('uuid', decrypt($request->subject))->first();
-        $school_home = (new SchoolController)->getHome($request);
-        if (!$subject || $subject->curriculum->school_uuid !== $school_home->uuid) {
-            return redirect()->route('manage.curriculum');
-        }
         $subject->update($request->validated());
         return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])->with('message', 'Disciplina atualizada com sucesso');
     }

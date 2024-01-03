@@ -103,15 +103,9 @@ class CurriculumController extends Controller
     /**
      * Show the curriculum.
      */
-    public function show(Request $request, $code)
+    public function show(Request $request)
     {
-        $curriculum = Curriculum::where('code', $code)->firstOrFail();
-        $school_home = (new SchoolController)->getHome($request);
-
-        if ($curriculum->school_uuid != $school_home->uuid) {
-            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
-        }
-
+        $curriculum = Curriculum::where('code', $request->curriculum)->firstOrFail();
         return response()->json([
             'series' => $curriculum->series,
             'modality' => $curriculum->modality,
@@ -130,12 +124,6 @@ class CurriculumController extends Controller
     public function update(StoreCurriculumRequest $request)
     {
         $curriculum = Curriculum::where('code', $request->curriculum)->firstOrFail();
-        $school_home = (new SchoolController)->getHome($request);
-
-        if ($curriculum->school_uuid != $school_home->uuid) {
-            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
-        }
-
         $curriculum->update([
             'series' => $request->series,
             'modality' => $request->modality,
@@ -155,16 +143,8 @@ class CurriculumController extends Controller
      */
     public function destroy(Request $request)
     {
-        $request->validate([
-            'curriculum' => 'required|exists:curricula,code',
-        ]);
-
         $curriculum = Curriculum::where('code', $request->curriculum)->first();
-        $school_home = (new SchoolController)->getHome($request);
-
-        if ($curriculum->school_uuid != $school_home->uuid) {
-            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
-        }
+        
         if ($curriculum->subjects()->count() > 0) {
             return Redirect::route('manage.curriculum')->withErrors(['error' => 'Não é possível excluir uma matriz curricular que possui disciplinas!']);
         }

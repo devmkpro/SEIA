@@ -212,7 +212,10 @@
         <script>
             function showCurriculum(code) {
                 $.ajax({
-                    url: "{{ route('manage.curriculum.show', '') }}" + "/" + code,
+                    url: "{{ route('manage.curriculum.show') }}",
+                    data: {
+                        curriculum: code
+                    },
                     type: "GET",
                     dataType: "json",
                     success: function(data) {
@@ -230,7 +233,9 @@
                         $('#editCurriculumForm #end_time').val(data.end_time);
                         $('#editCurriculumForm #complementary_information').val(data.complementary_information);
 
-                    },
+                    }, error: function(data) {
+                        location.reload();
+                    }
                 });
             }
             $(document).ready(function() {
