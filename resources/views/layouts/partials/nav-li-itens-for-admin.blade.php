@@ -6,16 +6,16 @@
             <i class="ph-map-pin-fill icons-menu"></i>
             <span class="a-name ">Localizações</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownLocations">
+        <div class="dropdown-menu collapse navbar-collapse" aria-labelledby="navbarDropdownLocations">
 
-            <a class="dropdown-item" href="{{ route('manage.cities') }}">
+            <a class="dropdown-item red" href="{{ route('manage.cities') }}">
                 <i class="ph-map-pin-fill icons-menu"></i>
-                <span class="a-name">Cidades</span>
+                <span >Cidades</span>
             </a>
 
-            <a class="dropdown-item" href="{{ route('manage.states') }}">
+            <a class="dropdown-item red" href="{{ route('manage.states') }}">
                 <i class="ph-map-pin-fill icons-menu"></i>
-                <span class="a-name">Estados</span>
+                <span >Estados</span>
             </a>
         </div>
     </li>
@@ -28,19 +28,19 @@
             <i class="ph-bank-fill icons-menu"></i>
             <span class="a-name ">Escolas</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownSchools">
+        <div class="dropdown-menu collapse navbar-collapse" aria-labelledby="navbarDropdownSchools">
 
             @can('update-any-school')
                 <a class="dropdown-item" href="{{route('manage.schools')}}">
                     <i class="ph-bank-fill icons-menu"></i>
-                    <span class="a-name">Gerenciar</span>
+                    <span >Gerenciar</span>
                 </a>
             @endcan
 
             @can('create-any-school')
                 <a class="dropdown-item" href="{{route('manage.schools.create')}}">
                     <i class="ph-bank-fill icons-menu"></i>
-                    <span class="a-name">Cadastrar</span>
+                    <span >Cadastrar</span>
                 </a>
             @endcan
         </div>
@@ -54,12 +54,12 @@
             <i class="ph-calendar-fill icons-menu"></i>
             <span class="a-name ">Anos Letivos</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownSchoolYears">
+        <div class="dropdown-menu collapse navbar-collapse" aria-labelledby="navbarDropdownSchoolYears">
 
             @can('update-any-school-year')
                 <a class="dropdown-item" href="{{route('manage.school-years')}}">
                     <i class="ph-calendar-fill icons-menu"></i>
-                    <span class="a-name">Gerenciar</span>
+                    <span >Gerenciar</span>
                 </a>
             @endcan
 

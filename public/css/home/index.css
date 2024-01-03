@@ -220,6 +220,17 @@ body, #content-wrapper{
     color: white !important;
 }
 
+/* dropdown-menu sidebar */
+.sidebar .nav-item .collapse{
+    border: none !important;
+}
+
+.sidebar .center-retraido .nav-item .collapse{
+    border: none !important;
+    box-shadow: var(--seia-shadow) !important;
+}
+
+
 
 /* menu sair */
 .exit{
@@ -699,7 +710,6 @@ main .card-sm{
 .dataTables_wrapper .dataTables_length select {
     width: 4em;
 }
-
 
 
 /* Medias*/
