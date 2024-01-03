@@ -18,10 +18,6 @@
                 @include('layouts.partials.index-card-for-secretary')
             @endrole
 
-            @schoolRole('director', optional($school_home)->uuid)
-                @include('layouts.partials.index-card-for-secretary')
-            @endschoolRole
-
             @schoolRole('secretary', optional($school_home)->uuid)
                 @include('layouts.partials.index-card-for-secretary')
             @endschoolRole
