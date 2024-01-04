@@ -87,7 +87,7 @@
 
                 </div>
 
-            <ul class="navbar-nav center animated--fade-in" id="accordionSidebar">
+                <ul class="navbar-nav center animated--fade-in" id="accordionSidebar">
                     <span class="menu-title align-self-start">Menu</span>
                     <li class="nav-item "><a class="nav-link blue center" href="{{ route('panel') }}"><i
                                 class="ph-house-fill icons-menu"></i></i><span class="a-name">Início</span></a></li>
@@ -96,15 +96,15 @@
                     @schoolRole('secretary', optional($school_home)->uuid)
                         @include('layouts.partials.nav-li-itens-for-secretary')
                     @endschoolRole
-                                
+
                     @schoolRole('student', optional($school_home)->uuid)
-                        @include('layouts.partials.nav-li-itens-for-students')
-                    @endrole
+                    @include('layouts.partials.nav-li-itens-for-students')
+                @endrole
 
 
-                    @role('admin')
-                        @include('layouts.partials.nav-li-itens-for-admin')
-                    @endrole
+                @role('admin')
+                    @include('layouts.partials.nav-li-itens-for-admin')
+                @endrole
 
 
 
@@ -118,7 +118,7 @@
                 </li>
                 <li class="nav-item"><a class="nav-link blue center" href="#"><i
                             class="ph-gear icons-menu"></i>
-                            <span class="a-name">Configurações</span></a>
+                        <span class="a-name">Configurações</span></a>
                 </li>
 
 
@@ -130,7 +130,8 @@
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <ul class="navbar-nav center animated--fade-in">
                         <li class="nav-item">
-                            <a class="nav-link d-flex justify-content-center align-items-center center red" href="{{ route('logout') }}">
+                            <a class="nav-link d-flex justify-content-center align-items-center center red"
+                                href="{{ route('logout') }}">
                                 <i class="ph-sign-out icons-menu"></i>
                                 <span class="a-name">Sair</span>
                             </a>
@@ -146,55 +147,61 @@
     </nav>
     <div class="d-flex flex-column" id="content-wrapper">
         <div id="content">
-            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top" id="nav-content">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top"
+                id="nav-content">
                 <div class="container-fluid">
-                    <button class="btn btn-link d-md-none me-3 px-2" id="sidebarToggleTop" type="button" aria-label="Fechar/Abrir sidebar">
+                    <button class="btn btn-link d-md-none me-3 px-2" id="sidebarToggleTop" type="button"
+                        aria-label="Fechar/Abrir sidebar">
                         <i class="ph-fill ph-list fs-3"></i>
                     </button>
-                    <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <form action="{{ route('delete-school-home') }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="d-flex flex-column align-items-start">
-                                    <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
-                                        alt="LogoDaEscola" class="img-fluid" style="height: 12px">
-                                    <span class="">
-                                        {{ $school_home ? $school_home->name : null }}
-                                    </span>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    <ul class="navbar-nav flex-nowrap ms-auto">
-                        <li class="nav-item dropdown d-sm-none no-arrow">
-                            <a class="dropdown-toggle nav-link lime" aria-expanded="false" data-bs-toggle="dropdown"
-                                href="#" aria-label="Escola">
-                                <i class="ph-bank"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <div class="me-auto navbar-search w-100">
-
-                                    <form action="{{ route('delete-school-home') }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
+                    @if ($school_home)
+                        <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <form action="{{ route('delete-school-home') }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
                                         <button class="d-flex flex-column align-items-start">
                                             <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
-                                                alt="LogoDaEscola" height="12px">
+                                                alt="LogoDaEscola" class="img-fluid" style="height: 12px">
                                             <span class="">
                                                 {{ $school_home ? $school_home->name : null }}
                                             </span>
                                         </button>
-                                    
-                                    </form>
-                                </div>
+                                </form>
                             </div>
-                        </li>
+                        </div>
+                    @endif
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        @if ($school_home)
+                            <li class="nav-item dropdown d-sm-none no-arrow">
+                                <a class="dropdown-toggle nav-link lime" aria-expanded="false"
+                                    data-bs-toggle="dropdown" href="#" aria-label="Escola">
+                                    <i class="ph-bank"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
+                                    aria-labelledby="searchDropdown">
+                                    <div class="me-auto navbar-search w-100">
+
+                                        <form action="{{ route('delete-school-home') }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="d-flex flex-column align-items-start">
+                                                <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
+                                                    alt="LogoDaEscola" height="12px">
+                                                <span class="">
+                                                    {{ $school_home ? $school_home->name : null }}
+                                                </span>
+                                            </button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        @endif
 
                         <li class="nav-item dropdown mx-1 no-arrow">
-                            <a class="dropdown-toggle nav-link green" aria-expanded="false" data-bs-toggle="dropdown"
-                                href="#" aria-label="Periodo letivo">
+                            <a class="dropdown-toggle nav-link green" aria-expanded="false"
+                                data-bs-toggle="dropdown" href="#" aria-label="Periodo letivo">
                                 <i class="ph-calendar fs-5"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
@@ -219,7 +226,7 @@
                             </div>
                         </li>
 
-                       
+
 
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="nav-item dropdown no-arrow">
