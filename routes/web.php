@@ -24,9 +24,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/', function () {return view('welcome');})->name('panel');
     Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::patch('/data-user', [DataUserController::class, 'update'])->name('data-user.update');
 
     // System -> Admin
     Route::group(['middleware' => ['role:admin']], function () {

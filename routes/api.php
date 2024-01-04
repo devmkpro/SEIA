@@ -8,6 +8,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DataUserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SubjectsController;
 
@@ -16,17 +17,20 @@ use App\Http\Controllers\SubjectsController;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| middlewares explicadas em routes/web.php
+| Middlewares explained in routes/web.php
 |
 */
 
 Route::post('/login', [AuthController::class, 'login']);
 
-
 Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
 
     Route::post('/set-school-home', [SchoolController::class, 'setHome'])->name('set-school-home')->middleware('to.set.school.home');
     Route::delete('/delete-school-home', [SchoolController::class, 'deleteHome'])->name('delete-school-home');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/data-user', [DataUserController::class, 'update'])->name('data-user.update');
+
 
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/verify/schools', [SchoolController::class, 'index'])->name('manage.schools.index')->middleware('permission:view-any-school');
@@ -35,33 +39,33 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
         Route::get('/states/cities', [StateController::class, 'cities'])->name('manage.states.cities');
         Route::get('/verify/school-years', [SchoolYearController::class, 'index'])->name('manage.school-years.index')->middleware('permission:manage-school-years');
 
-        Route::get('/gerenciar/anos-letivos/{schoolYear}', [SchoolYearController::class, 'show'])->name('manage.school-years.show')->middleware('permission:update-any-school-year');
-        Route::post('/gerenciar/anos-letivos/novo', [SchoolYearController::class, 'store'])->name('manage.school-years.store')->middleware('permission:create-any-school-year');
-        Route::put('/gerenciar/anos-letivos/', [SchoolYearController::class, 'update'])->name('manage.school-years.update')->middleware('permission:update-any-school-year');
-        Route::post('/gerenciar/escolas/nova', [SchoolController::class, 'store'])->name('manage.schools.store')->middleware('permission:create-any-school');
-        Route::post('/gerenciar/estados', [StateController::class, 'store'])->name('manage.states.store')->middleware('permission:manage-location');
+        Route::get('/manage/school-years/{schoolYear}', [SchoolYearController::class, 'show'])->name('manage.school-years.show')->middleware('permission:update-any-school-year');
+        Route::post('/manage/school-years/new', [SchoolYearController::class, 'store'])->name('manage.school-years.store')->middleware('permission:create-any-school-year');
+        Route::put('/manage/school-years/', [SchoolYearController::class, 'update'])->name('manage.school-years.update')->middleware('permission:update-any-school-year');
+        Route::post('/manage/schools/new', [SchoolController::class, 'store'])->name('manage.schools.store')->middleware('permission:create-any-school');
+        Route::post('/manage/states', [StateController::class, 'store'])->name('manage.states.store')->middleware('permission:manage-location');
     });
 
-        // school_home required
+    // school_home required
     Route::group(['middleware' => ['school_home']], function () {
         // School -> Secretary
         Route::group(['middleware' => ['school.role:secretary']], function () {
             Route::get('/verify/curriculum', [CurriculumController::class, 'index'])->name('manage.curriculum.index')->middleware('permission:manage-curricula');
-            Route::post('/gerenciar/matriz-curricular/nova', [CurriculumController::class, 'store'])->name('manage.curriculum.store')->middleware('permission:create-any-curriculum');
+            Route::post('/manage/curriculum/new', [CurriculumController::class, 'store'])->name('manage.curriculum.store')->middleware('permission:create-any-curriculum');
 
             // School -> Teacher
             Route::middleware(['school.curriculum'])->group(function () {
-                Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'show'])->name('manage.curriculum.show')->middleware('permission:update-any-curriculum');
-                Route::put('/gerenciar/matriz-curricular', [CurriculumController::class, 'update'])->name('manage.curriculum.update')->middleware('permission:update-any-curriculum');
+                Route::get('/manage/curriculum', [CurriculumController::class, 'show'])->name('manage.curriculum.show')->middleware('permission:update-any-curriculum');
+                Route::put('/manage/curriculum', [CurriculumController::class, 'update'])->name('manage.curriculum.update')->middleware('permission:update-any-curriculum');
                 Route::get('/verify/subjects/curriculum', [SubjectsController::class, 'index'])->name('manage.subjects.index')->middleware('permission:manage.subjects');
-                Route::post('/gerenciar/matriz-curricular/disciplinas', [SubjectsController::class, 'store'])->name('manage.subjects.store')->middleware('permission:create-any-subject');
-                Route::delete('/gerenciar/matriz-curricular/deletar', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
+                Route::post('/manage/curriculum/subjects', [SubjectsController::class, 'store'])->name('manage.subjects.store')->middleware('permission:create-any-subject');
+                Route::delete('/manage/curriculum/delete', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
             });
 
             Route::middleware(['school.curriculum.subject'])->group(function () {
                 Route::get('/verify/subjects', [SubjectsController::class, 'show'])->name('manage.subjects.show')->middleware('permission:update-any-subject');
-                Route::put('/gerenciar/disciplinas/', [SubjectsController::class, 'update'])->name('manage.subjects.update')->middleware('permission:update-any-subject');
-                Route::delete('/gerenciar/disciplinas/deletar', [SubjectsController::class, 'destroy'])->name('manage.subjects.destroy')->middleware('permission:delete-any-subject');
+                Route::put('/manage/subjects/', [SubjectsController::class, 'update'])->name('manage.subjects.update')->middleware('permission:update-any-subject');
+                Route::delete('/manage/subjects/delete', [SubjectsController::class, 'destroy'])->name('manage.subjects.destroy')->middleware('permission:delete-any-subject');
             });
         });
     });
