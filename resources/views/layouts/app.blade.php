@@ -182,7 +182,9 @@
                                         <button class="d-flex flex-column align-items-start">
                                             <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
                                                 alt="LogoDaEscola" height="12px">
-                                            <span class="">Nome da Escola</span>
+                                            <span class="">
+                                                {{ $school_home ? $school_home->name : null }}
+                                            </span>
                                         </button>
                                     
                                     </form>
@@ -217,22 +219,7 @@
                             </div>
                         </li>
 
-                        @if ($school_home)
-                            <li class="nav-item no-arrow mx-1">
-                                <div class="nav-item no-arrow">
-
-                                    <form action="{{ route('delete-school-home') }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="nav-link border-0 darkMode fs-5 blue" href=""
-                                            aria-label="Trocar escola" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="Trocar escola">
-                                            <i class="ph-bank"></i>
-                                    </form>
-                                </div>
-
-                            </li>
-                        @endif
+                       
 
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="nav-item dropdown no-arrow">
