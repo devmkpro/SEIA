@@ -21,15 +21,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
-
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/', function () {return view('welcome');})->name('panel');
     Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch('/data-user', [DataUserController::class, 'update'])->name('data-user.update');
-    Route::post('/set-school-home', [SchoolController::class, 'setHome'])->name('set-school-home');
 
     // System -> Admin
     Route::group(['middleware' => ['role:admin']], function () {
@@ -43,8 +40,6 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 Route::middleware(['auth', 'web', 'school_home'])->group(function () {
-    Route::delete('/delete-school-home', [SchoolController::class, 'deleteHome'])->name('delete-school-home');
-
     // School -> Secretary
     Route::group(['middleware' => ['school.role:secretary']], function () {
         Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'curriculum'])->name('manage.curriculum')->middleware('permission:manage-curricula');

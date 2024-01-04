@@ -50,6 +50,7 @@ class Kernel extends HttpKernel
         'school_home' => [
             \App\Http\Middleware\RequireSchoolHome::class,
         ],
+      
 
     ];
 
@@ -81,5 +82,7 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         'school.role' => \App\Http\Middleware\SchoolRole::class,
         'school.curriculum' => \App\Http\Middleware\CheckSchoolCurriculum::class,
+        'school.curriculum.subject' => \App\Http\Middleware\CheckSchoolCurriculumSubject::class,
+        'to.set.school.home' => \App\Http\Middleware\CheckIFSetSchoolHome::class,
     ];
 }

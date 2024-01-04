@@ -3,23 +3,24 @@
 namespace App\Http\Middleware;
 
 use App\Http\Controllers\SchoolController;
-use App\Models\Curriculum;
 use Closure;
+use App\Models\Subjects;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Guard;
 use Spatie\Permission\Exceptions\UnauthorizedException; 
 
-class CheckSchoolCurriculum
+class CheckSchoolCurriculumSubject
 {
     /**
      * Handle an incoming request.
      *
-    * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, $guard=null): Response
     {
+
         $authGuard = Auth::guard($guard);
         $user = $authGuard->user();
 
@@ -35,18 +36,21 @@ class CheckSchoolCurriculum
             throw UnauthorizedException::missingTraitHasRoles($user);
         }
 
-        $curriculum = Curriculum::where('code', $request->curriculum)->first();
+        try{
+            $subject = Subjects::where('uuid', decrypt($request->subject))->firstOrFail();
+        } catch (\Exception $e) {
+            return $this->terminateError($request, 'Matriz curricular nao encontrada');
+        }
 
-        if (!$curriculum ) {
+        if (!$subject ) {
             return $this->terminateError($request, 'Matriz curricular nao encontrada');
         }
 
         $school_home = (new SchoolController)->getHome($request);
-        
-        if ($curriculum->school_uuid != $school_home->uuid) {
+
+        if ($subject->curriculum->school_uuid != $school_home->uuid) {
             return $this->terminateError($request, 'Matriz curricular nao encontrada');
         }
-
 
         return $next($request);
     }

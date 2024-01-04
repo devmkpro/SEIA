@@ -75,30 +75,9 @@ class SchoolController extends Controller
     /**
      * Set School Home Cookie and redirect to home.
      */
-    public function setHome(Request $request): \Illuminate\Http\RedirectResponse
+    public function setHome(Request $request)
     {
-        $request->validate([
-            'school' => 'required|string',
-        ]);
-
-        $user = $request->user();
-        try{
-            $school = School::where('uuid', decrypt($request->school))->first();
-        } catch (\Exception $e) {
-            return Redirect::route('panel')->withErrors(['school' => 'Escola não encontrada!']);
-        }
-
-        if (!$school) {
-            return Redirect::route('panel')->withErrors(['school' => 'Escola não encontrada!']);
-        }
-
-        if (!$user->hasRole('admin') && (!$user->schools() || !$user->schools()->where('school_uuid', decrypt($request->school))->exists())) {
-            return Redirect::route('panel')->withErrors(['school' => 'Você não tem permissão para acessar essa escola!']);
-        }
-
-        (new CookieController)->setCookie('school_home', encrypt($school->uuid), 1440);
-
-        return Redirect::route('panel')->with('message', 'Escola selecionada com sucesso!');
+        return Redirect::route('panel')->withCookie(cookie()->forever('school_home', $request->school))->with('message', 'Escola definida com sucesso!');
     }
 
     /**
@@ -106,9 +85,7 @@ class SchoolController extends Controller
      */
     public function deleteHome(): \Illuminate\Http\RedirectResponse
     {
-        (new CookieController)->deleteCookie('school_home');
-
-        return Redirect::route('panel')->with('info', 'Escolha uma escola para acessar o sistema!');
+        return Redirect::route('panel')->withCookie(cookie()->forget('school_home'))->with('message', 'Escola removida com sucesso!');
     }
 
     /**
