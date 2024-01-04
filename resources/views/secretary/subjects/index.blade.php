@@ -261,7 +261,14 @@
                         "render": function(data, type, row, meta) {
                             return `
                     <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editSchoolYear" onclick="editSubjectCurriculum('${row.uuid}')">Editar</button>
-                    <button type="submit" class="btn btn-outline-danger btn-sm btn-danger">Excluir</button>
+                    @schoolPermission('delete-any-subject', optional($school_home)->uuid)
+                    <form action="{{ route('manage.subjects.destroy') }}" method="POST" class="d-inline-block">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="subject" value="${row.uuid}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                    </form>
+                    @endschoolPermission
                 `;
                         }
                     }

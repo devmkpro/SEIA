@@ -6,6 +6,12 @@
             @endforeach
         </div>
     </div>
+@elseif (session('error'))
+    <div class="card-body">
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    </div>
 @endif
 @if (session('message'))
     <div class="card-body">

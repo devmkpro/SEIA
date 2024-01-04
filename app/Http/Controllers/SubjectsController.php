@@ -160,4 +160,18 @@ class SubjectsController extends Controller
         ]);
         return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])->with('message', 'Disciplina atualizada com sucesso');
     }
+
+    /**
+     * Destroy a subject
+     */
+    public function destroy(Request $request)
+    {
+        $subject = Subjects::where('uuid', decrypt($request->subject))->firstOrFail();
+        if ($subject->curriculum->classes()->exists()) {
+            return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])
+            ->with('error', 'Não é possível excluir uma disciplina que já está sendo utilizada em uma turma');
+        }
+        $subject->delete();
+        return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])->with('message', 'Disciplina excluída com sucesso');
+    }
 }

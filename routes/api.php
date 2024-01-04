@@ -56,6 +56,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::post('/gerenciar/matriz-curricular/disciplinas', [SubjectsController::class, 'store'])->name('manage.subjects.store')->middleware('permission:create-any-subject');
                 Route::delete('/gerenciar/matriz-curricular/deletar', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
                 Route::put('/gerenciar/disciplinas/', [SubjectsController::class, 'update'])->name('manage.subjects.update')->middleware('permission:update-any-subject');
+                Route::delete('/gerenciar/disciplinas/deletar', [SubjectsController::class, 'destroy'])->name('manage.subjects.destroy')->middleware('permission:delete-any-subject');
             });
         });
     });

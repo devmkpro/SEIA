@@ -41,5 +41,6 @@ class Subjects extends Model
     {
         return $this->belongsTo(Curriculum::class, 'curriculum_uuid', 'uuid');
     }
-   
+
+    
 }

@@ -51,7 +51,7 @@
 
                         <div class="col-md-6">
                             <label for="serie" class="form-label">Série/Etapa</label>
-                            <select class="form-select" name="serie" value="{{ old('serie') }}" required>
+                            <select class="form-select" name="serie" value="" required>
                                 <option selected>Selecione uma série</option>
                                 <option value="educ_infa_cc_0_3">Educacao Infantil - Creche (0 a 3 anos)</option>
                                 <option value="educ_infa_cc_4_5">Educacao Infantil - Pre-escola (4 a 5 anos)</option>
@@ -66,7 +66,7 @@
 
                         <div class="col-md-6">
                             <label for="modalidade" class="form-label">Modalidade</label>
-                            <select class="form-select" name="modalidade" value="{{ old('modalidade') }}" required>
+                            <select class="form-select" name="modalidade" value="" required>
                                 <option selected>Selecione uma modalidade</option>
                                 <option value="bercario">Berçário</option>
                                 <option value="creche">Creche</option>

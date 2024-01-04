@@ -41,6 +41,7 @@ return new class extends Migration
             'manage.subjects',
             'create-any-subject',
             'update-any-subject',
+            'delete-any-subject',
 
 
             'manage-classes', 
