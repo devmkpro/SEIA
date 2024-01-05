@@ -49,8 +49,14 @@
 <body id="page-top">
     <div id="wrapper">
         <nav class="navbar navbar-light align-items-start sidebar sidebar-dark accordion p-0" id="sidebar">
-            <div class="container-fluid d-flex flex-column p-0">
+            <div class="container-fluid d-flex flex-column p-0 scroll-active">
                 <div class="top">
+                    <span>
+                        <button class="btn btn-link d-md-none me-3 px-2 d-none sidebarToggleTopMobile" id="sidebarToggleTopMobile" type="button"
+                            aria-label="Fechar/Abrir sidebar">
+                            <i class="ph-fill ph-x fs-3"></i>
+                        </button>
+                    </span>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
                         href="#">
                         <div class="sidebar-brand-icon mx-3 center">

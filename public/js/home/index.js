@@ -24,7 +24,7 @@ const caretRight = document.getElementById('caret-right');
     const menutitle = document.querySelectorAll(".menu-title");
     const btnSidebarToggle = document.getElementById('btnSidebarToggle');
     var sidebarToggles = document.querySelectorAll(
-        "#sidebarToggle, #sidebarToggleTop"
+        "#sidebarToggle, #sidebarToggleTop, .sidebarToggleTopMobile",
     );
 
     if (sidebar) {

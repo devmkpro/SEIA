@@ -896,3 +896,43 @@ main .card-sm{
         width: 50%;
     }
 }
+
+
+@media (max-width: 550px) {
+    #wrapper{
+        position: relative !important;
+        height: 100vh !important;
+        width: 100vw !important;
+        overflow: hidden !important;
+    }
+
+    #wrapper .sidebar{
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        
+        overflow: auto !important;
+        z-index: 9 !important;
+    }
+
+    #wrapper #sidebarToggleTopMobile{
+        display: block !important;
+        position: absolute !important;
+        top: 1em !important;
+        right: 0em !important;
+        border: none !important;
+        outline: none !important;
+        z-index: 10 !important;
+    }
+
+
+
+    #wreapper .exit a{
+        margin-top: 1em !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+    }
+}
