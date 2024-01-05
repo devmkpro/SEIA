@@ -58,4 +58,20 @@ class StateController extends Controller
         }));
     }
 
+    /**
+     * Show the state by code.
+     */
+    public function show($code)
+    {
+        $state = State::where('ibge_code', $code)->first();
+        if (!$state) {
+            return response()->json(['error' => 'Estado não encontrado.'], 404);
+        }
+
+        return response()->json ([
+            'name' => $state->name,
+            'ibge_code' => $state->ibge_code,
+            'schools_count' => $state->schools()->count(),
+        ]);
+    }
 }

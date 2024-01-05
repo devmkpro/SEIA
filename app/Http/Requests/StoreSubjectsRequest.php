@@ -22,6 +22,7 @@ class StoreSubjectsRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'curriculum' => ['required', 'string', 'exists:curricula,code'],
             'nome' => ['required', 'string', 'in:artes,biologia,ciencias,educacao-fisica,filosofia,fisica,geografia,historia,ingles,literatura,matematica,portugues,quimica,sociologia,ensino-religioso,other'],
             'carga_horaria' => ['required', 'integer'],
             'carga_horaria_semanal' => ['required', 'integer', 'lte:carga_horaria'],

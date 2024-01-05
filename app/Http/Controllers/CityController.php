@@ -33,5 +33,21 @@ class CityController extends Controller
         ]);
     }
 
+    /**
+     * Show the city by code.
+     */
+    public function show($code)
+    {
+        $city = City::where('ibge_code', $code)->first();
+        if (!$city) {
+            return response()->json(['error' => 'Cidade não encontrada.'], 404);
+        }
+
+        return response()->json ([
+            'name' => $city->name,
+            'ibge_code' => $city->ibge_code,
+            'schools_count' => $city->schools->count(),
+        ]);
+    }
 
 }

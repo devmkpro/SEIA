@@ -46,7 +46,6 @@ class CheckSchoolCurriculum
         if ($curriculum->school_uuid != $school_home->uuid) {
             return $this->terminateError($request, 'Essa matriz curricular nao pertence a escola selecionada');
         }
-
         return $next($request);
     }
 

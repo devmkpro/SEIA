@@ -35,7 +35,9 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/verify/schools', [SchoolController::class, 'index'])->name('manage.schools.index')->middleware('permission:view-any-school');
         Route::get('/verify/cities', [CityController::class, 'index'])->name('manage.cities.index')->middleware('permission:manage-location');
+        Route::get('/verify/cities/{code}', [CityController::class, 'show'])->name('manage.cities.show')->middleware('permission:manage-location');
         Route::get('/verify/states', [StateController::class, 'index'])->name('manage.states.index')->middleware('permission:manage-location');
+        Route::get('/verify/states/{code}', [StateController::class, 'show'])->name('manage.states.show')->middleware('permission:manage-location');
         Route::get('/states/cities', [StateController::class, 'cities'])->name('manage.states.cities');
         Route::get('/verify/school-years', [SchoolYearController::class, 'index'])->name('manage.school-years.index')->middleware('permission:manage-school-years');
 
@@ -43,7 +45,6 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
         Route::post('/manage/school-years/new', [SchoolYearController::class, 'store'])->name('manage.school-years.store')->middleware('permission:create-any-school-year');
         Route::put('/manage/school-years/', [SchoolYearController::class, 'update'])->name('manage.school-years.update')->middleware('permission:update-any-school-year');
         Route::post('/manage/schools/new', [SchoolController::class, 'store'])->name('manage.schools.store')->middleware('permission:create-any-school');
-        Route::post('/manage/states', [StateController::class, 'store'])->name('manage.states.store')->middleware('permission:manage-location');
     });
 
     // school_home required
