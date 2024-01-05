@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}" id="dark-theme" disabled>
     <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}" id="light-theme">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'SEIA') }}</title>
 
     <!-- Fonts -->
     <link rel="apple-touch-icon" sizes="180x180"
