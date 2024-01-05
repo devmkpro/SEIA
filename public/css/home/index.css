@@ -898,7 +898,7 @@ main .card-sm{
 }
 
 
-@media (max-width: 766px) {
+@media (max-width: 1080px) {
     #wrapper{
         position: relative !important;
         height: 100vh !important;
