@@ -65,7 +65,7 @@ class CheckIFSetSchoolHome
                 'message' => $message ?? 'Data nao definida',
             ], 404);
         } else {
-            return redirect()->route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
+            return redirect()->route('manage.curriculum')->withErrors(['error' => $message ?? 'Sem permissão']);
         }
     }
 }

@@ -44,9 +44,8 @@ class CheckSchoolCurriculum
         $school_home = (new SchoolController)->getHome($request);
         
         if ($curriculum->school_uuid != $school_home->uuid) {
-            return $this->terminateError($request, 'Matriz curricular nao encontrada');
+            return $this->terminateError($request, 'Essa matriz curricular nao pertence a escola selecionada');
         }
-
 
         return $next($request);
     }
@@ -54,14 +53,13 @@ class CheckSchoolCurriculum
     /**
      * terminateError
      */
-
     public function terminateError ($request, $message=null) {
         if ($request->bearerToken()) {
             return response()->json([
                 'message' => $message ?? 'Data nao definida',
             ], 404);
         } else {
-            return redirect()->route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
+            return redirect()->route('manage.curriculum')->withErrors(['error' => $message ?? 'Sem permissão']);
         }
     }
 }

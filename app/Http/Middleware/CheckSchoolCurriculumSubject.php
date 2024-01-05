@@ -20,7 +20,6 @@ class CheckSchoolCurriculumSubject
      */
     public function handle(Request $request, Closure $next, $guard=null): Response
     {
-
         $authGuard = Auth::guard($guard);
         $user = $authGuard->user();
 
@@ -39,11 +38,11 @@ class CheckSchoolCurriculumSubject
         try{
             $subject = Subjects::where('uuid', decrypt($request->subject))->firstOrFail();
         } catch (\Exception $e) {
-            return $this->terminateError($request, 'Matriz curricular nao encontrada');
+            return $this->terminateError($request, 'Disciplina nao encontrada');
         }
 
         if (!$subject ) {
-            return $this->terminateError($request, 'Matriz curricular nao encontrada');
+            return $this->terminateError($request, 'Disciplina nao encontrada');
         }
 
         $school_home = (new SchoolController)->getHome($request);
@@ -58,14 +57,13 @@ class CheckSchoolCurriculumSubject
     /**
      * terminateError
      */
-
     public function terminateError ($request, $message=null) {
         if ($request->bearerToken()) {
             return response()->json([
                 'message' => $message ?? 'Data nao definida',
             ], 404);
         } else {
-            return redirect()->route('manage.curriculum')->withErrors(['error' => 'Você não tem permissão para acessar essa página!']);
+            return redirect()->route('manage.curriculum')->withErrors(['error' => $message ?? 'Sem permissão']);
         }
     }
 }

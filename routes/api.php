@@ -62,6 +62,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::delete('/manage/curriculum/delete', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
             });
 
+            // Require Subject in request
             Route::middleware(['school.curriculum.subject'])->group(function () {
                 Route::get('/verify/subjects', [SubjectsController::class, 'show'])->name('manage.subjects.show')->middleware('permission:update-any-subject');
                 Route::put('/manage/subjects/', [SubjectsController::class, 'update'])->name('manage.subjects.update')->middleware('permission:update-any-subject');

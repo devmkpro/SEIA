@@ -120,7 +120,7 @@ class SubjectsController extends Controller
     {
         $curriculum = Curriculum::where('code', $curriculumCode)->where('school_uuid', (new SchoolController)->getHome($request)->uuid)->first();
         if (!$curriculum) {
-            return redirect()->route('manage.curriculum');
+            return redirect()->route('manage.curriculum.index')->with('error', 'Matriz curricular não encontrada');
         }
         return view('secretary.subjects.index', ['curriculum' => $curriculum,
         'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
@@ -142,7 +142,7 @@ class SubjectsController extends Controller
             'description' => $request->descricao,
             'modality' => $request->modalidade,
         ]);
-        return redirect()->route('manage.subjects', ['code' => $curriculum->code])->with('message', 'Disciplina criada com sucesso');
+        return $this->response($request, 'manage.subjects', 'Disciplina criada com sucesso', 'message', 201, 'code', $curriculum->code);
     }
 
     /**
@@ -158,7 +158,7 @@ class SubjectsController extends Controller
             'description' => $request->descricao,
             'modality' => $request->modalidade,
         ]);
-        return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])->with('message', 'Disciplina atualizada com sucesso');
+        return $this->response($request, 'manage.subjects', 'Disciplina atualizada com sucesso', 'message', 200, 'code', $subject->curriculum->code);
     }
 
     /**
@@ -168,10 +168,9 @@ class SubjectsController extends Controller
     {
         $subject = Subjects::where('uuid', decrypt($request->subject))->firstOrFail();
         if ($subject->curriculum->classes()->exists()) {
-            return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])
-            ->with('error', 'Não é possível excluir uma disciplina que já está sendo utilizada em uma turma');
+            return  $this->response($request, 'manage.subjects', 'Disciplina não pode ser excluída pois está sendo usada em uma turma', 'error', 403, 'code', $subject->curriculum->code);
         }
         $subject->delete();
-        return redirect()->route('manage.subjects', ['code' => $subject->curriculum->code])->with('message', 'Disciplina excluída com sucesso');
+        return $this->response($request, 'manage.subjects', 'Disciplina excluída com sucesso', 'message', 200, 'code', $subject->curriculum->code);
     }
 }

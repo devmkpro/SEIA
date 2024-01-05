@@ -98,7 +98,7 @@ class CurriculumController extends Controller
             'complementary_information' => $request->informacoes_complementares,
         ]);
 
-        return redirect()->route('manage.curriculum')->with('message', 'Matriz curricular criada com sucesso!');
+        return $this->response($request, 'manage.curriculum', 'Matriz curricular cadastrada com sucesso!');
     }
 
 
@@ -138,7 +138,7 @@ class CurriculumController extends Controller
             'complementary_information' => $request->informacoes_complementares,
         ]);
 
-        return redirect()->route('manage.curriculum')->with('message', 'Matriz curricular atualizada com sucesso!');
+        return $this->response($request, 'manage.curriculum', 'Matriz curricular atualizada com sucesso!');
     }
 
     /**
@@ -149,11 +149,11 @@ class CurriculumController extends Controller
         $curriculum = Curriculum::where('code', $request->curriculum)->first();
 
         if ($curriculum->subjects()->count() > 0) {
-            return Redirect::route('manage.curriculum')->withErrors(['error' => 'Não é possível excluir uma matriz curricular que possui disciplinas!']);
+            return $this->response($request, 'manage.curriculum', 'Não é possível excluir uma matriz curricular que possui disciplinas!', 'error', 400);
         }
 
         $curriculum->delete();
 
-        return redirect()->route('manage.curriculum')->with('message', 'Matriz curricular excluída com sucesso!');
+        return $this->response($request, 'manage.curriculum', 'Matriz curricular excluída com sucesso!');
     }
 }
