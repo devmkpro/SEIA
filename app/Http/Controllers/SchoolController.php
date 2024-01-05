@@ -57,7 +57,7 @@ class SchoolController extends Controller
             'state_uuid' => $state->uuid,
         ]);
 
-        return redirect()->route('manage.schools.create')->with('message', 'Escola cadastrada com sucesso!');
+        return $this->response($request, 'manage.schools.create', 'Escola cadastrada com sucesso!');
     }
 
     /**
@@ -77,15 +77,15 @@ class SchoolController extends Controller
      */
     public function setHome(Request $request)
     {
-        return Redirect::route('panel')->withCookie(cookie()->forever('school_home', $request->school))->with('message', 'Escola definida com sucesso!');
+        return $this->response($request, 'panel', 'Escola definida com sucesso!')->withCookie(cookie()->forever('school_home', $request->school));
     }
 
     /**
      * Delete School Home Cookie and redirect to home.
      */
-    public function deleteHome(): \Illuminate\Http\RedirectResponse
+    public function deleteHome(Request $request)
     {
-        return Redirect::route('panel')->withCookie(cookie()->forget('school_home'))->with('message', 'Escola removida com sucesso!');
+        return $this->response($request, 'panel', 'Escola removida com sucesso!')->withCookie(cookie()->forget('school_home'));
     }
 
     /**

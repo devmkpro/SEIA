@@ -56,7 +56,7 @@ class SchoolYearController extends Controller
 
     /**
      * Store a new school year.
-    **/
+     **/
     public function store(Request $request)
     {
         $request->validate([
@@ -75,7 +75,7 @@ class SchoolYearController extends Controller
             'active' => $hasSchoolYearActive ? false : $request->status,
         ]);
 
-        return redirect()->route('manage.school-years')->with('success', 'Ano letivo criado com sucesso!');
+        return $this->response($request, 'manage.school-years', 'Ano letivo criado com sucesso!');
     }
 
     /**
@@ -91,14 +91,18 @@ class SchoolYearController extends Controller
             'schoolYear' => 'required',
         ]);
 
-        $schoolYear = SchoolYear::where('uuid', decrypt($request->schoolYear))->firstOrFail();
+        try {
+            $schoolYear = SchoolYear::where('uuid', decrypt($request->schoolYear))->firstOrFail();
+        } catch (\Exception $e) {
+            return $this->response($request, 'manage.school-years', 'Ano letivo não encontrado!', 'error');
+        }
 
-        if (!$schoolYear){
-            return redirect()->route('manage.school-years')->with('error', 'Ano letivo não encontrado!');
+        if (!$schoolYear) {
+            return $this->response($request, 'manage.school-years', 'Ano letivo não encontrado!', 'error');
         }
 
         $hasSchoolYearActive = SchoolYear::where('active', true)->first();
-        if ($hasSchoolYearActive && $request->status){
+        if ($hasSchoolYearActive && $request->status) {
             $hasSchoolYearActive->update(['active' => false]);
         }
 
@@ -111,5 +115,4 @@ class SchoolYearController extends Controller
 
         return redirect()->route('manage.school-years')->with('success', 'Ano letivo atualizado com sucesso!');
     }
-
 }
