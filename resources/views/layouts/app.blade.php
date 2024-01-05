@@ -11,9 +11,9 @@
     <meta name="keywords" content="SEIA, educação, gestão escolar, soluções">
     <meta name="author" content="Equipe SEIA">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}" id="dark-theme" disabled>
-    <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}" id="light-theme">
+    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}?v=1.0">
+    <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}?v=1.0" id="dark-theme" disabled>
+    <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}?v=1.0" id="light-theme">
 
     <title>{{ config('app.name', 'SEIA') }}</title>
 
@@ -465,7 +465,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/home/index.js') }}"></script>
+<script src="{{ asset('js/home/index.js') }}?v=1.0"></script>
 @yield('scripts')
 
 
