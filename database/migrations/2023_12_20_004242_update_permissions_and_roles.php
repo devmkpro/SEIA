@@ -42,14 +42,14 @@ return new class extends Migration
             'create-any-subject',
             'update-any-subject',
             'delete-any-subject',
-
-
             'manage-classes', 
+
         ];
 
         $directorPermissions = [
+            'manage-classes',  
             'manage-teachers', 
-            'manage-students', 
+            'manage-students',
         ];
 
         foreach ($adminPermissions as $permission) {
