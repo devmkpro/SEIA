@@ -22,7 +22,7 @@ class SchoolFactory extends Factory
             'zip_code' => $this->faker->postcode,
             'district' => $this->faker->city,
             'email_responsible' => $this->faker->companyEmail,
-            'city_uuid' => \App\Models\City::where('name', 'São Paulo')->first()->uuid,
+            'city_uuid' => \App\Models\City::where('ibge_code', '1100015')->first()->uuid,
         ];
     }
 }

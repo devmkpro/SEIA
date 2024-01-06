@@ -21,11 +21,19 @@ class CitySeeder extends Seeder
     {
         $cities = json_decode(file_get_contents($this->BASE_URL));
         foreach ($cities as $city) {
-            City::create([
-                'name' => $city->nome,
-                'state_id' => $city->microrregiao->mesorregiao->UF->id,
-                'ibge_code' => $city->id,
-            ]);
+            //City::create([
+               // 'name' => $city->nome,
+                //'state_id' => $city->microrregiao->mesorregiao->UF->id,
+                //'ibge_code' => $city->id,
+           // ]);
+           if ($city->id == '1100015'){
+                City::create([
+                    'name' => $city->nome,
+                    'state_id' => $city->microrregiao->mesorregiao->UF->id,
+                    'ibge_code' => $city->id,
+                ]);
+                break;
+           }
         }
     }
 }

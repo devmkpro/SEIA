@@ -21,10 +21,13 @@ class StateSeeder extends Seeder
     {
         $states = json_decode(file_get_contents($this->BASE_URL));
         foreach ($states as $state) {
-            State::create([
-                'ibge_code' => $state->id,
-                'name' => $state->nome,
-            ]);
+            if ($state->id == '11'){
+                State::create([
+                    'ibge_code' => $state->id,
+                    'name' => $state->nome,
+                ]);
+                break;
+            }
         }
     }
 }
