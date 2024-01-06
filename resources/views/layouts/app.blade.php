@@ -11,9 +11,9 @@
     <meta name="keywords" content="SEIA, educação, gestão escolar, soluções">
     <meta name="author" content="Equipe SEIA">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}?v=1.0">
-    <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}?v=1.0" id="dark-theme" disabled>
-    <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}?v=1.0" id="light-theme">
+    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}?v=1.1">
+    <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}?v=1.1" id="dark-theme" disabled>
+    <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}?v=1.1" id="light-theme">
 
     <title>{{ config('app.name', 'SEIA') }}</title>
 
@@ -48,6 +48,7 @@
 
 <body id="page-top">
     <div id="wrapper">
+        <div id="blockScrollMobile"></div>
         <nav class="navbar navbar-light align-items-start sidebar sidebar-dark accordion p-0" id="sidebar">
             <div class="container-fluid d-flex flex-column p-0 scroll-active">
                 <div class="top">
@@ -465,7 +466,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/home/index.js') }}?v=1.0"></script>
+<script src="{{ asset('js/home/index.js') }}?v=1.1"></script>
 @yield('scripts')
 
 

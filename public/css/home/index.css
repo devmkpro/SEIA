@@ -899,12 +899,24 @@ main .card-sm{
 
 
 @media (max-width: 772px) {
+    /* #blockScrollMobile{
+        width: 100vw !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+        z-index: 5 !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        background: rgba(0,0,0,0.5) !important;
+    } */
+
     #wrapper{
         position: relative !important;
         height: 100vh !important;
         width: 100vw !important;
         overflow: hidden !important;
     }
+    
 
     #wrapper .sidebar{
         position: absolute !important;
@@ -926,7 +938,12 @@ main .card-sm{
         z-index: 10 !important;
     }
 
-
+    .sidebar .nav-item .collapse {
+        position: relative !important;
+        left: 0 !important;
+        z-index: 1  !important;
+        top: 0 !important;
+    }
 
     #wreapper .exit a{
         margin-top: 1em !important;

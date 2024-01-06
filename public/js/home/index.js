@@ -11,6 +11,9 @@ const iconsM = document.querySelectorAll(".icons-menu");
 const caretLeft = document.getElementById('caret-left');
 const caretRight = document.getElementById('caret-right');
 
+const contentWrapper = document.getElementById('content-wrapper');
+const blockScrollMobile = document.getElementById('blockScrollMobile');
+
 
 (function () {
     "use strict"; // Start of use strict
@@ -41,6 +44,22 @@ const caretRight = document.getElementById('caret-right');
             toggle.addEventListener("click", function (e) {
                 document.body.classList.toggle("sidebar-toggled");
                 sidebar.classList.toggle("toggled");
+
+                //Quando a sidebar for toggled ou a tela for menor que 768px o content-wrapper recebe um style com overflow-y: hidden
+                var vw = Math.max(
+                    document.documentElement.clientWidth || 0,
+                    window.innerWidth || 0
+                );
+
+                if (sidebar.classList.contains("toggled") && vw < 768) {
+                    contentWrapper.style.overflowY = "auto";
+                    contentWrapper.style.opacity = "1";
+                    blockScrollMobile.style.display = "none";
+                } else {
+                    contentWrapper.style.overflowY = "hidden";
+                    contentWrapper.style.opacity = "0.2";
+                    blockScrollMobile.style.display = "block";
+                }
 
                 //troca ph-caret-left-bold por ph-caret-right-bold de btnSidebarToggle
 
