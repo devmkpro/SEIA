@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
@@ -41,6 +42,14 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
     Route::group(['middleware' => ['school.role:secretary']], function () {
         Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'curriculum'])->name('manage.curriculum')->middleware('permission:manage-curricula');
         Route::get('/gerenciar/matriz-curricular/{code}/disciplinas', [SubjectsController::class, 'subjects'])->name('manage.subjects')->middleware('permission:update-any-subject');
+    });
+
+     // School -> Secretary | Director
+    Route::middleware(['school.role:secretary|director'])->group(function () {
+
+        Route::group(['middleware' => ['school_year_active']], function () {
+            //Route::get('/gerenciar/turmas', [ClassesController::class, 'classes'])->name('manage.classes')->middleware('permission:manage-classes');
+        });
     });
 
 

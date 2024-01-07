@@ -50,6 +50,9 @@ class Kernel extends HttpKernel
         'school_home' => [
             \App\Http\Middleware\RequireSchoolHome::class,
         ],
+        'school_year_active' => [
+            \App\Http\Middleware\RequireSchoolYearActive::class,
+        ],
       
 
     ];

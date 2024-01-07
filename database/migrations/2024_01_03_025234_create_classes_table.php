@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
+            $table->string('name');
+            $table->uuid('schools_uuid');
+            $table->foreign('schools_uuid')->references('uuid')->on('schools')->onDelete('cascade');
             $table->uuid('school_years_uuid');
+            $table->foreign('school_years_uuid')->references('uuid')->on('school_years')->onDelete('cascade');
+
             $table->integer('code')->unique();
 
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->enum('shift', ['morning', 'afternoon', 'night'])->default('morning');
+            $table->enum('turn', ['morning', 'afternoon', 'night'])->default('morning');
 
             $table->boolean('monday')->default(false);
             $table->boolean('tuesday')->default(false);
@@ -26,17 +31,14 @@ return new class extends Migration
             $table->boolean('friday')->default(false);
             $table->boolean('saturday')->default(false);
             $table->boolean('sunday')->default(false);
-
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
-
-            $table->integer('max_students')->default(0);
-            $table->string('room')->nullable();
+            $table->integer('max_students')->default(30);
 
 
-            $table->foreign('school_years_uuid')->references('uuid')->on('school_years')->onDelete('cascade');
             $table->uuid('curriculum_uuid')->nullable();
             $table->foreign('curriculum_uuid')->references('uuid')->on('curricula')->onDelete('cascade');
+            $table->string('room')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->timestamps();
         });
     }

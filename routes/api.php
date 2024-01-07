@@ -6,6 +6,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\ProfileController;
@@ -68,6 +69,14 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::get('/verify/subjects', [SubjectsController::class, 'show'])->name('manage.subjects.show')->middleware('permission:update-any-subject');
                 Route::put('/manage/subjects/', [SubjectsController::class, 'update'])->name('manage.subjects.update')->middleware('permission:update-any-subject');
                 Route::delete('/manage/subjects/delete', [SubjectsController::class, 'destroy'])->name('manage.subjects.destroy')->middleware('permission:delete-any-subject');
+            });
+        });
+
+        // School -> Secretary | Director
+        Route::middleware(['school.role:secretary|director'])->group(function () {
+
+            Route::group(['middleware' => ['school_year_active']], function () {
+                Route::post('/manage/classes/new', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
             });
         });
     });

@@ -17,14 +17,12 @@ class SchoolRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role, $guard=null): Response
+    public function handle(Request $request, Closure $next, $roles, $guard = null): Response
     {
-        
         $authGuard = Auth::guard($guard);
-
         $user = $authGuard->user();
 
-        if (! $user && $request->bearerToken() && config('permission.use_passport_client_credentials')) {
+        if (!$user && $request->bearerToken() && config('permission.use_passport_client_credentials')) {
             $user = Guard::getPassportClient($guard);
         }
 
@@ -32,20 +30,23 @@ class SchoolRole
             throw UnauthorizedException::notLoggedIn();
         }
 
-        if (! method_exists($user, 'hasAnyRole')) {
+        if (!method_exists($user, 'hasAnyRole')) {
             throw UnauthorizedException::missingTraitHasRoles($user);
         }
 
         $schoolUUID = Cookie::get('school_home');
         $schoolUUID = decrypt($schoolUUID);
-        
-    
+
         if ($user->hasRole('admin')) {
             return $next($request);
         }
 
-        if ($schoolUUID && $user->hasRoleForSchool($role, $schoolUUID)) {
-            return $next($request);
+        $rolesArray = explode('|', $roles);
+
+        foreach ($rolesArray as $role) {
+            if ($schoolUUID && $user->hasRoleForSchool($role, $schoolUUID)) {
+                return $next($request);
+            }
         }
 
         abort(403, 'Unauthorized.');

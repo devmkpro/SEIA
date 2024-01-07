@@ -115,4 +115,14 @@ class SchoolYearController extends Controller
 
         return redirect()->route('manage.school-years')->with('success', 'Ano letivo atualizado com sucesso!');
     }
+
+    /**
+     * Get Active School Year
+     */
+    public function getActive()
+    {
+        $schoolYear = SchoolYear::where('active', true)->firstOrFail();
+
+        return $schoolYear;
+    }
 }
