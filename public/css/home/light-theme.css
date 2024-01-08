@@ -39,12 +39,8 @@
 }
 
 .navbar-light{
-    background-color: #ffffffcc !important;
+    background-color: #fffffff3 !important;
     border-right: 1px solid rgba(206, 206, 205, 1);
-
-    background: rgba(255, 255, 255, 0.726) !important;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px) !important;
 
     box-shadow: var(--seia-shadow) !important;
     padding-left: 0px !important;
