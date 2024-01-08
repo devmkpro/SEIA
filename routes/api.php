@@ -25,7 +25,6 @@ use App\Http\Controllers\SubjectsController;
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
-
     Route::post('/set-school-home', [SchoolController::class, 'setHome'])->name('set-school-home')->middleware('to.set.school.home');
     Route::delete('/delete-school-home', [SchoolController::class, 'deleteHome'])->name('delete-school-home');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -54,8 +53,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
         Route::group(['middleware' => ['school.role:secretary']], function () {
             Route::get('/verify/curriculum', [CurriculumController::class, 'index'])->name('manage.curriculum.index')->middleware('permission:manage-curricula');
             Route::post('/manage/curriculum/new', [CurriculumController::class, 'store'])->name('manage.curriculum.store')->middleware('permission:create-any-curriculum');
-
-            // School -> Teacher
+            // Require Curriculum in request
             Route::middleware(['school.curriculum'])->group(function () {
                 Route::get('/manage/curriculum', [CurriculumController::class, 'show'])->name('manage.curriculum.show')->middleware('permission:update-any-curriculum');
                 Route::put('/manage/curriculum', [CurriculumController::class, 'update'])->name('manage.curriculum.update')->middleware('permission:update-any-curriculum');
@@ -63,7 +61,6 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::post('/manage/curriculum/subjects', [SubjectsController::class, 'store'])->name('manage.subjects.store')->middleware('permission:create-any-subject');
                 Route::delete('/manage/curriculum/delete', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
             });
-
             // Require Subject in request
             Route::middleware(['school.curriculum.subject'])->group(function () {
                 Route::get('/verify/subjects', [SubjectsController::class, 'show'])->name('manage.subjects.show')->middleware('permission:update-any-subject');
@@ -74,7 +71,6 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
 
         // School -> Secretary | Director
         Route::middleware(['school.role:secretary|director'])->group(function () {
-
             Route::group(['middleware' => ['school_year_active']], function () {
                 Route::post('/manage/classes/new', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
             });

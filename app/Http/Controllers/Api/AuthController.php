@@ -9,16 +9,20 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    /**
+     * Login user and create token
+     */
     public function login(LoginRequest $request)
     {
         if (Auth::attempt($request->only('email', 'password'))) {
-            if (!User::where('email', $request->email)->first()->active) {
+            $user = User::where('email', $request->email)->first();
+            if (!$user->active) {
                 return response()->json([
                     'message' => 'Usuário inativo',
                 ], 401);
             } else {
                 return response()->json([
-                    'access_token' => request()->user()->createToken('invoice')->plainTextToken,
+                    'access_token' => $user->createToken('invoice')->plainTextToken,
                     'token_type' => 'Bearer',
                 ]);
             }
