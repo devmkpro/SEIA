@@ -53,13 +53,20 @@ const blockScrollMobile = document.getElementById('blockScrollMobile');
 
                 if (sidebar.classList.contains("toggled") && vw < 768) {
                     contentWrapper.style.overflowY = "auto";
-                    contentWrapper.style.opacity = "1";
                     blockScrollMobile.style.display = "none";
+                    localStorage.removeItem('sidebar-toggled')
+                       
                 } else {
                     contentWrapper.style.overflowY = "hidden";
-                    contentWrapper.style.opacity = "0.2";
                     blockScrollMobile.style.display = "block";
+                    window.addEventListener('popstate', function (event) {
+                        localStorage.setItem('sidebar-toggled', 'sidebar-toggled')
+                        location.reload();}); 
                 }
+
+                //quando a vw < 768 px e ouver alteração na Url o localStorage é atualizado recebendo sidebar-toggled e o location.reload() é executado para atualizar a pagina e assim remover o style com overflow-y: hidden
+
+
 
                 //troca ph-caret-left-bold por ph-caret-right-bold de btnSidebarToggle
 
