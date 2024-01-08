@@ -18,10 +18,11 @@ class ClassesController extends Controller
         $school_year = (new SchoolYearController)->getActive();
         return response()->json(Classes::where('schools_uuid', $school_home->uuid)->where('school_years_uuid', $school_year->uuid)->get()->map(function ($class) {
             return [
-                'status' => $class->status,
+                'status' => $class->status ? 'Ativa' : 'Inativa',
                 'name' => $class->name,
                 'code' => $class->code,
-                'shift' => $class->shift,
+                'turno' => $class->turn == 'morning' ? 'Manhã' : ($class->turn == 'afternoon' ? 'Tarde' : 'Noite'),
+                'max_students' => $class->max_students,
             ];
         }));
     }
@@ -62,7 +63,23 @@ class ClassesController extends Controller
     {
         return view('classes.index', [
             'title' => 'Gerenciar Turmas',
-            'slot' => 'Olá, seja bem vindo(a) ao gerenciamento de turmas. Aqui você gerencia todas as turmas da sua escola.',
+            'slot' => 'Você está gerenciando as turmas da sua escola do ano de ' . (new SchoolYearController)->getActive()->name,
+        ]);
+    }
+
+    /**
+     * edit class by code.
+     */
+    public function edit(Request $request, $code) {
+        $school_home = (new SchoolController)->getHome($request);
+        $class = Classes::where('code', $code)->where('schools_uuid', $school_home->uuid)->first();
+        if (!$class) {
+            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
+        }
+        return view('classes.edit', [
+            'title' => 'Gerenciar Turma',
+            'slot' => 'Você está gerenciando a turma do ' . $class->name . '/' . $class->schoolYear->name,
+            'class' => $class,
         ]);
     }
 }

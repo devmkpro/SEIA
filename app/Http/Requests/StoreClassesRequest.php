@@ -23,7 +23,6 @@ class StoreClassesRequest extends FormRequest
     {
         return [
             'nome' => 'required|string',
-            'email' => 'required|email',
             'turno' => 'required|string|in:morning,afternoon,night',
             'domingo' => 'required|boolean',
             'segunda' => 'required|boolean',

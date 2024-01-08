@@ -13,7 +13,7 @@
 
             <div class="row ms-2 me-2">
                 <div class="col-12 d-flex justify-content-end mt-3 mb-2">
-                    <button type="submit" class="btn btn-outline-primary">Salvar</button>
+                    <button type="submit" class="btn btn btn-seia-oceanblue">Salvar</button>
                     <button type="button" class="btn btn-outline-secondary ms-2" data-bs-dismiss="modal"
                         aria-label="Close">Cancelar</button>
                 </div>

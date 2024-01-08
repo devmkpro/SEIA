@@ -22,7 +22,7 @@
                         </p>
                         <div class="flex space-x-4">
                             <a href="#"
-                                class="inline-flex items-center justify-content-center rounded text-white text-dark-seia btn btn-group-sm btn-seia-red">
+                                class="inline-flex items-center justify-content-center rounded text-white text-dark-seia btn btn-group-sm btn-seia-red me-3">
                                 Matriz curricular
                             </a href="#">
                             <a href="#"
@@ -51,7 +51,7 @@
                         <div class="row row-cols-md-3 row-cols-sm-1 justify-content-center gap-3 gap-y-2">
                             <a href="#"
                                 class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-greenligth">
-                                Gerenciar professor
+                                Gerenciar professores
                             </a>
                             <a href="#"
                                 class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-oceanblue">
