@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="{{ asset('css/home/index.css') }}?v=1.2">
     <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}?v=1.2" id="dark-theme" disabled>
-    <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}?v=1.1" id="light-theme">
+    <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}?v=1.2" id="light-theme">
 
     <title>{{ config('app.name', 'SEIA') }}</title>
 
@@ -476,7 +476,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/home/index.js') }}?v=1.2"></script>
+<script src="{{ asset('js/home/index.js') }}?v=1.3"></script>
 @yield('scripts')
 
 
