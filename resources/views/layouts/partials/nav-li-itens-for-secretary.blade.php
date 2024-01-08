@@ -12,6 +12,13 @@
                 <span class="">Matriz Curricular</span>
             </a>
         @endschoolPermission
+
+        @schoolPermission('manage-classes', optional($school_home)->uuid)
+            <a class="dropdown-item red" href="{{route('manage.classes')}}">
+                <i class="ph ph-chalkboard-teacher icons-menu"></i>
+                <span class="">Turmas</span>
+            </a>
+        @endschoolPermission
     </div>
 </li>
 

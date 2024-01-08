@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->string('name');
+            $table->string('email');
             $table->uuid('schools_uuid');
             $table->foreign('schools_uuid')->references('uuid')->on('schools')->onDelete('cascade');
             $table->uuid('school_years_uuid');

@@ -14,7 +14,7 @@
             @can('create-any-school-year')
                 <div class="col-md-12">
                     <div class="d-flex justify-content-end mb-3">
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-seia-oceanblue" data-bs-toggle="modal"
                             data-bs-target="#addSchoolYear">
                             Novo Período Letivo
                         </button>

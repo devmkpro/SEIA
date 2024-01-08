@@ -45,7 +45,7 @@ class RequireSchoolHome
                 'error' => 'Escola nao encontrada',
             ], 404);
         } else {
-            return redirect()->route('panel')->withErros(['error' => 'Escola inválida.']);
+            return redirect()->route('panel')->with(['error' => 'Primeiro selecione uma escola!']);
         }
     }
 

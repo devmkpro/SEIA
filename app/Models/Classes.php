@@ -41,6 +41,7 @@ class Classes extends Model
     protected $fillable = [
         'uuid',
         'name',
+        'email',
         'schools_uuid',
         'school_years_uuid',
         'curriculum_uuid',
