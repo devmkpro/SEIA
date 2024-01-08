@@ -216,8 +216,6 @@ body, #content-wrapper{
     border-color: none !important;
 }
 
-
-
 #content-wrapper{
     background-color: transparent !important;
 }
@@ -348,7 +346,6 @@ body, #content-wrapper{
     background: rgba(255, 255, 255, 0.726) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     backdrop-filter: blur(10px) !important;
-
 }
 
 .dropdown-item{
