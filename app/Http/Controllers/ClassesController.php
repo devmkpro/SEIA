@@ -8,6 +8,24 @@ use App\Models\Classes;
 
 class ClassesController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        $school_home = (new SchoolController)->getHome($request);
+        $school_year = (new SchoolYearController)->getActive();
+        return response()->json(Classes::where('schools_uuid', $school_home->uuid)->where('school_years_uuid', $school_year->uuid)->get()->map(function ($class) {
+            return [
+                'status' => $class->status,
+                'name' => $class->name,
+                'code' => $class->code,
+                'shift' => $class->shift,
+            ];
+        }));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -15,7 +33,7 @@ class ClassesController extends Controller
     {
         $school_home = (new SchoolController)->getHome($request);
         $school_year = (new SchoolYearController)->getActive();
-        
+
         Classes::create([
             'name' => $request->nome,
             'turn' => $request->turno,
@@ -40,10 +58,11 @@ class ClassesController extends Controller
     /**
      * Index classes.
      */
-    public function classes(Request $request)
+    public function classes()
     {
-        $school_home = (new SchoolController)->getHome($request);
-        $classes = Classes::where('schools_uuid', $school_home->uuid)->get();
-        return view('manage.classes', compact('classes'));
+        return view('classes.index', [
+            'title' => 'Gerenciar Turmas',
+            'slot' => 'Olá, seja bem vindo(a) ao gerenciamento de turmas. Aqui você gerencia todas as turmas da sua escola.',
+        ]);
     }
 }

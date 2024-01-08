@@ -67,14 +67,25 @@
             Gestão
         </div>
 
-        @schoolPermission('manage-curricula', optional($school_home)->uuid)
         <ul class="list-group list-group-flush">
-            <div class="mt-2">
-                <li><a href="{{route('manage.curriculum')}}">
-                    <i class="ph-list-checks-fill icons-menu"></i>
-                    <span>Matriz Curricular</span></a></li>
-            </div>
+            @schoolPermission('manage-curricula', optional($school_home)->uuid)
+                <div class="mt-2">
+                    <li><a href="{{ route('manage.curriculum') }}">
+                            <i class="ph-list-checks-fill icons-menu"></i>
+                            <span>Matriz Curricular</span></a></li>
+                </div>
+            @endschoolPermission
+
+
+            @schoolPermission('manage-classes', optional($school_home)->uuid)
+                <div class="mt-2">
+                    <li><a href="{{ route('manage.classes') }}">
+                            <i class="ph ph-chalkboard-teacher icons-menu"></i>
+                            <span>Turmas</span></a></li>
+                </div>
+            @endschoolPermission
+
         </ul>
-        @endschoolPermission
+
     </div>
 </div>

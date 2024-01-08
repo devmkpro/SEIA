@@ -73,6 +73,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
         Route::middleware(['school.role:secretary|director'])->group(function () {
             Route::group(['middleware' => ['school_year_active']], function () {
                 Route::post('/manage/classes/new', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
+                Route::get('/verify/classes', [ClassesController::class, 'index'])->name('manage.classes.index')->middleware('permission:manage-classes');
             });
         });
     });

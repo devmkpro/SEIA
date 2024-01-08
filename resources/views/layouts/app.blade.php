@@ -100,18 +100,28 @@
                                 class="ph-house-fill icons-menu"></i></i><span class="a-name">Início</span></a></li>
 
 
+                    @schoolRole('director', optional($school_home)->uuid)
+                        @if ($school_home)
+                            @include('layouts.partials.nav-li-itens-for-secretary')
+                        @endif
+                    @endschoolRole
+                    
                     @schoolRole('secretary', optional($school_home)->uuid)
-                        @include('layouts.partials.nav-li-itens-for-secretary')
+                        @if ($school_home)
+                            @include('layouts.partials.nav-li-itens-for-secretary')
+                        @endif
                     @endschoolRole
 
                     @schoolRole('student', optional($school_home)->uuid)
-                    @include('layouts.partials.nav-li-itens-for-students')
-                @endrole
+                        @include('layouts.partials.nav-li-itens-for-students')
+                    @endrole
 
-
-                @role('admin')
-                    @include('layouts.partials.nav-li-itens-for-admin')
-                @endrole
+                    @role('admin')
+                        @if ($school_home)
+                            @include('layouts.partials.nav-li-itens-for-secretary')
+                        @endif
+                        @include('layouts.partials.nav-li-itens-for-admin')
+                    @endrole
 
 
 
