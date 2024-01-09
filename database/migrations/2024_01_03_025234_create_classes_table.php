@@ -34,7 +34,7 @@ return new class extends Migration
 
             
             $table->uuid('teacher_responsible_uuid')->nullable();
-            $table->foreign('teacher_responsible_uuid')->references('uuid')->on('teachers')->onDelete('cascade');
+            $table->foreign('teacher_responsible_uuid')->references('uuid')->on('users')->onDelete('cascade');
             $table->uuid('curriculum_uuid')->nullable();
             $table->foreign('curriculum_uuid')->references('uuid')->on('curricula')->onDelete('cascade');
             $table->string('room')->nullable();
