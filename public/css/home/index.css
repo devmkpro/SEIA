@@ -1037,7 +1037,7 @@ main .card-sm{
 
 
 @media (max-width: 772px) {
-    /* #blockScrollMobile{
+     #blockScrollMobile{
         width: 100vw !important;
         height: 100vh !important;
         overflow: hidden !important;
@@ -1046,7 +1046,7 @@ main .card-sm{
         top: 0 !important;
         left: 0 !important;
         background: rgba(0,0,0,0.5) !important;
-    } */
+     }
 
     #wrapper{
         position: relative !important;

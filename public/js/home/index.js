@@ -14,8 +14,26 @@ const caretRight = document.getElementById('caret-right');
 const contentWrapper = document.getElementById('content-wrapper');
 const blockScrollMobile = document.getElementById('blockScrollMobile');
 
+var vw = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+);
 
-(function () {
+window.addEventListener("load", function () {
+
+
+    if (vw < 768) {
+        
+        localStorage.setItem('sidebar-toggled', 'sidebar-toggled')
+
+        contentWrapper.style.overflowY = "auto";
+        sidebar.classList.add("toggled");
+        document.body.classList.add("sidebar-toggled");
+
+ }
+
+});
+(function (){
     "use strict"; // Start of use strict
 
     var sidebar = document.querySelector(".sidebar");
@@ -27,8 +45,10 @@ const blockScrollMobile = document.getElementById('blockScrollMobile');
     const menutitle = document.querySelectorAll(".menu-title");
     const btnSidebarToggle = document.getElementById('btnSidebarToggle');
     var sidebarToggles = document.querySelectorAll(
-        "#sidebarToggle, #sidebarToggleTop, .sidebarToggleTopMobile",
+        "#sidebarToggle, #sidebarToggleTop, .sidebarToggleTopMobile, #blockScrollMobile",
     );
+
+
 
     if (sidebar) {
         var collapseEl = sidebar.querySelector(".collapse");
@@ -45,67 +65,85 @@ const blockScrollMobile = document.getElementById('blockScrollMobile');
                 document.body.classList.toggle("sidebar-toggled");
                 sidebar.classList.toggle("toggled");
 
-              
 
-                //troca ph-caret-left-bold por ph-caret-right-bold de btnSidebarToggle
 
-                if (sidebar.classList.contains("toggled")) {
-                    btnSidebarToggle.classList.remove("ph-caret-left-bold");
-                    btnSidebarToggle.classList.add("ph-caret-right-bold");
-                    btnSidebarToggle.classList.add("ps-1");
-                } else {
-                    btnSidebarToggle.classList.remove("ph-caret-right-bold");
-                    btnSidebarToggle.classList.remove("ps-1");
-                    btnSidebarToggle.classList.add("ph-caret-left-bold");
-                }
-
-                //adiciona center ao menu-title se modo retraido ativo
-                menutitle.forEach((m) => {
-                    m.classList.toggle("align-self-start")
-                    m.classList.toggle("center");
-                });
-
-                //Arruma imagem perfil se modo retraido ativo
-                imgPerfil.forEach((i) => {
-                    i.classList.toggle("img-perfil-retraido");
-                });
-
-                //Esconde nomes se modo retraido ativo
-                aName.forEach((a) => {
-                    a.classList.toggle("d-none");
-                });
-
-                //verificar se toggled remover w-50 e colocar logo-seia-retraido
-                if (sidebar.classList.contains("toggled")) {
-                    logoSeia.forEach((l) => {
-                        l.classList.remove("w-50");
-                        l.classList.add("logo-seia-retraido");
-                    });
-
-                    localStorage.setItem('sidebar-toggled', 'sidebar-toggled')
-                } else {
-                    logoSeia.forEach((l) => {
-                        l.classList.add("w-50");
-                        l.classList.remove("logo-seia-retraido");
-                    });
-
-                    localStorage.removeItem('sidebar-toggled')
-                }
-                //Centraliza itens se modo retraido ativo
-                center.forEach((c) => {
-                    c.classList.toggle("center-retraido");
-                });
-
-                //Centraliza icones se modo retraido ativo
-                iconsM.forEach((i) => {
-                    i.classList.toggle("icons-menu-retraido");
-                });
-
-                if (sidebar.classList.contains("toggled")) {
-                    for (var bsCollapse of sidebarCollapseList) {
-                        bsCollapse.hide();
+                if (vw < 768) {
+                    if (sidebar.classList.contains("toggled")) {
+                        contentWrapper.style.overflowY = "auto";
+                        blockScrollMobile.classList.add("d-none");
+                    } else {
+                        contentWrapper.style.overflowY = "hidden";
+                        blockScrollMobile.classList.remove("d-none");
                     }
                 }
+
+
+                //remover o if se der merda
+                if (vw > 768) {
+                     //troca ph-caret-left-bold por ph-caret-right-bold de btnSidebarToggle
+
+                    if (sidebar.classList.contains("toggled")) {
+                        btnSidebarToggle.classList.remove("ph-caret-left-bold");
+                        btnSidebarToggle.classList.add("ph-caret-right-bold");
+                        btnSidebarToggle.classList.add("ps-1");
+                    } else {
+                        btnSidebarToggle.classList.remove("ph-caret-right-bold");
+                        btnSidebarToggle.classList.remove("ps-1");
+                        btnSidebarToggle.classList.add("ph-caret-left-bold");
+                    }
+
+                    //adiciona center ao menu-title se modo retraido ativo
+                    menutitle.forEach((m) => {
+                        m.classList.toggle("align-self-start")
+                        m.classList.toggle("center");
+                    });
+
+                    //Arruma imagem perfil se modo retraido ativo
+                    imgPerfil.forEach((i) => {
+                        i.classList.toggle("img-perfil-retraido");
+                    });
+
+                    //Esconde nomes se modo retraido ativo
+                    aName.forEach((a) => {
+                        a.classList.toggle("d-none");
+                    });
+
+                    //verificar se toggled remover w-50 e colocar logo-seia-retraido
+                    if (sidebar.classList.contains("toggled")) {
+                        logoSeia.forEach((l) => {
+                            l.classList.remove("w-50");
+                            l.classList.add("logo-seia-retraido");
+                        });
+
+                        localStorage.setItem('sidebar-toggled', 'sidebar-toggled')
+                    } else {
+                        logoSeia.forEach((l) => {
+                            l.classList.add("w-50");
+                            l.classList.remove("logo-seia-retraido");
+                        });
+
+                        localStorage.removeItem('sidebar-toggled')
+                    }
+                    //Centraliza itens se modo retraido ativo
+                    center.forEach((c) => {
+                        c.classList.toggle("center-retraido");
+                    });
+
+                    //Centraliza icones se modo retraido ativo
+                    iconsM.forEach((i) => {
+                        i.classList.toggle("icons-menu-retraido");
+                    });
+
+                    if (sidebar.classList.contains("toggled")) {
+                        for (var bsCollapse of sidebarCollapseList) {
+                            bsCollapse.hide();
+                        }
+                    }
+                }
+
+            
+
+               
             });
         }
 
@@ -124,16 +162,14 @@ const blockScrollMobile = document.getElementById('blockScrollMobile');
         });
     }
 
+
+
     // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
 
     var fixedNaigation = document.querySelector("body.fixed-nav .sidebar");
 
     if (fixedNaigation) {
         fixedNaigation.on("mousewheel DOMMouseScroll wheel", function (e) {
-            var vw = Math.max(
-                document.documentElement.clientWidth || 0,
-                window.innerWidth || 0
-            );
 
             if (vw > 768) {
                 var e0 = e.originalEvent,
@@ -201,52 +237,55 @@ else {
 
 
 
-if (localStorage.getItem('sidebar-toggled') == 'sidebar-toggled') {
-    document.body.classList.toggle("sidebar-toggled");
-    sidebar.classList.toggle("toggled");
-
-    if (sidebar.classList.contains("toggled")) {
-        btnSidebarToggle.classList.remove("ph-caret-left-bold");
-        btnSidebarToggle.classList.add("ph-caret-right-bold");
-        btnSidebarToggle.classList.add("ps-1");
-    } else {
-        btnSidebarToggle.classList.remove("ph-caret-right-bold");
-        btnSidebarToggle.classList.remove("ps-1");
-        btnSidebarToggle.classList.add("ph-caret-left-bold");
-    }
-
-    //Arruma imagem perfil se modo retraido ativo
-    imgPerfil.forEach((i) => {
-        i.classList.toggle("img-perfil-retraido");
-    });
-
-    //Esconde nomes se modo retraido ativo
-    aName.forEach((a) => {
-        a.classList.toggle("d-none");
-    });
-
-    //verificar se toggled remover w-50 e colocar logo-seia-retraido
-    if (sidebar.classList.contains("toggled")) {
-        logoSeia.forEach((l) => {
-            l.classList.remove("w-50");
-            l.classList.add("logo-seia-retraido");
+if(vw>768){
+    if (localStorage.getItem('sidebar-toggled') == 'sidebar-toggled') {
+        document.body.classList.toggle("sidebar-toggled");
+        sidebar.classList.toggle("toggled");
+    
+        if (sidebar.classList.contains("toggled")) {
+            btnSidebarToggle.classList.remove("ph-caret-left-bold");
+            btnSidebarToggle.classList.add("ph-caret-right-bold");
+            btnSidebarToggle.classList.add("ps-1");
+        } else {
+            btnSidebarToggle.classList.remove("ph-caret-right-bold");
+            btnSidebarToggle.classList.remove("ps-1");
+            btnSidebarToggle.classList.add("ph-caret-left-bold");
+        }
+    
+        //Arruma imagem perfil se modo retraido ativo
+        imgPerfil.forEach((i) => {
+            i.classList.toggle("img-perfil-retraido");
         });
-    } else {
-        logoSeia.forEach((l) => {
-            l.classList.add("w-50");
-            l.classList.remove("logo-seia-retraido");
+    
+        //Esconde nomes se modo retraido ativo
+        aName.forEach((a) => {
+            a.classList.toggle("d-none");
+        });
+    
+        //verificar se toggled remover w-50 e colocar logo-seia-retraido
+        if (sidebar.classList.contains("toggled")) {
+            logoSeia.forEach((l) => {
+                l.classList.remove("w-50");
+                l.classList.add("logo-seia-retraido");
+            });
+        } else {
+            logoSeia.forEach((l) => {
+                l.classList.add("w-50");
+                l.classList.remove("logo-seia-retraido");
+            });
+        }
+        //Centraliza itens se modo retraido ativo
+        center.forEach((c) => {
+            c.classList.toggle("center-retraido");
+        });
+    
+        //Centraliza icones se modo retraido ativo
+        iconsM.forEach((i) => {
+            i.classList.toggle("icons-menu-retraido");
         });
     }
-    //Centraliza itens se modo retraido ativo
-    center.forEach((c) => {
-        c.classList.toggle("center-retraido");
-    });
-
-    //Centraliza icones se modo retraido ativo
-    iconsM.forEach((i) => {
-        i.classList.toggle("icons-menu-retraido");
-    });
 }
+
 
 
 
