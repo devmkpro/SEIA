@@ -96,7 +96,7 @@
 
                 <ul class="navbar-nav center animated--fade-in" id="accordionSidebar">
                     <span class="menu-title align-self-start">Menu</span>
-                    <li class="nav-item "><a class="nav-link blue center" href="{{ route('panel') }}"><i
+                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Início"><a class="nav-link blue center" href="{{ route('panel') }}"><i
                                 class="ph-house-fill icons-menu"></i></i><span class="a-name">Início</span></a></li>
 
 
@@ -127,13 +127,13 @@
 
                 <hr class="sidebar-divider my-3 shadow-sm">
                 <span class="menu-title align-self-start">Pessoal</span>
-                <li class="nav-item">
+                <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Perfil">
                     <a class="nav-link green center" href="{{ route('profile.edit') }}">
                         <i class="ph-user-circle-fill icons-menu"></i>
                         <span class="a-name">Minhas Informações</span>
                     </a>
                 </li>
-                <li class="nav-item"><a class="nav-link blue center" href="#"><i
+                <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Configurações"><a class="nav-link blue center" href="#"><i
                             class="ph-gear icons-menu"></i>
                         <span class="a-name">Configurações</span></a>
                 </li>
@@ -146,7 +146,7 @@
             <div class="exit">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <ul class="navbar-nav center animated--fade-in">
-                        <li class="nav-item">
+                        <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Sair do sistema">
                             <a class="nav-link d-flex justify-content-center align-items-center center red"
                                 href="{{ route('logout') }}">
                                 <i class="ph-sign-out icons-menu"></i>
@@ -476,7 +476,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/home/index.js') }}?v=1.4"></script>
+<script src="{{ asset('js/home/index.js') }}?v=1.5"></script>
 @yield('scripts')
 
 

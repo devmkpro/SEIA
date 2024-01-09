@@ -1,6 +1,6 @@
 <span class="menu-title align-self-start">Admin</span>
 @can('manage-location')
-    <li class="nav-item">
+    <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Serviços de localização">
         <a class="nav-link dropdown-toggle red center" href="#" id="navbarDropdownLocations"
             role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="ph-map-pin-fill icons-menu"></i>
@@ -22,7 +22,7 @@
 @endcan
 
 @can('manage-schools')
-    <li class="nav-item">
+    <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Escolar">
         <a class="nav-link dropdown-toggle blue center" href="#" id="navbarDropdownSchools"
             role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="ph-bank-fill icons-menu"></i>
@@ -48,7 +48,7 @@
 @endcan
 
 @can('manage-school-years')
-    <li class="nav-item">
+    <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Atribuir/Gerenciar anos letivos">
         <a class="nav-link dropdown-toggle green center" href="#" id="navbarDropdownSchoolYears"
             role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="ph-calendar-fill icons-menu"></i>
