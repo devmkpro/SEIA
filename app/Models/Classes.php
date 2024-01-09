@@ -44,6 +44,7 @@ class Classes extends Model
         'schools_uuid',
         'school_years_uuid',
         'curriculum_uuid',
+        'modality',
         'code',
         'status',
         'turn',
@@ -58,6 +59,7 @@ class Classes extends Model
         'end_time',
         'max_students',
         'room',
+        'teacher_responsible_uuid',
     ];
 
     /**
@@ -73,9 +75,17 @@ class Classes extends Model
      * Get the currilum that owns the Classes
      */
 
-    public function currilum()
+    public function curriculum()
     {
-        return $this->belongsTo(Curriculum::class, 'currilum_uuid', 'uuid');
+        return $this->belongsTo(Curriculum::class, 'curriculum_uuid', 'uuid');
+    }
+
+    /**
+     * Teacher responsible for the class
+     */
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_responsible_uuid', 'uuid');
     }
 
 

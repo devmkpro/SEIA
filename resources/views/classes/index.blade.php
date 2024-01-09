@@ -6,7 +6,6 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     @endsection
-
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -20,7 +19,7 @@
                         </div>
                     </div>
                 @endcan
-                <x-grid-datatables identifier="addclassesTable" :columns="['Cód', 'Nome', 'Status', 'Turno', 'Máximo de alunos', 'Ações']" />
+                <x-grid-datatables identifier="addclassesTable" :columns="['Cód', 'Nome', 'Status', 'Ano Letivo', 'Turno', 'Máximo de alunos', 'Ações']" />
             </div>
         </div>
     </div>
@@ -38,7 +37,7 @@
                     são obrigatórios</small>
 
                 <div class="row mt-3">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nome
                                 <span class="text-danger">*</span>
@@ -49,7 +48,23 @@
                         </div>
                     </div>
 
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="modalidade" class="form-label">Modalidade de ensino
+                            </label>
+                            <span class="text-danger">*</span>
+                            <select class="form-select" aria-label="Default select example" id="modalidade"
+                                name="modalidade" required value="{{ old('modalidade') }}">
+                                <option value="regular">Regular</option>
+                                <option value="eja">EJA</option>
+                                <option value="eja_fundamental">EJA Fundamental</option>
+                                <option value="eja_medio">EJA Médio</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
+
+
 
                 <div class="row">
                     <div class="col-md-6">
@@ -138,7 +153,7 @@
                     </div>
 
 
-                    
+
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="sexta" class="form-label">Sexta-feira</label>
@@ -201,6 +216,9 @@
                         },
                         {
                             "data": "status",
+                        },
+                        {
+                            "data": "school_year",
                         },
                         {
                             "data": "turno",

@@ -44,7 +44,7 @@ class CurriculumController extends Controller
     /**
      * Format the series.
      */
-    private function formatSeries($series)
+    public function formatSeries($series)
     {
         $seriesMap = [
             'educ_infa_cc_0_3' => 'Educação Infantil - Creche (0 a 3 anos)',

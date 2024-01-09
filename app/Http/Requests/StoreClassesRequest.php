@@ -24,6 +24,7 @@ class StoreClassesRequest extends FormRequest
         return [
             'nome' => 'required|string',
             'turno' => 'required|string|in:morning,afternoon,night',
+            'modalidade' => 'required|string|in:regular,eja,eja_fundamental,eja_medio',
             'domingo' => 'required|boolean',
             'segunda' => 'required|boolean',
             'terca' => 'required|boolean',
