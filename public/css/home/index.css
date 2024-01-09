@@ -821,10 +821,6 @@ main .card-sm{
     color: white !important;
 }
 
-.modal .modal-dialog .modal-content .modal-header .btn-close{
-    color: white !important;
-}
-
 .modal .modal-dialog .modal-content .modal-header .btn-close:hover{
     color: #ebebeb !important;
 }
@@ -841,6 +837,15 @@ main .card-sm{
 
 .modal .modal-dialog .modal-content .modal-body table{
     padding: 1em;
+}
+
+.modal .modal-dialog .modal-content .modal-body input:active,
+.modal .modal-dialog .modal-content .modal-body input:focus,
+.modal .modal-dialog .modal-content .modal-body input:hover,
+.modal .form-control,
+.modal .form-select{
+    color: #121212 !important;
+    outline: none !important;
 }
 
 /* datatables */
