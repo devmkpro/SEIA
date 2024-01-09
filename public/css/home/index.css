@@ -854,6 +854,11 @@ main .card-sm{
     width: 4em;
 }
 
+/* tootips */
+
+.tooltip {
+    --bs-tooltip-bg: var(--seia-darkblue) !important;
+  }
 
 /* Medias*/
 
