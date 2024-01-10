@@ -88,5 +88,13 @@ class Classes extends Model
         return $this->belongsTo(User::class, 'teacher_responsible_uuid', 'uuid');
     }
 
+    /**
+     * Teachers of the class
+     */
+    public function teachers()
+    {
+        $role = Role::where('name', 'teacher')->first();
+        return $this->hasMany(UserSchool::class, 'school_uuid', 'schools_uuid')->where('role', $role->uuid);
+    }
 
 }

@@ -53,4 +53,8 @@ class UserSchool extends Model
     {
         return $this->belongsTo(Role::class, 'role', 'uuid');
     }
+
+    public function subjects(){
+        return $this->hasMany(TeachersSchoolsSubjects::class, 'user_uuid', 'users_uuid')->where('school_uuid', $this->school_uuid);
+    }
 }

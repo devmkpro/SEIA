@@ -75,7 +75,7 @@
                         Ações
                     </h2>
                     <div class="row row-cols-md-3 row-cols-sm-1 justify-content-center gap-3 gap-y-2">
-                        <a href="#"
+                        <a href="{{route('manage.classes.teachers', $class->code)}} "
                             class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-greenligth">
                             Gerenciar professores
                         </a>
@@ -109,12 +109,17 @@
                 @csrf
                 @method('PUT')
                 <select name="curriculum" id="curriculum" class="form-select">
-                    <option value="">Selecione uma matriz curricular</option>
-                    @foreach ($curriculums as $curriculum)
-                        <option value="{{ $curriculum['uuid'] }}" @if (decrypt($curriculum['uuid']) == $class->curriculum_uuid) selected @endif>
-                            {{ $curriculum['series'] }}
-                        </option>
-                    @endforeach
+                    @if ($curriculums->count() == 0)
+                        <option value="">Não há matrizes na escola</option>
+                    @else
+                        <option value="">Selecione uma matriz curricular</option>
+                        @foreach ($curriculums as $curriculum)
+                            <option value="{{ $curriculum['uuid'] }}" @if (decrypt($curriculum['uuid']) == $class->curriculum_uuid) selected @endif>
+                                {{ $curriculum['series'] }}
+                            </option>
+                        @endforeach
+                    @endif
+
 
                 </select>
         </div>

@@ -107,11 +107,11 @@ class ClassesController extends Controller
         try{
             $curriculum = Curriculum::where('uuid', decrypt($request->curriculum))->where('school_uuid', $school_home->uuid)->first();
         } catch(\Exception $e){
-            return $this->response($request, 'manage.classes', 'Matriz curricular não encontrada.', 'error', 404);
+            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'code', $code);
         }
 
         if (!$class || !$curriculum) {
-            return $this->response($request, 'manage.classes', 'Turma ou matriz curricular não encontrada.', 'error', 404);
+            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'code', $code);
         }
 
         $class->update([

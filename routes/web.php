@@ -9,6 +9,7 @@ use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SubjectsController;
+use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth', 'web'])->group(function () {
-    Route::get('/', function () {return view('welcome');})->name('panel');
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('panel');
     Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
 
     // System -> Admin
@@ -44,17 +47,16 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
         Route::get('/gerenciar/matriz-curricular/{code}/disciplinas', [SubjectsController::class, 'subjects'])->name('manage.subjects')->middleware('permission:update-any-subject');
     });
 
-     // School -> Secretary | Director
+    // School -> Secretary | Director
     Route::middleware(['school.role:secretary|director'])->group(function () {
         Route::group(['middleware' => ['school_year_active']], function () {
             Route::get('/gerenciar/turmas', [ClassesController::class, 'classes'])->name('manage.classes')->middleware('permission:manage-classes');
             Route::get('/gerenciar/turmas/{code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
+            Route::get('/gerenciar/turmas/{code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
         });
     });
-
-
 });
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

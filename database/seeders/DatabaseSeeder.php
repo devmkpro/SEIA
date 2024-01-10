@@ -50,6 +50,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
+        $teacher = \App\Models\User::factory()->create([
+            'name' => 'Test Teacher',
+            'email' => 'teacher@teacher.com',
+            'phone' => '99999999999',
+            'password' => bcrypt('password'),
+        ]);
+
         $data = [
                 'landline' => '99999999999',
                 'inep' => '99999999',
@@ -79,14 +86,17 @@ class DatabaseSeeder extends Seeder
         $secretary->datauser()->create($data);
         $director->datauser()->create($data);
         $student->datauser()->create($data);
+        $teacher->datauser()->create($data);
 
         $admin->assignRole('admin');
         $secretary->assignRole('secretary');
         $director->assignRole('director');
+        $teacher->assignRole('teacher');
         $student->assignRole('student');
         $director->assignRoleForSchool('director', School::first()->uuid);
         $student->assignRoleForSchool('student', School::first()->uuid);
         $secretary->assignRoleForSchool('secretary', School::first()->uuid);
+        $teacher->assignRoleForSchool('teacher', School::first()->uuid);
 
 
 

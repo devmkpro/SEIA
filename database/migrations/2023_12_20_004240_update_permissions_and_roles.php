@@ -34,6 +34,9 @@ return new class extends Migration
         $secretaryPermissions = [
             'manage-students', 
             'manage-teachers', 
+            'create-any-teacher',
+            'update-any-teacher',
+            'delete-any-teacher',
             'manage-curricula',
             'create-any-curriculum',
             'update-any-curriculum',
@@ -45,6 +48,7 @@ return new class extends Migration
             'manage-classes', 
             'create-any-class',
             'update-any-class',
+            
 
         ];
 
@@ -52,7 +56,14 @@ return new class extends Migration
             'manage-classes',  
             'create-any-class',
             'update-any-class',
-            'manage-teachers', 
+            'manage-teachers',
+            'create-any-teacher',
+            'update-any-teacher',
+            'delete-any-teacher', 
+            'manage-students',
+        ];
+
+        $teacherPermissions = [
             'manage-students',
         ];
 
@@ -76,6 +87,9 @@ return new class extends Migration
 
         $director = Role::where('name', 'director')->first();
         $director->givePermissionTo($directorPermissions);
+
+        $teacher = Role::where('name', 'teacher')->first();
+        $teacher->givePermissionTo($teacherPermissions);
 
 
     }

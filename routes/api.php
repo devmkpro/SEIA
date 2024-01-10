@@ -12,6 +12,7 @@ use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SubjectsController;
+use App\Http\Controllers\TeachersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,9 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::post('/manage/classes/new', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
                 Route::put('/manage/classes/{code}', [ClassesController::class, 'update'])->name('manage.classes.update')->middleware('permission:update-any-class');
                 Route::put('/manage/classes/{code}/change-curriculum', [ClassesController::class, 'setCurriculum'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
+            
+                Route::get('/manage/teachers/classes/{code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
+               
             });
         });
     });
