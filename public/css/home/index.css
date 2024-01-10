@@ -860,6 +860,35 @@ main .card-sm{
     --bs-tooltip-bg: var(--seia-darkblue) !important;
   }
 
+/* Select */
+
+.select-school .form-select{
+    background: rgba(255, 255, 255, 0.966) !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px) !important;
+
+    padding: 0.5em !important;
+
+    border-radius: 0.5em 0 0 0.5em !important;
+    color: var(--seia-darkblue) !important;
+
+}
+
+.select-school .form-select option{
+    background: rgba(255, 255, 255, 0.726) !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px) !important;
+
+    color: var(--seia-darkblue) !important;
+}
+
+.select-school button{
+    padding: 0.5em !important;
+    border-radius: 0 0.5em 0.5em 0 !important;
+}
+
+
+
 /* Medias*/
 
 @media (max-width: 991px) {

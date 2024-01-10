@@ -11,7 +11,7 @@
     <meta name="keywords" content="SEIA, educação, gestão escolar, soluções">
     <meta name="author" content="Equipe SEIA">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}?v=1.5">
+    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}?v=1.6">
     <link rel="stylesheet" href="{{ asset('css/home/dark-theme.css') }}?v=1.2" id="dark-theme" disabled>
     <link rel="stylesheet" href="{{ asset('css/home/light-theme.css') }}?v=1.2" id="light-theme">
 
