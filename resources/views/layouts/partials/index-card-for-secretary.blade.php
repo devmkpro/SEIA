@@ -61,16 +61,17 @@
     </div>
 </div>
 
-<div class="col-sm-4">
-    <div class="card">
-        <div class="title">
+<div class="col-sm-12 col-md-6">
+    <div class="card text-dark-seia seia-shadow">
+        <div class="title py-1">
             Gestão
         </div>
 
         <ul class="list-group list-group-flush">
             @schoolPermission('manage-curricula', optional($school_home)->uuid)
                 <div class="mt-2">
-                    <li><a href="{{ route('manage.curriculum') }}">
+                    <li>
+                        <a href="{{ route('manage.curriculum') }}">
                             <i class="ph-list-checks-fill icons-menu"></i>
                             <span>Matriz Curricular</span></a></li>
                 </div>
