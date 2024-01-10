@@ -30,8 +30,15 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                @schoolPermission('create-any-teacher', optional($school_home)->uuid)
-                    <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ route('manage.classes.edit', ['code' => $class->code]) }}"
+                            class="btn btn-seia-jeans">
+                            Voltar para turma</a>
+                    </div>
+
+                    @schoolPermission('create-any-teacher', optional($school_home)->uuid)
+                    <div class="col-md-6">
                         <div class="d-flex justify-content-end mb-3">
                             <button type="button" class="btn btn-seia-oceanblue" data-bs-toggle="modal"
                                 data-bs-target="#addTeacherModal">
@@ -40,6 +47,8 @@
                         </div>
                     </div>
                 @endschoolPermission
+                </div>
+              
 
                 <x-grid-datatables identifier="teachersTable" :columns="['Cód.', 'Nome', 'Disciplinas', 'E-mail', 'Telefone', 'Ações']" />
             </div>

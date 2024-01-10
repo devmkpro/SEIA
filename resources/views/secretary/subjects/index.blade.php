@@ -29,12 +29,12 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <a href="{{ route('manage.curriculum') }}" class="btn btn-primary">Voltar </a>
+                        <a href="{{ route('manage.curriculum') }}" class="btn btn btn-seia-jeans">Voltar para matrizes </a>
                     </div>
                     @schoolPermission('create-any-subject', optional($school_home)->uuid)
                         <div class="col-md-6">
                             <div class="d-flex justify-content-end mb-3">
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-seia-oceanblue" data-bs-toggle="modal"
                                     data-bs-target="#createSubjectModal">
                                     Cadastrar Disciplina
                                 </button>
