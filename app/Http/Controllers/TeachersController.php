@@ -60,9 +60,14 @@ class TeachersController extends Controller
 
         $teachers = $class->teachers;
         return $teachers->map(function ($teacher) {
-            $subjects = $teacher->subjects->pluck('name')->map(function ($subject) {
-                return ucfirst($subject);
-            })->implode(', ');
+            if ($teacher->subjects){
+                $subjects = $teacher->subjects->pluck('name')->map(function ($subject) {
+                    return ucfirst($subject);
+                })->implode(', ');
+            } else {
+                $subjects = 'Nenhuma disciplina vinculada';
+            }
+           
             return [
                 'name' => $teacher->user->name,
                 'email' => $teacher->user->email,
@@ -84,6 +89,12 @@ class TeachersController extends Controller
 
         if ($isInvited) {
             return $this->response($request, 'manage.classes.teachers', 'Solicitação de vinculo já enviada!', 'message', 200, 'code', $request->class);
+        }
+
+        $isTeacher = TeachersSchoolsSubjects::where('user_uuid', User::where('username', $request->username)->first()->uuid)->where('class_uuid', Classes::where('code', $request->class)->first()->uuid)->first();
+
+        if ($isTeacher) {
+            return $this->response($request, 'manage.classes.teachers', 'Professor já vinculado a turma!', 'error', 200, 'code', $request->class);
         }
 
         SchoolConnectionRequest::create([
