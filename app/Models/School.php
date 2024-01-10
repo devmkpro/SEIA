@@ -78,7 +78,8 @@ class School extends Model
      */
     public function teachers()
     {
-        $teachers = TeachersSchoolsSubjects::where('school_uuid', $this->uuid)->get();
+        $role = Role::where('name', 'teacher')->first();
+        $teachers = UserSchool::where('school_uuid', $this->uuid)->where('role', $role->uuid)->get();
         return $teachers;
     }
 
