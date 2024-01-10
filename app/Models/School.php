@@ -78,8 +78,8 @@ class School extends Model
      */
     public function teachers()
     {
-        $role = Role::where('name', 'teacher')->first();
-        return $this->belongsToMany(User::class, 'users_schools', 'school_uuid', 'users_uuid')->wherePivot('role', $role->uuid);
+        $teachers = TeachersSchoolsSubjects::where('school_uuid', $this->uuid)->get();
+        return $teachers;
     }
 
 

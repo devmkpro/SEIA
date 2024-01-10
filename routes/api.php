@@ -79,7 +79,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::put('/manage/classes/{code}/change-curriculum', [ClassesController::class, 'setCurriculum'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
             
                 Route::get('/manage/teachers/classes/{code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
-               
+                Route::post('/manage/teachers/classes/invite', [TeachersController::class, 'invite'])->name('manage.classes.teachers.invite')->middleware('permission:create-any-teacher');
             });
         });
     });

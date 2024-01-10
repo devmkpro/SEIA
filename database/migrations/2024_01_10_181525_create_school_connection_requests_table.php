@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teachers_schools', function (Blueprint $table) {
+        Schema::create('school_connection_requests', function (Blueprint $table) {
             $table->uuid("uuid")->primary();
-            $table->uuid("user_uuid");
             $table->uuid("school_uuid");
-            $table->uuid("subject_uuid")->nullable();
+            $table->uuid("user_uuid");
+            $table->uuid("role");
             $table->uuid("class_uuid");
-            $table->foreign('user_uuid')->references('uuid')->on('users');         
+            $table->string("status")->default("pending");
             $table->foreign('school_uuid')->references('uuid')->on('schools');
-            $table->foreign('subject_uuid')->references('uuid')->on('subjects');   
+            $table->foreign('user_uuid')->references('uuid')->on('users');
             $table->foreign('class_uuid')->references('uuid')->on('classes');
+            $table->foreign("role")->references("uuid")->on("roles");
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teachers_schools');
+        Schema::dropIfExists('school_connection_requests');
     }
 };

@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSchoolConnectionRequest;
 use Illuminate\Http\Request;
 use App\Models\City;
 use App\Models\State;
 use App\Models\School;
 use App\Http\Requests\StoreSchoolRequest;
+use App\Models\Classes;
+use App\Models\Role;
+use App\Models\SchoolConnectionRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 
 class SchoolController extends Controller
@@ -101,7 +106,7 @@ class SchoolController extends Controller
         return School::where('uuid', decrypt($school_home))->first();
     }
 
-
+   
 
 
 }

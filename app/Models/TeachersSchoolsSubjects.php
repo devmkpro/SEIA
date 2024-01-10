@@ -13,7 +13,7 @@ class TeachersSchoolsSubjects extends Model
     protected $primaryKey = 'uuid';
     public $incrementing = false;
 
-    protected $table = 'teachers_schools_subjects';
+    protected $table = 'teachers_schools';
 
     
     /**
@@ -32,6 +32,8 @@ class TeachersSchoolsSubjects extends Model
         'user_uuid',
         'school_uuid',
         'subject_uuid',
+        'status',
+        
     ];
 
     public function user(){
@@ -42,7 +44,7 @@ class TeachersSchoolsSubjects extends Model
         return $this->belongsTo(School::class, 'school_uuid', 'uuid');
     }
 
-    public function subject(){
+    public function subjects(){
         return $this->belongsTo(Subjects::class, 'subject_uuid', 'uuid');
     }
 

@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
         $director->assignRoleForSchool('director', School::first()->uuid);
         $student->assignRoleForSchool('student', School::first()->uuid);
         $secretary->assignRoleForSchool('secretary', School::first()->uuid);
-        $teacher->assignRoleForSchool('teacher', School::first()->uuid);
+        //$teacher->assignRoleForSchool('teacher', School::first()->uuid);
 
 
 

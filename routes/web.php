@@ -53,6 +53,7 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
             Route::get('/gerenciar/turmas', [ClassesController::class, 'classes'])->name('manage.classes')->middleware('permission:manage-classes');
             Route::get('/gerenciar/turmas/{code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
             Route::get('/gerenciar/turmas/{code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
+            
         });
     });
 });

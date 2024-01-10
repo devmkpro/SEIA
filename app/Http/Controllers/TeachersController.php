@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSchoolConnectionRequest;
 use App\Models\Classes;
 use App\Models\Role;
-use App\Models\TeachersSchool;
+use App\Models\SchoolConnectionRequest;
+use App\Models\TeachersSchoolsSubjects;
 use App\Models\User;
-use App\Models\UserSchool;
 use Illuminate\Http\Request;
 
 class TeachersController extends Controller
@@ -26,7 +27,6 @@ class TeachersController extends Controller
             'title' => 'Aqui você pode gerenciar os professores da turma ' . $class->name . '/' . $class->schoolYear->name,
             'slot' => 'Os professores são responsáveis por gerenciar as notas e faltas dos alunos, e também por lançar os conteúdos e atividades.',
         ]);
-
     }
 
     /**
@@ -40,39 +40,59 @@ class TeachersController extends Controller
         if (!$class) {
             return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
         }
-        
-        if ($request->search){
-            $users = User::where('email', $request->search)->orWhere('username', $request->search)->get();
 
-            foreach ($users as $user) {
-                if (!$user->hasRole('teacher')) {
-                    $user->delete();
-                }
-                unset($user->email_verified_at, $user->created_at, $user->updated_at, $user->uuid, $user->password, $user->photo, $user->roles);
-            }
-            
-            $users = array_values($users->toArray());
-            return response()->json($users);
-        }
-        
-        $teachers = $class->teachers;
-        
-        return response()->json(
-            $teachers->map(function ($teacher) {
+        if ($request->search) {
+            $users = User::where('email', $request->search)->orWhere('username', $request->search)->get();
+            $users = $users->filter(function ($user) {
+                $class = Classes::where('code', request()->code)->first();
+                return $user->hasRole('teacher') && !TeachersSchoolsSubjects::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
+            });
+
+            return $users->map(function ($user) {
                 return [
-                    'name' => $teacher->name,
-                    'email' => $teacher->email,
-                    'subjects' => $teacher->subjects->map(function ($subject) {
-                        return [
-                            'name' => ucfirst($subject->subject->name)
-                        ];
-                    })->implode('name', ', ') ?: 'Nenhuma disciplina',
-                    'phone' => $teacher->phone,
-                    'username' => $teacher->username,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'username' => $user->username,
                 ];
-            })
-        );
+            });
+        }
+
+        $teachers = $class->teachers;
+        return $teachers->map(function ($teacher) {
+            $subjects = $teacher->subjects->pluck('name')->map(function ($subject) {
+                return ucfirst($subject);
+            })->implode(', ');
+            return [
+                'name' => $teacher->user->name,
+                'email' => $teacher->user->email,
+                'subjects' => $subjects,
+                'phone' => $teacher->user->phone,
+                'username' => $teacher->user->username,
+            ];
+        })->unique('user_uuid');
     }
 
-   
+    /**
+     * Create new request to connect school.
+     */
+
+    public function invite(StoreSchoolConnectionRequest $request)
+    {
+
+        $isInvited = SchoolConnectionRequest::where('user_uuid', User::where('username', $request->username)->first()->uuid)->where('class_uuid', Classes::where('code', $request->class)->first()->uuid)->where('role', Role::where('name', $request->role)->first()->uuid)->first();
+
+        if ($isInvited) {
+            return $this->response($request, 'manage.classes.teachers', 'Solicitação de vinculo já enviada!', 'message', 200, 'code', $request->class);
+        }
+
+        SchoolConnectionRequest::create([
+            'school_uuid' => (new SchoolController)->getHome($request)->uuid,
+            'user_uuid' => User::where('username', $request->username)->first()->uuid,
+            'role' => Role::where('name', $request->role)->first()->uuid,
+            'class_uuid' => Classes::where('code', $request->class)->first()->uuid,
+        ]);
+
+        return $this->response($request, 'manage.classes.teachers', 'Solicitação de vinculo enviada com sucesso!', 'message', 200, 'code', $request->class);
+    }
 }

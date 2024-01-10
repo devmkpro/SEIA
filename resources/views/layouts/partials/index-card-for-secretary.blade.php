@@ -27,7 +27,7 @@
                             Nº de professores</div>
 
                         <div class="h5 mb-0 font-weight-bold test-dark-seia">
-                            {{ $school_home->teachers->count() }}</div>
+                            {{ $school_home->teachers()->count() }}</div>
 
                     </div>
                     <div class="col-auto">

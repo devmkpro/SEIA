@@ -1,4 +1,5 @@
 <x-app-layout>
+   
     @include('components.warnings-panel')
     @include('components.messages-erros')
 
@@ -38,17 +39,17 @@
                     </div>
 
                     @schoolPermission('create-any-teacher', optional($school_home)->uuid)
-                    <div class="col-md-6">
-                        <div class="d-flex justify-content-end mb-3">
-                            <button type="button" class="btn btn-seia-oceanblue" data-bs-toggle="modal"
-                                data-bs-target="#addTeacherModal">
-                                Novo Professor
-                            </button>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-end mb-3">
+                                <button type="button" class="btn btn-seia-oceanblue" data-bs-toggle="modal"
+                                    data-bs-target="#addTeacherModal">
+                                    Novo Professor
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                @endschoolPermission
+                    @endschoolPermission
                 </div>
-              
+
 
                 <x-grid-datatables identifier="teachersTable" :columns="['Cód.', 'Nome', 'Disciplinas', 'E-mail', 'Telefone', 'Ações']" />
             </div>
@@ -92,14 +93,11 @@
                             Cadastrar</a>
                     </div>
                 </div>
-               
+
 
             </div>
         </x-modal>
-    @endschoolPermission
 
-
-    @section('scripts')
         <script>
             function createTeacherCard(teacher) {
                 var cardHtml = `
@@ -116,11 +114,19 @@
                     <strong>Telefone:</strong> ${teacher.phone}
                 </p>
                 <div class="row mt-3">
-                    <button type="button" class="btn btn-seia-yellow">Solicitar vinculo</button>
+                    <form action="{{route('manage.classes.teachers.invite')}}" method="POST">
+                        @csrf
+                        @method('POST')
+                        <input type="hidden" name="username" value="${teacher.username}">
+                        <input type="hidden" name="role" value="teacher">
+                        <input type="hidden" name="class" value="{{ $class->code }}">
+                    <button type="submit" class="btn btn-seia-yellow">Solicitar vinculo</button>
                     </div>
             </div>
         </div>
     </div>
+</form>
+
     `;
 
                 return cardHtml;
@@ -143,12 +149,17 @@
                                 var teacherCard = createTeacherCard(teacher);
                                 $('#teacherCardsContainer').append(teacherCard);
                             });
-                        }
-                    }
+                        } 
+                    },
+                
                 })
             }
+        </script>
+    @endschoolPermission
 
 
+    @section('scripts')
+        <script>
             $(document).ready(function() {
 
                 $('#teacherEmail').on('input', function() {
