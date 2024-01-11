@@ -1,5 +1,5 @@
 <span class="menu-title align-self-start">Secretaria</span>
-<li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Gestão" data-bs-placement="right">
+<li class="nav-item">
     <a class="nav-link dropdown-toggle red center " href="#" id="navbarDropdownLocations" 
         role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="pph ph-graduation-cap icons-menu"></i>
