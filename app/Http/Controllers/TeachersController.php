@@ -67,7 +67,7 @@ class TeachersController extends Controller
             } else {
                 $subjects = 'Nenhuma disciplina vinculada';
             }
-           
+
             return [
                 'name' => $teacher->user->name,
                 'email' => $teacher->user->email,
@@ -108,13 +108,35 @@ class TeachersController extends Controller
             return $this->response($request, 'manage.classes.teachers', 'Professor já vinculado à turma!', 'error', 200, 'code', $class->code);
         }
 
-        SchoolConnectionRequest::create([
-            'school_uuid' => (new SchoolController)->getHome($request)->uuid,
-            'user_uuid' => $user->uuid,
-            'role' => $role->uuid,
-            'class_uuid' => $class->uuid,
-        ]);
+        $school_connection_request = (new SchoolConnectionController)->store($class->schools_uuid, $user->uuid, $role->uuid, $class->uuid);
+
+        (new NotificationController)->store(
+            "Nova solicitação de vinculo com escola",
+            "Você recebeu uma solicitação para lecionar na escola " . $school_connection_request->school->name . " na turma " . $school_connection_request->class->name . "/" . $school_connection_request->class->schoolYear->name,
+            "ph ph-chalkboard",
+            false,
+            $school_connection_request->user_uuid,
+            'request',
+            $school_connection_request->uuid
+        );
 
         return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo enviada com sucesso!', 'message', 200, 'code', $class->code);
+    }
+
+    /**
+     * Link teacher to class.
+     */
+    public function store($class_uuid, $user_uuid)
+    {
+        $class = Classes::where('uuid', $class_uuid)->first();
+        TeachersSchoolsSubjects::create([
+            'class_uuid' => $class->uuid,
+            'school_uuid' => $class->school->uuid,
+            'user_uuid' => $user_uuid,
+        ]);
+
+        return response()->json([
+            'message' => 'Professor vinculado com sucesso!',
+        ], 201);  
     }
 }

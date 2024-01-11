@@ -18,7 +18,7 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
-            'title' => 'Seu perfil',
+            'title' => 'Suas informações',
             'slot' => 'Suas informações pessoais devem ser atualizados na secretaria da escola.',
         ]);
     }

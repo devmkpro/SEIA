@@ -35,11 +35,17 @@ class SchoolRole
         }
 
         $schoolUUID = Cookie::get('school_home');
-        $schoolUUID = decrypt($schoolUUID);
 
         if ($user->hasRole('admin')) {
             return $next($request);
+        } 
+
+        try {
+            $schoolUUID = decrypt($schoolUUID);
+        } catch (\Exception $e) {
+            return $this->terminateError($request);
         }
+
 
         $rolesArray = explode('|', $roles);
 
@@ -49,6 +55,17 @@ class SchoolRole
             }
         }
 
-        abort(403, 'Unauthorized.');
+        return $this->terminateError($request);
+    }
+
+    public function terminateError ($request) {
+        if ($request->bearerToken()) {
+            return response()->json([
+                'message' => 'Escola invalida ou sem permissao',
+                'error' => 'Escola nao encontrada',
+            ], 404);
+        } else {
+            return redirect()->route('panel')->with(['error' => 'Escola inválida ou sem permissão!']);
+        }
     }
 }
