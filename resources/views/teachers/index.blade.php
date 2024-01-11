@@ -9,24 +9,6 @@
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     @endsection
 
-    @php
-        $curriculum = $class->curriculum;
-    @endphp
-
-    @if (!$curriculum)
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="alert alert-warning" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>
-                        <strong>Atenção!</strong>
-                        Você deve definir uma matriz curricular na turma para poder vincular professores.
-                    </span>
-                </div>
-            </div>
-        </div>
-    @endif
-
 
     <div class="row">
         <div class="col-sm-12">
@@ -114,12 +96,11 @@
                     <strong>Telefone:</strong> ${teacher.phone}
                 </p>
                 <div class="row mt-3">
-                    <form action="{{route('manage.classes.teachers.invite')}}" method="POST">
+                    <form action="{{route('manage.classes.teachers.invite', $class->code  )}}" method="POST">
                         @csrf
                         @method('POST')
                         <input type="hidden" name="username" value="${teacher.username}">
                         <input type="hidden" name="role" value="teacher">
-                        <input type="hidden" name="class" value="{{ $class->code }}">
                     <button type="submit" class="btn btn-seia-yellow">Solicitar vinculo</button>
                     </div>
             </div>
