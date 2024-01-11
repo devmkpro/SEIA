@@ -11,11 +11,13 @@
     --seia-jeans:#35488b;
     --seia-greenligth:#00c949;
     --seia-green:#00a149;
+    --seia-dark: rgba(56, 56, 56, 0.70);
     --seia-darkback:#383737;
     --seia-ligthgrey:#595959;
     --seia-grey:#686868;
 
     --seia-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+    --seia-shadow2: 0px 3px 9px 1px rgba(0, 0, 0, 0.25);
 }
 
 /* scrollbar smurfs */
@@ -32,6 +34,10 @@ body, #content-wrapper{
     background-attachment: fixed;
     background-color: white !important;
     font-family: 'Quicksand', sans-serif !important;
+}
+
+.h-seia-full{
+    height: 100vh !important;
 }
 
 .text-dark-seia{

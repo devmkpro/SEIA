@@ -3,6 +3,14 @@ body{
     color: white !important; 
 }
 
+body, #content-wrapper {
+    background-image: url('https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675769151/assets/seia/img/fundo_uvigv0.png') !important;
+}
+
+.seia-shadow{
+    box-shadow: var(--seia-shadow2) !important;
+}
+
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -233,8 +241,8 @@ body{
 .dropdown-menu{
     box-shadow: var(--seia-shadow) !important;
     background: rgba(56,55,55,0.5) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(50px) !important;
+    backdrop-filter: blur(50px) !important;
     
     
 }
@@ -257,8 +265,8 @@ body{
 
 /* cards */
 main .card{
-    background: var(--seia-darkack);
-    box-shadow: var(--seia-shadow);
+    background: var(--seia-dark);
+    box-shadow: var(--seia-shadow2);
     border: none;
 }
 
