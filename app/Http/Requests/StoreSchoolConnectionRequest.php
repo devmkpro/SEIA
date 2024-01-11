@@ -24,7 +24,6 @@ class StoreSchoolConnectionRequest extends FormRequest
         return [
             'username' => 'required|string|exists:users,username',
             'role' => 'required|string|exists:roles,name',
-            'class' => 'required|string|exists:classes,code',
         ];
     }
 }

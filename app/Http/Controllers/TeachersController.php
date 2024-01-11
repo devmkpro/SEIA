@@ -81,29 +81,40 @@ class TeachersController extends Controller
     /**
      * Create new request to connect school.
      */
-
-    public function invite(StoreSchoolConnectionRequest $request)
-    {
-
-        $isInvited = SchoolConnectionRequest::where('user_uuid', User::where('username', $request->username)->first()->uuid)->where('class_uuid', Classes::where('code', $request->class)->first()->uuid)->where('role', Role::where('name', $request->role)->first()->uuid)->first();
-
-        if ($isInvited) {
-            return $this->response($request, 'manage.classes.teachers', 'Solicitação de vinculo já enviada!', 'message', 200, 'code', $request->class);
+    public function invite(StoreSchoolConnectionRequest $request, $code)
+    {   
+        $class = Classes::where('code', $code)->first();
+        if (!$class) {
+            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
         }
 
-        $isTeacher = TeachersSchoolsSubjects::where('user_uuid', User::where('username', $request->username)->first()->uuid)->where('class_uuid', Classes::where('code', $request->class)->first()->uuid)->first();
+        $user = User::where('username', $request->username)->first();
+        $role = Role::where('name', $request->role)->first();
+
+        $isInvited = SchoolConnectionRequest::where('user_uuid', $user->uuid)
+            ->where('class_uuid', $class->uuid)
+            ->where('role', $role->uuid)
+            ->first();
+
+        if ($isInvited) {
+            return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo já enviada!', 'message', 200, 'code', $class->code);
+        }
+
+        $isTeacher = TeachersSchoolsSubjects::where('user_uuid', $user->uuid)
+            ->where('class_uuid', $class->uuid)
+            ->first();
 
         if ($isTeacher) {
-            return $this->response($request, 'manage.classes.teachers', 'Professor já vinculado a turma!', 'error', 200, 'code', $request->class);
+            return $this->response($request, 'manage.classes.teachers', 'Professor já vinculado à turma!', 'error', 200, 'code', $class->code);
         }
 
         SchoolConnectionRequest::create([
             'school_uuid' => (new SchoolController)->getHome($request)->uuid,
-            'user_uuid' => User::where('username', $request->username)->first()->uuid,
-            'role' => Role::where('name', $request->role)->first()->uuid,
-            'class_uuid' => Classes::where('code', $request->class)->first()->uuid,
+            'user_uuid' => $user->uuid,
+            'role' => $role->uuid,
+            'class_uuid' => $class->uuid,
         ]);
 
-        return $this->response($request, 'manage.classes.teachers', 'Solicitação de vinculo enviada com sucesso!', 'message', 200, 'code', $request->class);
+        return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo enviada com sucesso!', 'message', 200, 'code', $class->code);
     }
 }
