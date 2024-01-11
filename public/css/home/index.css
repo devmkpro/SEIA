@@ -350,8 +350,8 @@ body, #content-wrapper{
 
 .dropdown-menu{
     background: rgba(255, 255, 255, 0.726) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(50px) !important;
+    backdrop-filter: blur(50px) !important;
 }
 
 .dropdown-item{
@@ -426,7 +426,6 @@ body, #content-wrapper{
 
 .avisos .title{
     font-weight: 900 !important;
-    line-height: 19px !important;
     margin-bottom: 5px !important;
     font-size: 1.5rem !important;
 }
