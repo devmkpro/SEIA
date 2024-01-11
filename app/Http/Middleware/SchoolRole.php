@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ class SchoolRole
     {
         $authGuard = Auth::guard($guard);
         $user = $authGuard->user();
+        $user = User::find($user->uuid); // Refresh user data to funcion model methods
 
         if (!$user && $request->bearerToken() && config('permission.use_passport_client_credentials')) {
             $user = Guard::getPassportClient($guard);

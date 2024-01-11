@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classes;
 use App\Models\Role;
 use App\Models\School;
 use Illuminate\Http\Request;
 use App\Models\SchoolConnectionRequest;
 use App\Models\User;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class SchoolConnectionController extends Controller
