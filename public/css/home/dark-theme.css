@@ -136,12 +136,7 @@ body, #content-wrapper {
 }
 
 .navbar-nav .menu-title{
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 19px;
     color: white !important;
-    margin-bottom: 10px;
-    margin-left: 20px;
 }
 
 /* Button toggle */
