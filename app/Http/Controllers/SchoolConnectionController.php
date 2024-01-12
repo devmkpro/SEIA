@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
 use App\Models\Role;
 use App\Models\School;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class SchoolConnectionController extends Controller
 
 
         if($request_connection->class_uuid){
-            (new TeachersController())->store($request_connection->class_uuid, $user->uuid);
+            (new TeachersController())->linkinClass($request_connection->class_uuid, $user->uuid);
         }
 
         // Revoke request uuid for delete invitation

@@ -15,14 +15,14 @@ return new class extends Migration
             $table->uuid('uuid')->primary();
             $table->uuid('user_uuid');
             $table->date('birth_date');
-            $table->string('gender');
+            $table->enum("gender", ["M", "F", "NB"]);
             $table->string('country');
             $table->string('district');
             $table->string('city');
             $table->string('city_birth');
             $table->string('state');
             $table->string('state_birth');
-            $table->string('zone');
+            $table->enum("zone", ["U", "R"]);
             $table->string('zip_code');
             $table->string('cpf_responsible');
             $table->string('name_responsible')->nullable();
