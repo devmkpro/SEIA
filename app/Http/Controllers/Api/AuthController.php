@@ -17,19 +17,15 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = User::where('email', $request->email)->first();
             if (!$user->active) {
-                return response()->json([
-                    'message' => 'Usuário inativo',
-                ], 401);
-            } else {
-                return response()->json([
-                    'access_token' => $user->createToken('invoice')->plainTextToken,
-                    'token_type' => 'Bearer',
-                ]);
+                return response()->json(['message' => 'Usuário inativo'], 401);
             }
+            
+            return response()->json([
+                'access_token' => $user->createToken('invoice')->plainTextToken,
+                'token_type' => 'Bearer',
+            ]);
         }
 
-        return response()->json([
-            'message' => 'Login inválido',
-        ], 401);
+        return response()->json(['message' => 'Login inválido'], 401);
     }
 }
