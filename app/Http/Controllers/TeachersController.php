@@ -11,7 +11,6 @@ use App\Models\TeachersSchoolsSubjects;
 use App\Models\User;
 use App\Models\State;
 use App\Models\City;
-use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

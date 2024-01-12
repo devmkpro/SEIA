@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
                 'country' => 'Brasil',
                 'street' => 'Rua Teste',
                 'number' => '999',
-                'zone' => 'urbana',
+                'zone' => 'U',
                 'city' => 'Cidade Teste',
                 'city_birth' => 'Cidade Teste',
                 'state' => 'Estado Teste',
