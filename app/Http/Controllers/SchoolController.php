@@ -31,7 +31,7 @@ class SchoolController extends Controller
     /**
      * Display the schools create.
      */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View
     {
         return view('admin.schools.create',[
             'title' => 'Cadastrar Escola',
