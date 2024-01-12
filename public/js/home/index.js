@@ -29,10 +29,9 @@ window.addEventListener("load", function () {
         contentWrapper.style.overflowY = "auto";
         sidebar.classList.add("toggled");
         document.body.classList.add("sidebar-toggled");
-
- }
-
+    }
 });
+
 (function (){
     "use strict"; // Start of use strict
 
@@ -371,6 +370,25 @@ function cancelDiarioAlterar() {
     }
 }
 
+
+
+window.addEventListener("load", function () {
+    var vw = Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+    );
+
+    const menutitle = document.querySelectorAll(".menu-title");
+
+    if (vw > 768) {
+        if (localStorage.getItem('sidebar-toggled') == 'sidebar-toggled') {
+            menutitle.forEach((m) => {
+                m.classList.add("align-self-start")
+                m.classList.add("center");
+            });
+        }
+    }
+});
 
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
