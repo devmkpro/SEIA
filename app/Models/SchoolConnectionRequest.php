@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\NotificationController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -41,5 +42,10 @@ class SchoolConnectionRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class, "user_uuid", "uuid");
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, "class_uuid", "uuid");
     }
 }

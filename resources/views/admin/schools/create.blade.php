@@ -6,7 +6,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('manage.schools.store')}}" method="POST">
+                    <form action="{{ route('manage.schools.store') }}" method="POST">
                         @csrf
                         @method('POST')
                         <div class="row">
@@ -15,15 +15,13 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" class="form-control"
-                                    placeholder="Nome da escola"
-                                    value="{{ old('name') }}" required>
+                                    placeholder="Nome da escola" value="{{ old('name') }}" required>
 
                             </div>
                             <div class="col-sm-12 col-md-3">
                                 <label for="cnpj">CNPJ</label>
                                 <input type="text" name="cnpj" id="cnpj" class="form-control"
-                                    placeholder="CNPJ da escola"
-                                    value="{{ old('cnpj') }}">
+                                    placeholder="CNPJ da escola" value="{{ old('cnpj') }}">
                             </div>
 
                             <div class="col-sm-12 col-md-3">
@@ -42,24 +40,20 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="email" name="email" id="email" class="form-control"
-                                    placeholder="E-mail da escola"
-                                    value="{{ old('email') }}" required>
+                                    placeholder="E-mail da escola" value="{{ old('email') }}" required>
                             </div>
                             <div class="col-sm-12 col-md-3">
                                 <label for="phone">Celular da escola
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="phone" id="phone" class="form-control"
-                                    placeholder="Celular da escola"
-                                    value="{{ old('phone') }}"
-                                    required>
+                                    placeholder="Celular da escola" value="{{ old('phone') }}" required>
                             </div>
 
                             <div class="col-sm-12 col-md-3">
                                 <label for="landline">Telefone fixo</label>
                                 <input type="text" name="landline" id="landline" class="form-control"
-                                    placeholder="Telefone da escola"
-                                    value="{{ old('landline') }}">
+                                    placeholder="Telefone da escola" value="{{ old('landline') }}">
                             </div>
                         </div>
 
@@ -70,9 +64,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="zip_code" id="zip_code" class="form-control"
-                                    placeholder="CEP da escola"
-                                    value="{{ old('zip_code') }}"
-                                    required>
+                                    placeholder="CEP da escola" value="{{ old('zip_code') }}" required>
                             </div>
 
                             <div class="col-sm-12 col-md-4">
@@ -80,17 +72,14 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="district" id="district" class="form-control"
-                                    placeholder="Bairro da escola"
-                                    value="{{ old('district') }}"
-                                    required>
+                                    placeholder="Bairro da escola" value="{{ old('district') }}" required>
                             </div>
 
                             <div class="col-sm-12 col-md-4">
                                 <label for="street">Rua
                                 </label>
                                 <input type="text" name="street" id="street" class="form-control"
-                                    placeholder="Rua da escola"
-                                    value="{{ old('street') }}">
+                                    placeholder="Rua da escola" value="{{ old('street') }}">
                             </div>
                         </div>
 
@@ -101,8 +90,7 @@
 
                                 </label>
                                 <input type="text" name="inep" id="inep" class="form-control"
-                                    placeholder="INEP da escola"
-                                    value="{{ old('inep') }}">
+                                    placeholder="INEP da escola" value="{{ old('inep') }}">
                             </div>
 
                             <div class="col-sm-12 col-md-4">
@@ -128,7 +116,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select name="has_education_infant" id="has_education_infant" class="form-control"
-                                    value="{{ old('has_education_infant') }}"  required>
+                                    value="{{ old('has_education_infant') }}" required>
                                     <option value="1" selected>Sim</option>
                                     <option value="0">Não</option>
                                 </select>
@@ -173,7 +161,8 @@
                                     <label for="public">Escola Pública
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select name="public" id="public" class="form-control" value="{{ old('public') }}" required>
+                                    <select name="public" id="public" class="form-control"
+                                        value="{{ old('public') }}" required>
                                         <option value="1" selected>Sim</option>
                                         <option value="0">Não</option>
                                     </select>
@@ -183,8 +172,9 @@
                                     <label for="state_code">Estado
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select name="state_code" id="state_code" class="form-control" value="{{ old('state_code') }}" required>
-                                        <option value="" selected>Selecione</option>
+                                    <select name="state_code" id="state_code" class="form-control"
+                                        value="{{ old('state_code') }}" required>
+                                        <option value="0" selected>Selecione</option>
                                         @foreach ($states as $state)
                                             <option value="{{ $state->ibge_code }}">{{ $state->name }}</option>
                                         @endforeach
@@ -195,8 +185,9 @@
                                     <label for="city_code">Cidade
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select name="city_code" id="city_code" class="form-control" value="{{ old('city_code') }}" required>
-                                        <option value="" selected>Selecione um estado</option>
+                                    <select name="city_code" id="city_code" class="form-control"
+                                        value="{{ old('city_code') }}" required>
+                                        <option value="0" selected>Selecione um estado</option>
                                     </select>
                                 </div>
                             </div>
@@ -225,9 +216,13 @@
 
                 $('#state_code').change(function() {
                     var state_code = $(this).val();
-                    var url = "{{ route('manage.states.cities')}}";
+                    var url = "{{ route('manage.states.cities') }}";
                     var token = "{{ csrf_token() }}";
-
+                    if (state_code == 0) {
+                        $('#city_code').empty();
+                        $('#city_code').append('<option value="" selected>Selecione um estado</option>');
+                        return;
+                    }
                     $.ajax({
                         url: url,
                         type: 'GET',
@@ -238,14 +233,13 @@
                         dataType: 'json',
                         success: function(response) {
                             $('#city_code').empty();
-                            $('#city_code').append('<option value="" selected>Selecione uma cidade</option>');
+                            $('#city_code').append(
+                                '<option value="" selected>Selecione uma cidade</option>');
                             $.each(response, function(index, value) {
-                                $('#city_code').append('<option value="' + value.ibge_code + '">' + value
+                                $('#city_code').append('<option value="' + value.ibge_code +
+                                    '">' + value
                                     .name + '</option>');
                             });
-                        },
-                        error: function(xhr) {
-                            alert('Ocorreu um erro, tente novamente mais tarde.');
                         }
                     });
                 });
@@ -253,5 +247,5 @@
         </script>
     @endsection
 
-  
+
 </x-app-layout>

@@ -37,7 +37,6 @@
             </div>
         </div>
     </div>
-
     @schoolPermission('create-any-teacher', optional($school_home)->uuid)
         <x-modal titleModal="Adicionar novo Professor" identifier="addTeacherModal" id="addTeacherTable">
             <div class="me-3 ms-3 mt-2">
@@ -70,13 +69,11 @@
 
                 <div class="row mt-3 d-flex justify-content-center align-items-center">
                     <div class="col-md-2">
-                        <a href="#" class="btn btn-seia-oceanblue">
+                        <a href="{{route('manage.classes.teachers.create', $class->code)}}" class="btn btn-seia-oceanblue">
                             <i class="ph ph-user-plus-bold fs-5"></i>
                             Cadastrar</a>
                     </div>
                 </div>
-
-
             </div>
         </x-modal>
 

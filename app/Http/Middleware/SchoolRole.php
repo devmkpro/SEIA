@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ class SchoolRole
     {
         $authGuard = Auth::guard($guard);
         $user = $authGuard->user();
+        $user = User::find($user->uuid); // Refresh user data to funcion model methods
 
         if (!$user && $request->bearerToken() && config('permission.use_passport_client_credentials')) {
             $user = Guard::getPassportClient($guard);
@@ -35,11 +37,17 @@ class SchoolRole
         }
 
         $schoolUUID = Cookie::get('school_home');
-        $schoolUUID = decrypt($schoolUUID);
 
         if ($user->hasRole('admin')) {
             return $next($request);
+        } 
+
+        try {
+            $schoolUUID = decrypt($schoolUUID);
+        } catch (\Exception $e) {
+            return $this->terminateError($request);
         }
+
 
         $rolesArray = explode('|', $roles);
 
@@ -49,6 +57,17 @@ class SchoolRole
             }
         }
 
-        abort(403, 'Unauthorized.');
+        return $this->terminateError($request);
+    }
+
+    public function terminateError ($request) {
+        if ($request->bearerToken()) {
+            return response()->json([
+                'message' => 'Escola invalida ou sem permissao',
+                'error' => 'Escola nao encontrada',
+            ], 404);
+        } else {
+            return redirect()->route('panel')->with(['error' => 'Escola inválida ou sem permissão!']);
+        }
     }
 }

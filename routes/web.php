@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClassesController;
@@ -54,6 +53,7 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
             Route::get('/gerenciar/turmas/{code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
             Route::middleware(['school_curriculum_set'])->group(function () {
                 Route::get('/gerenciar/turmas/{code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
+                Route::get('/gerenciar/turmas/{code}/professores/cadastrar', [TeachersController::class, 'create'])->name('manage.classes.teachers.create')->middleware('permission:create-any-teacher');
             });
         });
     });

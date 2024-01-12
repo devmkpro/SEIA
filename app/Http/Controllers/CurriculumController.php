@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Curriculum;
 use App\Http\Requests\StoreCurriculumRequest;
-use Illuminate\Support\Facades\Redirect;
 
 class CurriculumController extends Controller
 {

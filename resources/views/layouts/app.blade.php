@@ -48,13 +48,13 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <div id="blockScrollMobile"  class="d-none"></div>
+        <div id="blockScrollMobile" class="d-none"></div>
         <nav class="navbar navbar-light align-items-start sidebar sidebar-dark accordion p-0" id="sidebar">
             <div class="container-fluid d-flex flex-column p-0 scroll-active">
                 <div class="top">
                     <span>
-                        <button class="btn btn-link d-md-none me-3 px-2 d-none sidebarToggleTopMobile" id="sidebarToggleTopMobile" type="button"
-                            aria-label="Fechar/Abrir sidebar">
+                        <button class="btn btn-link d-md-none me-3 px-2 d-none sidebarToggleTopMobile"
+                            id="sidebarToggleTopMobile" type="button" aria-label="Fechar/Abrir sidebar">
                             <i class="ph-fill ph-x fs-3"></i>
                         </button>
                     </span>
@@ -89,15 +89,16 @@
                         </span>
                     </div>
 
-
+                    
                     <hr class="sidebar-divider my-3 shadow-sm">
 
                 </div>
 
                 <ul class="navbar-nav center animated--fade-in" id="accordionSidebar">
                     <span class="menu-title align-self-start">Menu</span>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Início"><a class="nav-link blue center" href="{{ route('panel') }}"><i
-                                class="ph-house-fill icons-menu"></i></i><span class="a-name">Início</span></a></li>
+                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Início"><a class="nav-link blue center"
+                            href="{{ route('panel') }}"><i class="ph-house-fill icons-menu"></i></i><span
+                                class="a-name">Início</span></a></li>
 
 
                     @schoolRole('director', optional($school_home)->uuid)
@@ -105,7 +106,7 @@
                             @include('layouts.partials.nav-li-itens-for-secretary')
                         @endif
                     @endschoolRole
-                    
+
                     @schoolRole('secretary', optional($school_home)->uuid)
                         @if ($school_home)
                             @include('layouts.partials.nav-li-itens-for-secretary')
@@ -113,15 +114,15 @@
                     @endschoolRole
 
                     @schoolRole('student', optional($school_home)->uuid)
-                        @include('layouts.partials.nav-li-itens-for-students')
-                    @endrole
+                    @include('layouts.partials.nav-li-itens-for-students')
+                @endrole
 
-                    @role('admin')
-                        @if ($school_home)
-                            @include('layouts.partials.nav-li-itens-for-secretary')
-                        @endif
-                        @include('layouts.partials.nav-li-itens-for-admin')
-                    @endrole
+                @role('admin')
+                    @if ($school_home)
+                        @include('layouts.partials.nav-li-itens-for-secretary')
+                    @endif
+                    @include('layouts.partials.nav-li-itens-for-admin')
+                @endrole
 
 
 
@@ -133,8 +134,16 @@
                         <span class="a-name">Minhas Informações</span>
                     </a>
                 </li>
-                <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Configurações"><a class="nav-link blue center" href="#"><i
-                            class="ph-gear icons-menu"></i>
+
+                <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Notificações">
+                    <a class="nav-link yellow center" href="#">
+                        <i class="ph-bell-fill icons-menu"></i>
+                        <span class="a-name">Notificações</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Configurações"><a
+                        class="nav-link blue center" href="#"><i class="ph-gear icons-menu"></i>
                         <span class="a-name">Configurações</span></a>
                 </li>
 
@@ -177,13 +186,13 @@
                                 <form action="{{ route('delete-school-home') }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                        <button class="d-flex flex-column align-items-start">
-                                            <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
-                                                alt="LogoDaEscola" class="img-fluid" style="height: 12px">
-                                            <span class="">
-                                                {{ $school_home ? $school_home->name : null }}
-                                            </span>
-                                        </button>
+                                    <button class="d-flex flex-column align-items-start">
+                                        <img src="https://res.cloudinary.com/dnjjcvwx5/image/upload/v1675640779/logos/seia_logo_etwo84.svg"
+                                            alt="LogoDaEscola" class="img-fluid" style="height: 12px">
+                                        <span class="">
+                                            {{ $school_home ? $school_home->name : null }}
+                                        </span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -243,48 +252,85 @@
                             </div>
                         </li>
 
-
+                        @php
+                            $notifications = \App\Models\Notifications::where('user_uuid', auth()->user()->uuid)->where('read', 0)->get();
+                        @endphp
 
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="nav-item dropdown no-arrow">
                                 <a class="dropdown-toggle nav-link yellow" aria-expanded="false"
                                     data-bs-toggle="dropdown" href="#">
-                                    <span class="badge bg-danger badge-counter">3+</span><i
+                                    <span class="badge bg-danger badge-counter">
+                                        {{ $notifications->count() }}    
+                                    </span><i
                                         class="ph-bell fs-5"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                    <h6 class="dropdown-header text-center">Notificações</h6><a
-                                        class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="me-3">
-                                            <div class="bg-primary icon-circle"><i class="ph-file text-white"></i>
+                                    <h6 class="dropdown-header text-center">Notificações</h6>
+                                    
+                                    @if ($notifications->count() == 0)
+                                    
+                                        <div class="d-flex justify-content-center py-5">
+                                            <span class="text-center text-dark-seia">
+                                                Nenhuma notificação
+                                            </span>
+                                        </div>
+                                        
+                                    @endif
+
+                                    @foreach ($notifications->take(4) as $notification)
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="me-3">
+                                                <div class="bg-primary text-white icon-circle"><i
+                                                        class="{{ $notification->icon }}"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div><span class="small text-seia-dark">December 12, 2019</span>
-                                            <p>A new monthly report is ready to download!</p>
-                                        </div>
-                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="me-3">
-                                            <div class="bg-success icon-circle"><i
-                                                    class="ph-donate text-white"></i></div>
-                                        </div>
-                                        <div><span class="small text-seia-dark">December 7, 2019</span>
-                                            <p>$290.29 has been deposited into your account!</p>
-                                        </div>
-                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="me-3">
-                                            <div class="bg-warning icon-circle"><i
-                                                    class="fas fa-exclamation-triangle text-white"></i></div>
-                                        </div>
-                                        <div><span class="small text-seia-dark">December 2, 2019</span>
-                                            <p>Spending Alert: We've noticed unusually high spending for your
-                                                account.</p>
-                                        </div>
-                                    </a><a class="dropdown-item text-center small text-seia-dark"
-                                        href="#">Show All
-                                        Alerts</a>
+                                            <div><span class="small text-dark-seia">
+                                                    {{ $notification->created_at->format('d/m/Y - H:i') }}
+                                                </span>
+                                                <p class="fw-bold">
+                                                    {{ $notification->title }}
+                                                    
+                                                </p>
+                                                <hr>
+                                                
+                                                <p>
+                                                    {{$notification->body}}
+                                                </p>
+                                            </div>
+
+                                            @if ($notification->type == "request")
+                                                <div class="d-flex justify-content-end">
+                                                    <form action="{{route('manage.invite.accept')}}" method="POST">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="school_request" value="{{$notification->request_uuid}}">
+                                                        <input type="hidden" name="notification" value="{{ $notification->uuid }}">
+                                                        <button type="submit" class="btn btn-seia-greenligth btn-sm me-2">
+                                                            <i class="ph-check"></i>
+                                                        </button>
+                                                    </form>
+                                                    <form action="#" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="status" value="2">
+                                                        <button type="submit" class="btn btn-seia-red btn-sm">
+                                                            <i class="ph-x"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            @endif
+                                        </a>
+                                    @endforeach
+
+
+                                    <a class="dropdown-item text-center small text-dark-seia" href="#">
+                                        Ver todas as notificações
+                                    </a>
                                 </div>
                             </div>
                         </li>
+
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link lime"
                                     aria-expanded="false" data-bs-toggle="dropdown" href="#"><span
@@ -301,7 +347,7 @@
                                         <div class="fw-bold">
                                             <div class="text-truncate"><span>Hi there! I am wondering if you can
                                                     help me with a problem I've been having.</span></div>
-                                            <p class="small text-seia-dark mb-0">Emily Fowler - 58m</p>
+                                            <p class="small text-dark-seia mb-0">Emily Fowler - 58m</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
@@ -313,7 +359,7 @@
                                             <div class="text-truncate"><span>I have the photos that you ordered
                                                     last
                                                     month!</span></div>
-                                            <p class="small text-seia-dark mb-0">Jae Chun - 1d</p>
+                                            <p class="small text-dark-seia mb-0">Jae Chun - 1d</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
@@ -325,7 +371,7 @@
                                             <div class="text-truncate"><span>Last month's report looks great, I am
                                                     very happy with the progress so far, keep up the good
                                                     work!</span></div>
-                                            <p class="small text-seia-dark mb-0">Morgan Alvarez - 2d</p>
+                                            <p class="small text-dark-seia mb-0">Morgan Alvarez - 2d</p>
                                         </div>
                                     </a><a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image me-3">
@@ -338,9 +384,9 @@
                                             <div class="text-truncate"><span>Am I a good boy? The reason I ask is
                                                     because someone told me that people say this to all dogs, even
                                                     if they aren't good...</span></div>
-                                            <p class="small text-seia-dark mb-0">Chicken the Dog · 2w</p>
+                                            <p class="small text-dark-seia mb-0">Chicken the Dog · 2w</p>
                                         </div>
-                                    </a><a class="dropdown-item text-center small text-seia-dark"
+                                    </a><a class="dropdown-item text-center small text-dark-seia"
                                         href="#">Ver todas
                                         as mensagens </a>
                                 </div>
