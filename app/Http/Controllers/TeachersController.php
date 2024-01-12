@@ -2,24 +2,110 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\StoreSchoolConnectionRequest;
 use App\Models\Classes;
 use App\Models\Role;
 use App\Models\SchoolConnectionRequest;
 use App\Models\TeachersSchoolsSubjects;
 use App\Models\User;
+use App\Models\State;
+use App\Models\City;
+use App\Models\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TeachersController extends Controller
 {
+
+    /**
+     * Render the teachers create view.
+     */
+    public function create(Request $request, $code): \Illuminate\View\View
+    {
+        $class = Classes::where('code', $code)->first();
+        if (!$class) {
+            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
+        }
+        return view('teachers.create', [
+            'title' => 'Cadastrar professor(a)',
+            'slot' => 'Você está cadastrando um novo professor(a) para a turma ' . $class->name . '/' . $class->schoolYear->name,
+            'states' => State::all(),
+            'cities' => City::all(),
+            'class' => $class,
+        ]);
+    }
+
+    /**
+     * Store a new teacher.
+     */
+    public function store(StoreEmployeeRequest $request, $class_code)
+    {
+        $school_home = (new SchoolController)->getHome($request);
+        $class = Classes::where('code', $class_code)->where('schools_uuid', $school_home->uuid)->first();
+        
+        if (!$class || $class->schools_uuid != $school_home->uuid) {
+            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
+        }
+
+        $dataToCreateUser = [
+            'name' => $request->nome,
+            'email' => $request->email,
+            'phone' => $request->celular,
+            'password' => str_replace(['.', '-', '/'], '', $request->cpf),
+        ];
+
+        try {
+            DB::beginTransaction();
+
+
+            (new ProfileController)->store($dataToCreateUser);
+            $user = User::where('email', $request->email)->first();
+            $user->datauser()->create([
+                'landline' => $request->telefone_fixo,
+                'inep' => $request->inep,
+                'cpf' => $request->cpf,
+                'district' => $request->bairro,
+                'birth_date' => $request->data_nascimento,
+                'gender' => $request->genero,
+                'rg' => $request->rg,
+                'country' => $request->naturalidade,
+                'street' => $request->logradouro,
+                'number' => $request->numero,
+                'zone' => $request->zona,
+                'city' => $request->cidade,
+                'city_birth' => $request->cidade_nascimento,
+                'state' => $request->estado,
+                'state_birth' => $request->estado_nascimento,
+                'zip_code' => $request->cep,
+                'mother_name' => $request->nome_mae,
+                'father_name' => $request->nome_pai,
+                'cpf_responsible' => $request->cpf,
+                'deficiency' => $request->deficiencia,
+                'zip_code' => $request->cep,
+            ]);
+
+            $user->assignRole('teacher');
+            $user->assignRoleForSchool('teacher', $school_home->uuid);
+            $this->linkinClass($class->uuid, $user->uuid);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th);
+            return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar professor(a)!', 'error', 500, 'code', $class->code);
+        }
+
+        DB::commit();
+        return $this->response($request, 'manage.classes.teachers', 'Professor(a) cadastrado(a) com sucesso!', 'message', 200, 'code', $class->code);
+    }
+
     /**
      * Render the teachers view.
      */
-    public function teachers(Request $request, $code)
+    public function teachers(Request $request, $class_code)
     {
         $school_home = (new SchoolController)->getHome($request);
-        $class = Classes::where('code', $code)->where('schools_uuid', $school_home->uuid)->first();
-        if (!$class) {
+        $class = Classes::where('code', $class_code)->where('schools_uuid', $school_home->uuid)->first();
+        if (!$class || $class->schools_uuid != $school_home->uuid) {
             return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
         }
         return view('teachers.index', [
@@ -32,12 +118,12 @@ class TeachersController extends Controller
     /**
      * Get teachers from class.
      */
-    public function getTeachers(Request $request, $code)
+    public function getTeachers(Request $request, $class_code)
     {
         $school_home = (new SchoolController)->getHome($request);
-        $class = Classes::where('code', $code)->where('schools_uuid', $school_home->uuid)->first();
+        $class = Classes::where('code', $class_code)->where('schools_uuid', $school_home->uuid)->first();
 
-        if (!$class) {
+        if (!$class || $class->schools_uuid != $school_home->uuid) {
             return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
         }
 
@@ -60,7 +146,7 @@ class TeachersController extends Controller
 
         $teachers = $class->teachers;
         return $teachers->map(function ($teacher) {
-            if ($teacher->subjects){
+            if ($teacher->subjects) {
                 $subjects = $teacher->subjects->pluck('name')->map(function ($subject) {
                     return ucfirst($subject);
                 })->implode(', ');
@@ -71,18 +157,18 @@ class TeachersController extends Controller
             return [
                 'name' => $teacher->user->name,
                 'email' => $teacher->user->email,
-                'subjects' => $subjects,
                 'phone' => $teacher->user->phone,
                 'username' => $teacher->user->username,
+                'subjects' => $subjects,
             ];
-        })->unique('user_uuid');
+        });
     }
 
     /**
      * Create new request to connect school.
      */
     public function invite(StoreSchoolConnectionRequest $request, $code)
-    {   
+    {
         $class = Classes::where('code', $code)->first();
         if (!$class) {
             return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
@@ -126,7 +212,7 @@ class TeachersController extends Controller
     /**
      * Link teacher to class.
      */
-    public function store($class_uuid, $user_uuid)
+    public function linkinClass($class_uuid, $user_uuid)
     {
         $class = Classes::where('uuid', $class_uuid)->first();
         TeachersSchoolsSubjects::create([
@@ -137,6 +223,6 @@ class TeachersController extends Controller
 
         return response()->json([
             'message' => 'Professor vinculado com sucesso!',
-        ], 201);  
+        ], 201);
     }
 }
