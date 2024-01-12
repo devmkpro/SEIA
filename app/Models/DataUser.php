@@ -60,6 +60,10 @@ class DataUser extends Model
         'deficiency' => 'boolean',
     ];
 
+    /**
+     * Get the user that owns the data user.
+     */
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -39,7 +39,10 @@ class Curriculum extends Model
             $model->code = $model->generateCode();
         });
     }
-
+    
+    /**
+     * Generate a unique code for the curriculum.
+     */
     protected function generateCode(): int
     {
         $code = rand(100000, 999999);

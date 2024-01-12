@@ -8,7 +8,8 @@ use App\Models\City;
 
 class CitySeeder extends Seeder
 {
-
+    protected $BASE_URL;
+    
     public function __construct()
     {
         $this->BASE_URL = 'https://servicodados.ibge.gov.br/api/v1/localidades/municipios';

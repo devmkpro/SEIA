@@ -97,7 +97,11 @@ class Classes extends Model
         return $this->hasMany(TeachersSchoolsSubjects::class, 'school_uuid', 'schools_uuid', 'user_uuid', 'user_uuid', 'class_uuid', 'uuid');
     }
 
-    public function school(){
+    /**
+     * Get the school that owns the Classes
+     */
+    public function school()
+    {
         return $this->belongsTo(School::class, 'schools_uuid', 'uuid');
     }
 
