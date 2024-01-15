@@ -23,7 +23,7 @@ use App\Http\Controllers\TeachersController;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
     Route::post('/set-school-home', [SchoolController::class, 'setHome'])->name('set-school-home')->middleware('to.set.school.home');
