@@ -48,7 +48,7 @@
                                 <form action="{{ route('set-school-home') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="school" value="${row.uuid}">
-                                    <button type="submit" class="btn btn-outline-primary btn-sm">Gerenciar</button>
+                                    <button type="submit" class="btn btn-seia-oceanblue btn-sm">Gerenciar</button>
                                 </form> `;
                             }
                         }

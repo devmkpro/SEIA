@@ -36,6 +36,11 @@ body, #content-wrapper{
     font-family: 'Quicksand', sans-serif !important;
 }
 
+input, textarea, select{
+    font-family: 'Quicksand', sans-serif !important;
+    color: var(--seia-ligthgrey) !important;
+}
+
 .h-seia-full{
     height: 100vh !important;
 }
@@ -112,6 +117,10 @@ body, #content-wrapper{
     border-color: var(--seia-oceanblue) !important;
 }
 
+.seia-border-blue{
+    border-color: var(--seia-oceanblue) !important;
+}
+
 .seia-border-darkblue{
     border-color: var(--seia-darkblue) !important;
 }
@@ -170,6 +179,13 @@ body, #content-wrapper{
     border-color: none !important;
 }
 
+.btn-seia-blue{
+    color:white !important;
+    background-color: var(--seia-oceanblue) !important;
+    border-color: none !important;
+}
+
+
 .btn-seia-darkblue{
     color:white !important;
     background-color: var(--seia-darkblue) !important;
@@ -223,7 +239,8 @@ body, #content-wrapper{
 .btn-seia-green:hover,
 .btn-seia-darkback:hover,
 .btn-seia-ligthgrey:hover,
-.btn-seia-grey:hover {
+.btn-seia-grey:hover,
+.btn-seia-blue:hover {
     background-color: var(--seia-darkback) !important;
     border-color: none !important;
 }
