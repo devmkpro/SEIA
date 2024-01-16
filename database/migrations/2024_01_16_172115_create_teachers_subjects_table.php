@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign("user_uuid")->references("uuid")->on("users");
             $table->foreign("class_uuid")->references("uuid")->on("classes");
             $table->foreign("subject_uuid")->references("uuid")->on("subjects");
+            $table->integer("weekly_workload")->default(0); 
             $table->timestamps();
         });
     }

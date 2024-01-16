@@ -25,6 +25,7 @@ class Curriculum extends Model
         'description',
         'modality',
         'complementary_information',
+        'default_time_class',
     ];
 
     /**

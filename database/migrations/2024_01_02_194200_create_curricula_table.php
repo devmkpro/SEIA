@@ -24,12 +24,14 @@ return new class extends Migration
             'educ_ini_6_9',
             'educ_med_1',
             'educ_med_2',
-            'educ_med_3', 
+            'educ_med_3',
+            'courses',
             'other');
             $table->integer('weekly_hours');
             $table->integer('total_hours');
             $table->time('start_time');
             $table->time('end_time');
+            $table->integer('default_time_class');
             $table->string('modality')
             ->enum(
                 'bercario',
@@ -39,6 +41,7 @@ return new class extends Migration
                 'medio',
                 'eja',
                 'educacao_especial',
+                'tecnico',
                 'other'
             );
 

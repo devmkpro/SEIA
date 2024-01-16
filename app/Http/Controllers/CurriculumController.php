@@ -53,6 +53,7 @@ class CurriculumController extends Controller
             'educ_med_1' => 'Ensino Médio - 1º ano',
             'educ_med_2' => 'Ensino Médio - 2º ano',
             'educ_med_3' => 'Ensino Médio - 3º ano',
+            'courses' => 'Curso',
             'other' => 'Outro',
         ];
 
@@ -72,6 +73,7 @@ class CurriculumController extends Controller
             'medio' => 'Ensino Médio',
             'eja' => 'EJA',
             'educacao_especial' => 'Educação Especial',
+            'tecnico' => 'Técnico',
             'other' => 'Outro',
         ];
 
@@ -95,6 +97,7 @@ class CurriculumController extends Controller
             'end_time' => $request->hora_final,
             'description' => $request->descricao,
             'complementary_information' => $request->informacoes_complementares,
+            'default_time_class' => $request->tempo_padrao_de_aula,
         ]);
 
         return $this->response($request, 'manage.curriculum', 'Matriz curricular cadastrada com sucesso!');
@@ -117,6 +120,7 @@ class CurriculumController extends Controller
             'total_hours' => $curriculum->total_hours,
             'description' => $curriculum->description,
             'complementary_information' => $curriculum->complementary_information,
+            'default_time_class' => $curriculum->default_time_class,
         ]);
     }
 
@@ -135,6 +139,7 @@ class CurriculumController extends Controller
             'end_time' => $request->hora_final,
             'description' => $request->descricao,
             'complementary_information' => $request->informacoes_complementares,
+            'default_time_class' => $request->tempo_padrao_de_aula,
         ]);
 
         return $this->response($request, 'manage.curriculum', 'Matriz curricular atualizada com sucesso!');

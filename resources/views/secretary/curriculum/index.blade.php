@@ -60,6 +60,7 @@
                                 <option value="educ_med_1">Ensino Medio - 1 serie</option>
                                 <option value="educ_med_2">Ensino Medio - 2 serie</option>
                                 <option value="educ_med_3">Ensino Medio - 3 serie</option>
+                                <option value="courses">Cursos</option>
                                 <option value="other">Outro</option>
                             </select>
                         </div>
@@ -73,6 +74,7 @@
                                 <option value="pre_escola">Pré-escola</option>
                                 <option value="fundamental">Ensino Fundamental</option>
                                 <option value="medio">Ensino Médio</option>
+                                <option value="tecnico">Ensino Técnico</option>
                                 <option value="eja">EJA</option>
                                 <option value="educacao_especial">Educação Especial</option>
                                 <option value="other">Outro</option>
@@ -96,16 +98,22 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="hora_início" class="form-label" required>Hora de aula inicial</label>
                             <input type="time" class="form-control" name="hora_início" placeholder="Ex. 40"
                                 value="{{ old('hora_início') }}" required>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="hora_final" class="form-label" required>Hora de aula Final</label>
                             <input type="time" class="form-control" name="hora_final" placeholder="Ex. 2000"
                                 value="{{ old('hora_final') }}" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="default_time_class" class="form-label" required>Tempo de aula (minutos)</label>
+                            <input type="text" class="form-control" name="tempo_padrao_de_aula" placeholder="Ex. 45"
+                                value="{{ old('tempo_padrao_de_aula') }}" required>
                         </div>
                     </div>
 
@@ -147,6 +155,7 @@
                                 <option value="educ_med_1">Ensino Medio - 1 serie</option>
                                 <option value="educ_med_2">Ensino Medio - 2 serie</option>
                                 <option value="educ_med_3">Ensino Medio - 3 serie</option>
+                                <option value="courses">Cursos</option>
                                 <option value="other">Outro</option>
                             </select>
                         </div>
@@ -160,6 +169,7 @@
                                 <option value="pre_escola">Pré-escola</option>
                                 <option value="fundamental">Ensino Fundamental</option>
                                 <option value="medio">Ensino Médio</option>
+                                <option value="tecnico">Ensino Técnico</option>
                                 <option value="eja">EJA</option>
                                 <option value="educacao_especial">Educação Especial</option>
                                 <option value="other">Outro</option>
@@ -181,16 +191,22 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="hora_início" class="form-label" required>Hora de aula inicial</label>
                                 <input type="time" class="form-control" name="hora_início" id="start_time"
                                     placeholder="Ex. 40" value="{{ old('hora_início') }}" required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="hora_final" class="form-label" required>Hora de aula Final</label>
                                 <input type="time" class="form-control" name="hora_final" id="end_time"
                                     placeholder="Ex. 2000" value="{{ old('hora_final') }}" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="default_time_class" class="form-label" required>Tempo de aula (minutos)</label>
+                                <input type="text" class="form-control" name="tempo_padrao_de_aula" id="default_time_class"
+                                    placeholder="Ex. 45" value="{{ old('tempo_padrao_de_aula') }}" required>
                             </div>
                         </div>
 
@@ -227,6 +243,7 @@
                         $('#editCurriculumForm #start_time').val(data.start_time);
                         $('#editCurriculumForm #end_time').val(data.end_time);
                         $('#editCurriculumForm #complementary_information').val(data.complementary_information);
+                        $('#editCurriculumForm #default_time_class').val(data.default_time_class);
 
                     },
                     error: function(data) {
