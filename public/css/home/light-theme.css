@@ -79,12 +79,7 @@
 }
 
 .navbar-nav .menu-title{
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 19px;
     color: var(--seia-grey) !important;
-    margin-bottom: 10px;
-    margin-left: 20px;
 }
 
 /* Button toggle */

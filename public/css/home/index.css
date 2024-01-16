@@ -36,6 +36,11 @@ body, #content-wrapper{
     font-family: 'Quicksand', sans-serif !important;
 }
 
+input, textarea, select{
+    font-family: 'Quicksand', sans-serif !important;
+    color: var(--seia-ligthgrey) !important;
+}
+
 .h-seia-full{
     height: 100vh !important;
 }
@@ -112,6 +117,10 @@ body, #content-wrapper{
     border-color: var(--seia-oceanblue) !important;
 }
 
+.seia-border-blue{
+    border-color: var(--seia-oceanblue) !important;
+}
+
 .seia-border-darkblue{
     border-color: var(--seia-darkblue) !important;
 }
@@ -170,6 +179,13 @@ body, #content-wrapper{
     border-color: none !important;
 }
 
+.btn-seia-blue{
+    color:white !important;
+    background-color: var(--seia-oceanblue) !important;
+    border-color: none !important;
+}
+
+
 .btn-seia-darkblue{
     color:white !important;
     background-color: var(--seia-darkblue) !important;
@@ -223,7 +239,8 @@ body, #content-wrapper{
 .btn-seia-green:hover,
 .btn-seia-darkback:hover,
 .btn-seia-ligthgrey:hover,
-.btn-seia-grey:hover {
+.btn-seia-grey:hover,
+.btn-seia-blue:hover {
     background-color: var(--seia-darkback) !important;
     border-color: none !important;
 }
@@ -238,24 +255,25 @@ body, #content-wrapper{
 }
 
 .logo-seia-retraido{
-    width: 50px !important;
+    width: 32px !important;
 }
 
 .img-perfil-retraido{
-    width: 50px !important;
+    width: 40px !important;
     margin-left: 0px !important;
 }
 
 .info_perfil_nav img{
     box-shadow: 0px 3px 9px 1px rgba(0, 0, 0, 0.25);
     border: 2px solid rgba(255, 255, 255, 1);
-    width: 3em;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     margin-left: 1em;
 }
 
 .img-perfil-retraido{
-    width: 50px !important;
+    width: 32px !important;
     margin-left: 0px !important;
 }
 
@@ -292,8 +310,9 @@ body, #content-wrapper{
     font-weight: 700;
     font-size: 12px;
     line-height: 19px;
-    margin-bottom: 10px;
     margin-left: 20px;
+
+    margin-top: 1.5em;
 }
 
 /* active  li a*/
@@ -309,13 +328,12 @@ body, #content-wrapper{
 }
 
 .navbar-nav .icons-menu{
-    font-size: 1.5em !important;
-    margin-right: 10px;
+    font-size: 1.3em !important;
+    margin-right: 8px;
 }
 
 .navbar-nav .icons-menu-retraido{
-    font-size: 25px !important;
-
+    font-size: 22px !important;
 }
 
 .center-retraido{

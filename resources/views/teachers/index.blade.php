@@ -171,8 +171,9 @@
                         {
                             "render": function(data, type, row) {
                                 return `
-                                   
-                                `;
+                                <a href="#" class="btn btn-seia-oceanblue btn-sm">
+                                    Gerenciar
+                                </a>`
                             }
                         }
                     ]

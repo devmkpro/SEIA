@@ -104,7 +104,7 @@
                                 <select class="form-select" aria-label="Default select example" id="domingo"
                                     name="domingo" required value="{{ old('domingo') }}">
                                     <option value="1">Sim</option>
-                                    <option value="0">Não</option>
+                                    <option value="0" selected>Não</option>
                                 </select>
                             </div>
                         </div>
@@ -173,7 +173,7 @@
                                 <select class="form-select" aria-label="Default select example" id="sabado"
                                     name="sabado" required value="{{ old('sabado') }}">
                                     <option value="1">Sim</option>
-                                    <option value="0">Não</option>
+                                    <option value="0" selected>Não</option>
                                 </select>
                             </div>
                         </div>

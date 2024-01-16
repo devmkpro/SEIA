@@ -11,9 +11,11 @@
                 </button>
             </div>
 
-            {{ $slot }}
+           <div class="card-body my-4">
+                {{ $slot }}
+           </div>
 
-            <div class="row ms-2 me-2">
+            <div class="row ms-2 me-2 card-footer">
                 <div class="col-12 d-flex justify-content-end mt-3 mb-2">
                     <button type="submit" class="btn btn btn-seia-oceanblue">Salvar</button>
                     <button type="button" class="btn btn-seia-red ms-2" data-bs-dismiss="modal"

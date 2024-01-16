@@ -272,18 +272,18 @@
                                 return `
                                     <div class="row">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editCurriculum" onclick="showCurriculum('${row.code}')">
+                                            <button type="button" class="btn btn-seia-blue btn-sm" data-bs-toggle="modal" data-bs-target="#editCurriculum" onclick="showCurriculum('${row.code}')">
                                                 Editar
                                             </button>
-                                            <a href="/gerenciar/matriz-curricular/${row.code}/disciplinas" class="btn btn-outline-secondary btn-sm">
+                                            <a href="/gerenciar/matriz-curricular/${row.code}/disciplinas" class="btn btn-seia-green btn-sm">
                                                 Disciplinas
                                             </a>
                                             @schoolPermission('delete-any-curriculum', optional($school_home)->uuid)
-<form action="{{ route('manage.curriculum.destroy') }}" method="POST">
+                                                <form action="{{ route('manage.curriculum.destroy') }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <input type="hidden" name="curriculum" value="${row.code}">
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <button type="submit" class="btn btn-seia-red btn-sm">
                                                         Excluir
                                                     </button>
                                                 </form>

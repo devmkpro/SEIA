@@ -14,7 +14,7 @@ class SchoolController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index(): mixed
+    public function index(): \Illuminate\Http\JsonResponse 
     {
         return response()->json(School::all()->map(function ($school) {
             return [
@@ -99,8 +99,5 @@ class SchoolController extends Controller
 
         return School::where('uuid', decrypt($school_home))->first();
     }
-
-   
-
 
 }
