@@ -31,7 +31,6 @@ class TeachersSchoolsSubjects extends Model
     protected $fillable = [
         'user_uuid',
         'school_uuid',
-        'subject_uuid',
         'class_uuid',
         'status',
         
