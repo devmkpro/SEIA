@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class TeachersSchoolsSubjects extends Model
+class TeachersSchools extends Model
 {
     use HasFactory;
 

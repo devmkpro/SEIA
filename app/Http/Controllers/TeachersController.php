@@ -7,7 +7,7 @@ use App\Http\Requests\StoreSchoolConnectionRequest;
 use App\Models\Classes;
 use App\Models\Role;
 use App\Models\SchoolConnectionRequest;
-use App\Models\TeachersSchoolsSubjects;
+use App\Models\TeachersSchools;
 use App\Models\User;
 use App\Models\State;
 use App\Models\City;
@@ -129,7 +129,7 @@ class TeachersController extends Controller
             $users = User::where('email', $request->search)->orWhere('username', $request->search)->get();
             $users = $users->filter(function ($user) {
                 $class = Classes::where('code', request()->code)->first();
-                return $user->hasRole('teacher') && !TeachersSchoolsSubjects::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
+                return $user->hasRole('teacher') && !TeachersSchools::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
             });
 
             return $users->map(function ($user) {
@@ -184,7 +184,7 @@ class TeachersController extends Controller
             return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo já enviada!', 'message', 200, 'code', $class->code);
         }
 
-        $isTeacher = TeachersSchoolsSubjects::where('user_uuid', $user->uuid)
+        $isTeacher = TeachersSchools::where('user_uuid', $user->uuid)
             ->where('class_uuid', $class->uuid)
             ->first();
 
@@ -213,7 +213,7 @@ class TeachersController extends Controller
     public function linkinClass($class_uuid, $user_uuid)
     {
         $class = Classes::where('uuid', $class_uuid)->first();
-        TeachersSchoolsSubjects::create([
+        TeachersSchools::create([
             'class_uuid' => $class->uuid,
             'school_uuid' => $class->school->uuid,
             'user_uuid' => $user_uuid,

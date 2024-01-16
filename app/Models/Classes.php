@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\TeachersSchoolsSubjects;
+use App\Models\TeachersSchools;
 
 class Classes extends Model
 {
@@ -94,7 +94,7 @@ class Classes extends Model
      */
     public function teachers()
     {
-        return $this->hasMany(TeachersSchoolsSubjects::class, 'school_uuid', 'schools_uuid', 'user_uuid', 'user_uuid', 'class_uuid', 'uuid');
+        return $this->hasMany(TeachersSchools::class, 'school_uuid', 'schools_uuid', 'user_uuid', 'user_uuid', 'class_uuid', 'uuid');
     }
 
     /**
