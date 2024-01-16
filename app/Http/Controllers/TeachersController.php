@@ -89,7 +89,6 @@ class TeachersController extends Controller
             $this->linkinClass($class->uuid, $user->uuid);
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
             return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar professor(a)!', 'error', 500, 'code', $class->code);
         }
 

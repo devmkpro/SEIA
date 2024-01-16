@@ -15,11 +15,9 @@ return new class extends Migration
             $table->uuid("uuid")->primary();
             $table->uuid("user_uuid");
             $table->uuid("school_uuid");
-            $table->uuid("subject_uuid")->nullable();
             $table->uuid("class_uuid");
             $table->foreign('user_uuid')->references('uuid')->on('users');         
             $table->foreign('school_uuid')->references('uuid')->on('schools');
-            $table->foreign('subject_uuid')->references('uuid')->on('subjects');   
             $table->foreign('class_uuid')->references('uuid')->on('classes');
             $table->timestamps();
         });
