@@ -31,7 +31,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch('/data-user', [DataUserController::class, 'update'])->name('data-user.update');
-    Route::post('/manage/school/invite/accept', [SchoolConnectionController::class, 'accept'])->name('manage.invite.accept');
+    Route::post('/manage/school/invite/accept', [SchoolConnectionController::class, 'acceptOrReject'])->name('manage.invite.accept');
 
     // Rotas abaixo não retornar nenhum dado comprometedor, apenas dados publicos do ibge
     Route::get('/states/cities', [StateController::class, 'cities'])->name('manage.states.cities');

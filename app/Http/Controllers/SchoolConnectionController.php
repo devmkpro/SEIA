@@ -30,11 +30,12 @@ class SchoolConnectionController extends Controller
     /**
      * Accept a school connection request.
      */
-    public function accept(Request $request)
+    public function acceptOrReject(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'school_request' => 'required|string|exists:school_connection_requests,uuid',
             'notification' => 'required|string|exists:notifications,uuid',
+            'status' => 'required|string|in:accepted,rejected',
         ]);
 
         (new NotificationController())->markAsRead($request->notification);
@@ -55,10 +56,10 @@ class SchoolConnectionController extends Controller
             (new TeachersController())->linkinClass($request_connection->class_uuid, $user->uuid);
         }
 
-        // Revoke request uuid for delete invitation
-        (new NotificationController())->revokeRequestUuid($request_connection->uuid);
-        $request_connection->delete();
+        $request_connection->status = 'accepted';
+        $request_connection->save();
 
         return $this->response($request, 'panel', 'Solicitação aceita com sucesso!', 'message', 200);
     }
+    
 }

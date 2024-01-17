@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("user_uuid");
             $table->uuid("role");
             $table->uuid("class_uuid")->nullable();
-            $table->string("status")->default("pending");
+            $table->enum("status", ["pending", "accepted", "rejected"])->default("pending");
             $table->foreign('school_uuid')->references('uuid')->on('schools');
             $table->foreign('user_uuid')->references('uuid')->on('users');
             $table->foreign('class_uuid')->references('uuid')->on('classes');

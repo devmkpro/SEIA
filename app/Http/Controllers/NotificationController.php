@@ -38,18 +38,4 @@ class NotificationController extends Controller
             'message' => 'Notificação marcada como lida com sucesso!',
         ], 200);
     }
-    
-    /**
-     * Rovoke Request Uuid
-     */
-    public function revokeRequestUuid($uuid){
-        $notification = Notifications::where('request_uuid', $uuid)->first();
-        $notification->request_uuid = null;
-        $notification->save();
-
-        return response()->json([
-            'message' => 'Notificação marcada como lida com sucesso!',
-        ], 200);
-    }
-
 }
