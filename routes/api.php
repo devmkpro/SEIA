@@ -86,7 +86,9 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                     Route::post('/manage/classes/{class:code}/teachers', [TeachersController::class, 'store'])->name('manage.classes.teachers.store')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers/subjects', [TeachersController::class, 'linkinSubject'])->name('manage.classes.teachers.subjects')->middleware('permission:update-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers/schedules', [TeachersController::class, 'linkNewSchedules'])->name('manage.classes.teachers.schedules')->middleware('permission:update-any-teacher');
+
                 });
+                
             });
         });
     });

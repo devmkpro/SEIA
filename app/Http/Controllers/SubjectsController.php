@@ -116,15 +116,11 @@ class SubjectsController extends Controller
     /**
      * Render a views subjects
      */
-    public function subjects(Request $request, $curriculumCode)
+    public function subjects(Request $request, Curriculum $curriculum)
     {
-        $curriculum = Curriculum::where('code', $curriculumCode)->where('school_uuid', (new SchoolController)->getHome($request)->uuid)->first();
-        if (!$curriculum) {
-            return redirect()->route('manage.curriculum.index')->with('error', 'Matriz curricular não encontrada');
-        }
         return view('secretary.subjects.index', ['curriculum' => $curriculum,
-        'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
-        'slot' => 'Aqui você pode gerenciar as disciplinas da matriz curricular',
+            'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
+            'slot' => 'Aqui você pode gerenciar as disciplinas da matriz curricular',
         ]);
     }
 
@@ -142,7 +138,7 @@ class SubjectsController extends Controller
             'description' => $request->descricao,
             'modality' => $request->modalidade,
         ]);
-        return $this->response($request, 'manage.subjects', 'Disciplina criada com sucesso', 'message', 201, 'code', $curriculum->code);
+        return $this->response($request, 'manage.subjects', 'Disciplina criada com sucesso', 'message', 201, 'curriculum', $curriculum->code);
     }
 
     /**
@@ -150,7 +146,7 @@ class SubjectsController extends Controller
      */
     public function update(StoreSubjectsRequest $request)
     {
-        $subject = Subjects::where('uuid', decrypt($request->subject))->first();
+        $subject = Subjects::where('uuid', decrypt($request->subject))->firstOrFail();
         $subject->update([
             'name' => $request->nome,
             'ch' => $request->carga_horaria,
@@ -158,7 +154,7 @@ class SubjectsController extends Controller
             'description' => $request->descricao,
             'modality' => $request->modalidade,
         ]);
-        return $this->response($request, 'manage.subjects', 'Disciplina atualizada com sucesso', 'message', 200, 'code', $subject->curriculum->code);
+        return $this->response($request, 'manage.subjects', 'Disciplina atualizada com sucesso', 'message', 200, 'curriculum', $subject->curriculum->code);
     }
 
     /**
@@ -168,9 +164,9 @@ class SubjectsController extends Controller
     {
         $subject = Subjects::where('uuid', decrypt($request->subject))->firstOrFail();
         if ($subject->curriculum->classes()->exists()) {
-            return  $this->response($request, 'manage.subjects', 'Disciplina não pode ser excluída pois está sendo usada em uma turma', 'error', 403, 'code', $subject->curriculum->code);
+            return  $this->response($request, 'manage.subjects', 'Disciplina não pode ser excluída pois está sendo usada em uma turma', 'error', 403, 'curriculum', $subject->curriculum->code);
         }
         $subject->delete();
-        return $this->response($request, 'manage.subjects', 'Disciplina excluída com sucesso', 'message', 200, 'code', $subject->curriculum->code);
+        return $this->response($request, 'manage.subjects', 'Disciplina excluída com sucesso', 'message', 200, 'curriculum', $subject->curriculum->code);
     }
 }

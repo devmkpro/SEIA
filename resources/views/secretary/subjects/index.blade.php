@@ -26,25 +26,20 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <a href="{{ route('manage.curriculum') }}" class="btn btn btn-seia-jeans">Voltar para matrizes </a>
-                    </div>
-                    @schoolPermission('create-any-subject', optional($school_home)->uuid)
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-end mb-3">
-                                <button type="button" class="btn btn-seia-oceanblue" data-bs-toggle="modal"
-                                    data-bs-target="#createSubjectModal">
-                                    Cadastrar Disciplina
-                                </button>
+                <x-grid-datatables identifier="subjectsTable" :columns="['Nome', 'Carga Horária', 'Carga Horária Semanal', 'Modalidade', 'Descrição', 'Ações']" btnRoute="{{ route('manage.curriculum.edit', $curriculum) }}" btnBack="Voltar para matriz">
+                    <x-slot:btns>
+                        @schoolPermission('create-any-subject', optional($school_home)->uuid)
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button type="button" class="btn btn-seia-oceanblue" data-bs-toggle="modal"
+                                        data-bs-target="#createSubjectModal">
+                                        Cadastrar Disciplina
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    @endschoolPermission
-                </div>
-            
-
-                <x-grid-datatables identifier="subjectsTable" :columns="['Nome', 'Carga Horária', 'Carga Horária Semanal', 'Modalidade', 'Descrição', 'Ações']" />
+                        @endschoolPermission
+                    </x-slot:btns>
+                </x-grid-datatables>
 
             </div>
         </div>
@@ -85,14 +80,14 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="carga_horaria" class="form-label">Carga Horária</label>
-                            <input type="number" class="form-control" name="carga_horaria" value="{{ old('carga_horaria') }}"
-                                placeholder="Ex: 200" required>
+                            <input type="number" class="form-control" name="carga_horaria"
+                                value="{{ old('carga_horaria') }}" placeholder="Ex: 200" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="carga_horaria_semanal" class="form-label">Carga Horária Semanal</label>
-                            <input type="number" class="form-control" name="carga_horaria_semanal" value="{{ old('carga_horaria_semanal') }}"
-                                placeholder="Ex: 15" required>
+                            <input type="number" class="form-control" name="carga_horaria_semanal"
+                                value="{{ old('carga_horaria_semanal') }}" placeholder="Ex: 15" required>
                         </div>
                     </div>
 
@@ -159,14 +154,14 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="carga_horaria" class="form-label">Carga Horária</label>
-                            <input type="number" class="form-control" name="carga_horaria" id="ch" value=""
-                                placeholder="Ex: 200" required>
+                            <input type="number" class="form-control" name="carga_horaria" id="ch"
+                                value="" placeholder="Ex: 200" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="carga_horaria_semanal" class="form-label">Carga Horária Semanal</label>
-                            <input type="number" class="form-control" name="carga_horaria_semanal" id="ch_week" value=""
-                                placeholder="Ex: 15" required>
+                            <input type="number" class="form-control" name="carga_horaria_semanal" id="ch_week"
+                                value="" placeholder="Ex: 15" required>
                         </div>
                     </div>
 
@@ -202,7 +197,7 @@
         <script>
             function editSubjectCurriculum(uuid) {
                 $.ajax({
-                    url: '{{route("manage.subjects.show")}}',
+                    url: '{{ route('manage.subjects.show') }}',
                     data: {
                         'subject': uuid
                     },
@@ -217,8 +212,9 @@
                         $('#editSubjectForm').find('input[name="subject"]').remove();
                         $('#editSubjectForm').append('<input type="hidden" name="subject" value="' + data.uuid +
                             '">');
-                        $('#editSubjectForm').attr('action', '{{ route("manage.subjects.update") }}');
-                    } , error: function(data) {
+                        $('#editSubjectForm').attr('action', '{{ route('manage.subjects.update') }}');
+                    },
+                    error: function(data) {
                         location.reload();
                     }
                 });
@@ -262,13 +258,13 @@
                             return `
                     <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editSchoolYear" onclick="editSubjectCurriculum('${row.uuid}')">Editar</button>
                     @schoolPermission('delete-any-subject', optional($school_home)->uuid)
-                    <form action="{{ route('manage.subjects.destroy') }}" method="POST" class="d-inline-block">
+<form action="{{ route('manage.subjects.destroy') }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="subject" value="${row.uuid}">
                         <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
                     </form>
-                    @endschoolPermission
+@endschoolPermission
                 `;
                         }
                     }

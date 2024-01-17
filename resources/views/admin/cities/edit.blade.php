@@ -10,7 +10,11 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <x-grid-datatables identifier="statesTable" :columns="['Estado', 'IBGE-CODE', 'Escolas']" />
+                <x-grid-datatables identifier="statesTable" :columns="['Estado', 'IBGE-CODE', 'Escolas']">
+                    
+                </x-grid-datatables>
+
+
             </div>
         </div>
     </div>
