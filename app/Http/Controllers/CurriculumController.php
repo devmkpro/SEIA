@@ -11,7 +11,7 @@ class CurriculumController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $school_home = decrypt($request->cookie('school_home'));
         $curriculums = Curriculum::where('school_uuid', $school_home)->get()->map(function ($curriculum) {
@@ -32,7 +32,7 @@ class CurriculumController extends Controller
     /**
      * Render the curriculum view.
      */
-    public function curriculum()
+    public function curriculum(): \Illuminate\View\View
     {
         return view('secretary.curriculum.index', [
             'title' => 'Matrizes Curriculares',
@@ -43,7 +43,7 @@ class CurriculumController extends Controller
     /**
      * Format the series.
      */
-    public function formatSeries($series)
+    public function formatSeries($series): string
     {
         $seriesMap = [
             'educ_infa_cc_0_3' => 'Educação Infantil - Creche (0 a 3 anos)',
@@ -63,7 +63,7 @@ class CurriculumController extends Controller
     /**
      * Format the modality.
      */
-    public function formatModality($modality)
+    public function formatModality($modality): string
     {
         $modalityMap = [
             'bercario' => 'Berçário',
@@ -83,7 +83,7 @@ class CurriculumController extends Controller
     /**
      * Format the turn.
      */
-    public function formatTurn($turn)
+    public function formatTurn($turn): string
     {
         $turnMap = [
             'morning' => 'Manhã',
@@ -99,7 +99,7 @@ class CurriculumController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCurriculumRequest $request)
+    public function store(StoreCurriculumRequest $request): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
         Curriculum::create([
@@ -124,7 +124,7 @@ class CurriculumController extends Controller
     /**
      * Show the curriculum.
      */
-    public function show(Request $request)
+    public function show(Request $request): \Illuminate\Http\JsonResponse
     {
         $curriculum = Curriculum::where('code', $request->curriculum)->firstOrFail();
         return response()->json([
@@ -144,7 +144,7 @@ class CurriculumController extends Controller
     /**
      * Update the curriculum.
      */
-    public function update(StoreCurriculumRequest $request)
+    public function update(StoreCurriculumRequest $request): mixed
     {
         $curriculum = Curriculum::where('code', $request->curriculum)->firstOrFail();
         $curriculum->update([
@@ -166,7 +166,7 @@ class CurriculumController extends Controller
     /**
      * Destroy the curriculum.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): mixed
     {
         $curriculum = Curriculum::where('code', $request->curriculum)->first();
 

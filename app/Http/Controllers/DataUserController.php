@@ -11,7 +11,7 @@ class DataUserController extends Controller
     /**
      * Update the user's data information.
      */
-    public function update(DataUserUpdateRequest $request): RedirectResponse
+    public function update(DataUserUpdateRequest $request): mixed
     {
         if (!$request->user()->dataUser) {
             $request->user()->dataUser()->create($request->validated());
@@ -20,6 +20,6 @@ class DataUserController extends Controller
             $request->user()->dataUser->save();
         }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return $this->response($request, 'profile.edit', 'Dados atualizados com sucesso!');
     }
 }

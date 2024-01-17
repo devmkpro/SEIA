@@ -56,7 +56,7 @@ class SchoolController extends Controller
             'state_uuid' => $state->uuid,
         ]);
 
-        return $this->response($request, 'manage.schools.create', 'Escola cadastrada com sucesso!');
+        return $this->response($request, 'manage.schools', 'Escola cadastrada com sucesso!');
     }
 
     /**

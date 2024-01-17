@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classes;
 use App\Models\Role;
 use App\Models\School;
 use Illuminate\Http\Request;
@@ -30,7 +29,7 @@ class SchoolConnectionController extends Controller
     /**
      * Accept a school connection request.
      */
-    public function acceptOrReject(Request $request)
+    public function acceptOrReject(Request $request): mixed
     {
         $request->validate([
             'school_request' => 'required|string|exists:school_connection_requests,uuid',

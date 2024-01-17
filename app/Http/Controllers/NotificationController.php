@@ -9,7 +9,7 @@ class NotificationController extends Controller
     /**
      * Store a new notification.
      */
-    public function store($title, $body, $icon, $read, $user_uuid, $type, $request_uuid = null)
+    public function store($title, $body, $icon, $read, $user_uuid, $type, $request_uuid = null): \Illuminate\Http\JsonResponse
     {
         $notification = new Notifications();
         $notification->title = $title;
@@ -29,7 +29,8 @@ class NotificationController extends Controller
     /**
      * Mark notification as read.
      */
-    public function markAsRead($uuid){
+    public function markAsRead($uuid): \Illuminate\Http\JsonResponse
+    {
         $notification = Notifications::where('uuid', $uuid)->first();
         $notification->read = true;
         $notification->save();

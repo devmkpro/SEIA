@@ -32,7 +32,7 @@ class ClassesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreClassesRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(StoreClassesRequest $request): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
         $school_year = (new SchoolYearController)->getActive();
@@ -73,7 +73,7 @@ class ClassesController extends Controller
     /**
      * edit class by code.
      */
-    public function edit(Request $request, Classes $class)
+    public function edit(Request $request, Classes $class): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
         $curriculumns = Curriculum::where('school_uuid', $school_home->uuid)->get();
@@ -97,7 +97,7 @@ class ClassesController extends Controller
     /**
      * Set class curriculum.
      */
-    public function setCurriculum(Request $request, Classes $class)
+    public function setCurriculum(Request $request, Classes $class): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
 
@@ -121,7 +121,7 @@ class ClassesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreClassesRequest $request, Classes $class)
+    public function update(StoreClassesRequest $request, Classes $class): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
         if ($class->schools_uuid != $school_home->uuid) {

@@ -9,7 +9,7 @@ class CookieController extends Controller
     /**
      * Set Cookie in browser
      */
-    public function setCookie($name, $value, $minutes = 60)
+    public function setCookie($name, $value, $minutes = 60): void
     {
         Cookie::queue($name, $value, $minutes);
         return;
@@ -18,7 +18,7 @@ class CookieController extends Controller
     /**
      * Delete Cookie in browser
      */
-    public function deleteCookie($name)
+    public function deleteCookie($name): void
     {
         Cookie::queue(Cookie::forget($name));
         return;
