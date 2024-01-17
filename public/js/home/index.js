@@ -393,8 +393,20 @@ window.addEventListener("load", function () {
 const notificationscontainer = document.getElementById("notifications-container");
 const btnMarkRead = document.getElementById("button-check-all");
 
-notificationscontainer.addEventListener('show.bs.dropdown', function () {
-    openMarkAll();
+document.addEventListener('click', function(event) {
+    const dots = document.querySelector('.dots');
+    const isClickInside = dots.contains(event.target);
+
+    if (!isClickInside && !btnMarkRead.classList.contains('invisible')) {
+        btnMarkRead.classList.add('invisible');
+    }
+});
+
+const dots = document.querySelector('.dots');
+dots.addEventListener('click', function() {
+    if (btnMarkRead.classList.contains('invisible')) {
+        btnMarkRead.classList.remove('invisible');
+    }
 });
 
 function openMarkAll(){
