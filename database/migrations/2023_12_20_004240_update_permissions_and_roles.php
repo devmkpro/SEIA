@@ -33,6 +33,9 @@ return new class extends Migration
 
         $secretaryPermissions = [
             'manage-students', 
+            'create-any-student',
+            'update-any-student',
+            'delete-any-student',
             'manage-teachers', 
             'create-any-teacher',
             'update-any-teacher',
@@ -53,6 +56,10 @@ return new class extends Migration
         ];
 
         $directorPermissions = [
+            'manage-students', 
+            'create-any-student',
+            'update-any-student',
+            'delete-any-student',
             'manage-classes',  
             'create-any-class',
             'update-any-class',
@@ -78,7 +85,7 @@ return new class extends Migration
         foreach ($secretaryPermissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
-
+        
         $admin = Role::where('name', 'admin')->first();
         $admin->givePermissionTo(Permission::all());
 
