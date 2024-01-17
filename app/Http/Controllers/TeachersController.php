@@ -87,11 +87,11 @@ class TeachersController extends Controller
             $this->linkinClass($class->uuid, $user->uuid);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar professor(a)!', 'error', 500, 'code', $class->code);
+            return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar professor(a)!', 'error', 500, 'class', $class->code);
         }
 
         DB::commit();
-        return $this->response($request, 'manage.classes.teachers', 'Professor(a) cadastrado(a) com sucesso!', 'message', 200, 'code', $class->code);
+        return $this->response($request, 'manage.classes.teachers', 'Professor(a) cadastrado(a) com sucesso!', 'message', 200, 'class', $class->code);
     }
 
     /**
@@ -113,7 +113,7 @@ class TeachersController extends Controller
     /**
      * Get teachers from class.
      */
-    public function getTeachers(Request $request, Classes $class): \Illuminate\Http\JsonResponse
+    public function getTeachers(Request $request, Classes $class)
     {
         $school_home = (new SchoolController)->getHome($request);
 
@@ -124,7 +124,7 @@ class TeachersController extends Controller
         if ($request->search) {
             $users = User::where('email', $request->search)->orWhere('username', $request->search)->get();
             $users = $users->filter(function ($user) {
-                $class = Classes::where('code', request()->code)->first();
+                $class = Classes::where('class', request()->code)->first();
                 return $user->hasRole('teacher') && !TeachersSchools::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
             });
 
@@ -172,7 +172,7 @@ class TeachersController extends Controller
             ->first();
 
         if ($isInvited) {
-            return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo já enviada!', 'message', 200, 'code', $class->code);
+            return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo já enviada!', 'message', 200, 'class', $class->code);
         }
 
         $isTeacher = TeachersSchools::where('user_uuid', $user->uuid)
@@ -180,7 +180,7 @@ class TeachersController extends Controller
             ->first();
 
         if ($isTeacher) {
-            return $this->response($request, 'manage.classes.teachers', 'Professor já vinculado à turma!', 'error', 200, 'code', $class->code);
+            return $this->response($request, 'manage.classes.teachers', 'Professor já vinculado à turma!', 'error', 200, 'class', $class->code);
         }
 
         $school_connection_request = (new SchoolConnectionController)->store($class->schools_uuid, $user->uuid, $role->uuid, $class->uuid);
@@ -195,7 +195,7 @@ class TeachersController extends Controller
             $school_connection_request->uuid
         );
 
-        return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo enviada com sucesso!', 'message', 200, 'code', $class->code);
+        return $this->response($request, 'manage.classes.teachers', 'Solicitação de vínculo enviada com sucesso!', 'message', 200, 'class', $class->code);
     }
 
     /**
@@ -239,7 +239,7 @@ class TeachersController extends Controller
             'primary_teacher' => $request->primary_teacher,
         ]);
 
-        return $this->response($request, 'manage.classes.teachers', 'Disciplina vinculada com sucesso!', 'message', 200, 'code', $class->code);
+        return $this->response($request, 'manage.classes.teachers', 'Disciplina vinculada com sucesso!', 'message', 200, 'class', $class->code);
     }
 
     /**
@@ -288,10 +288,10 @@ class TeachersController extends Controller
             ]);
 
             DB::commit();
-            return $this->response($request, 'manage.classes.teachers', 'Horário cadastrado com sucesso!', 'message', 200, 'code', $class->code);
+            return $this->response($request, 'manage.classes.teachers', 'Horário cadastrado com sucesso!', 'message', 200, 'class', $class->code);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar horário!', 'error', 500, 'code', $class->code);
+            return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar horário!', 'error', 500, 'class', $class->code);
         }
     }
 }

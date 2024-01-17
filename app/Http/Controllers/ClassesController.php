@@ -22,7 +22,7 @@ class ClassesController extends Controller
                 'status' => $class->status ? 'Ativa' : 'Inativa',
                 'name' => $class->name,
                 'school_year' => $class->schoolYear->name,
-                'code' => $class->code,
+                'class' => $class->code,
                 'turno' => $class->turn == 'morning' ? 'Manhã' : ($class->turn == 'afternoon' ? 'Tarde' : 'Noite'),
                 'max_students' => $class->max_students,
             ];
@@ -73,13 +73,9 @@ class ClassesController extends Controller
     /**
      * edit class by code.
      */
-    public function edit(Request $request, $code)
+    public function edit(Request $request, Classes $class)
     {
         $school_home = (new SchoolController)->getHome($request);
-        $class = Classes::where('code', $code)->where('schools_uuid', $school_home->uuid)->first();
-        if (!$class) {
-            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
-        }
         $curriculumns = Curriculum::where('school_uuid', $school_home->uuid)->get();
         $curriculumns = $curriculumns->map(function ($curriculum) {
             return [
@@ -108,18 +104,18 @@ class ClassesController extends Controller
         try{
             $curriculum = Curriculum::where('uuid', decrypt($request->curriculum))->where('school_uuid', $school_home->uuid)->first();
         } catch(\Exception $e){
-            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'code', $class->code);
+            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'class', $class->code);
         }
 
         if (!$curriculum) {
-            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'code', $class->code);
+            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'class', $class->code);
         }
 
         $class->update([
             'curriculum_uuid' => $curriculum->uuid,
         ]);
 
-        return $this->response($request, 'manage.classes.edit', 'Matriz curricular alterada com sucesso.', 'message', 200, 'code', $class->code);
+        return $this->response($request, 'manage.classes.edit', 'Matriz curricular alterada com sucesso.', 'message', 200, 'class', $class->code);
     }
 
     /**
@@ -129,7 +125,7 @@ class ClassesController extends Controller
     {
         $school_home = (new SchoolController)->getHome($request);
         if ($class->schools_uuid != $school_home->uuid) {
-            return $this->response($request, 'manage.classes.edit', 'Turma não encontrada.', 'error', 404, 'code', $class->code);
+            return $this->response($request, 'manage.classes.edit', 'Turma não encontrada.', 'error', 404, 'class', $class->code);
         }
         $class->update([
             'name' => $request->nome,
@@ -147,6 +143,6 @@ class ClassesController extends Controller
             'start_time' => $request->horario_inicio,
             'end_time' => $request->horario_fim,
         ]);
-        return $this->response($request, 'manage.classes.edit', 'Turma alterada com sucesso.', 'message', 200, 'code', $class->code);
+        return $this->response($request, 'manage.classes.edit', 'Turma alterada com sucesso.', 'message', 200, 'class', $class->code);
     }
 }

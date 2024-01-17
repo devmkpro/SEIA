@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="row">
                     <div class="col-md-6">
-                        <a href="{{ route('manage.classes.edit', ['code' => $class->code]) }}"
+                        <a href="{{ route('manage.classes.edit', ['class' => $class->code]) }}"
                             class="btn btn-seia-jeans">
                             Voltar para turma</a>
                     </div>
@@ -114,7 +114,7 @@
             function searchTeacher() {
                 var query = $('#teacherEmail').val();
                 $.ajax({
-                    url: "{{ route('manage.classes.teachers.get', ['code' => $class->code]) }}",
+                    url: "{{ route('manage.classes.teachers.get', ['class' => $class->code]) }}",
                     type: "GET",
                     data: {
                         'search': query
@@ -149,7 +149,7 @@
                         "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
                     },
                     "ajax": {
-                        "url": "{{ route('manage.classes.teachers.get', ['code' => $class->code]) }}",
+                        "url": "{{ route('manage.classes.teachers.get', ['class' => $class->code]) }}",
                         "type": "GET",
                         "dataSrc": ""
                     },

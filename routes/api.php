@@ -80,7 +80,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::put('/manage/classes/{class:code}', [ClassesController::class, 'update'])->name('manage.classes.update')->middleware('permission:update-any-class');
                 Route::put('/manage/classes/{class:code}/change-curriculum', [ClassesController::class, 'setCurriculum'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
 
-                Route::get('/manage/teachers/classes/{code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
+                Route::get('/manage/teachers/classes/{class:code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
                 Route::middleware(['school_curriculum_set'])->group(function () {
                     Route::post('/manage/classes/{class:code}/teachers/invite', [TeachersController::class, 'invite'])->name('manage.classes.teachers.invite')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers', [TeachersController::class, 'store'])->name('manage.classes.teachers.store')->middleware('permission:create-any-teacher');
