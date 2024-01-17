@@ -31,7 +31,7 @@ class RequireCurriculumSet
                 'error' => 'Matriz curricular ou turma nao encontrada',
             ], 404);
         } else {
-            return redirect()->route('manage.classes.edit', $request->route('code'))->with(['error' => 'Você precisa definir uma matriz curricular para a turma!']);
+            return redirect()->route('manage.classes.edit', $request->route('class'))->with(['error' => 'Você precisa definir uma matriz curricular para a turma!']);
         }
     }
 }

@@ -205,7 +205,7 @@
                         "dataSrc": ""
                     },
                     "columns": [{
-                            "data": "code",
+                            "data": "class",
                         },
                         {
                             "data": "name",
@@ -225,7 +225,7 @@
                         {
                             "render": function(data, type, row, meta) {
                                 return `
-                                    <a href="/gerenciar/turmas/${row.code}/editar" class="btn btn-sm btn-seia-oceanblue">Gerenciar</a>
+                                    <a href="/gerenciar/turmas/${row.class}/editar" class="btn btn-sm btn-seia-oceanblue">Gerenciar</a>
                                 `;
                             }
                         }

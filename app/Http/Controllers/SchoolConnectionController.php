@@ -30,7 +30,7 @@ class SchoolConnectionController extends Controller
     /**
      * Accept a school connection request.
      */
-    public function acceptOrReject(Request $request): \Illuminate\Http\JsonResponse
+    public function acceptOrReject(Request $request)
     {
         $request->validate([
             'school_request' => 'required|string|exists:school_connection_requests,uuid',
@@ -56,10 +56,14 @@ class SchoolConnectionController extends Controller
             (new TeachersController())->linkinClass($request_connection->class_uuid, $user->uuid);
         }
 
-        $request_connection->status = 'accepted';
+        $request_connection->status = $request->status;
         $request_connection->save();
 
-        return $this->response($request, 'panel', 'Solicitação aceita com sucesso!', 'message', 200);
+        if ($request->status == 'accepted') {
+            return $this->response($request, 'panel', 'Solicitação aceita com sucesso!', 'success', 200);
+        } else {
+            return $this->response($request, 'panel', 'Solicitação rejeitada com sucesso!', 'success', 200);
+        }
     }
     
 }

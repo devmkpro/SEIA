@@ -41,11 +41,12 @@ class Notifications extends Model
     ];
 
     public function user(){
-        $this->belongsTo(User::class, 'user_uuid', 'uuid');
+        return $this->belongsTo(User::class, 'user_uuid', 'uuid');
     }
 
-    public function request(){
-        $this->belongsTo(SchoolConnectionRequest::class, 'request_uuid', 'uuid');
+    public function request()
+    {
+        return $this->belongsTo(SchoolConnectionRequest::class, 'request_uuid', 'uuid');
     }
 
 

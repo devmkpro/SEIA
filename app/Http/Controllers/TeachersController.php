@@ -38,7 +38,7 @@ class TeachersController extends Controller
     /**
      * Store a new teacher.
      */
-    public function store(StoreEmployeeRequest $request, Classes $class): \Illuminate\Http\JsonResponse
+    public function store(StoreEmployeeRequest $request, Classes $class)
     {
         $school_home = (new SchoolController)->getHome($request);
         if ($class->schools_uuid != $school_home->uuid) {
@@ -124,7 +124,7 @@ class TeachersController extends Controller
         if ($request->search) {
             $users = User::where('email', $request->search)->orWhere('username', $request->search)->get();
             $users = $users->filter(function ($user) {
-                $class = Classes::where('class', request()->code)->first();
+                $class = Classes::where('code', request()->class->code)->first();
                 return $user->hasRole('teacher') && !TeachersSchools::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
             });
 
@@ -161,7 +161,7 @@ class TeachersController extends Controller
     /**
      * Create new request to connect school.
      */
-    public function invite(StoreSchoolConnectionRequest $request, Classes $class): \Illuminate\Http\JsonResponse
+    public function invite(StoreSchoolConnectionRequest $request, Classes $class)
     {
         $user = User::where('username', $request->username)->first();
         $role = Role::where('name', $request->role)->first();
@@ -218,7 +218,7 @@ class TeachersController extends Controller
     /**
      * Link teacher to subject.
      */
-    public function linkinSubject(StoreTeacherSubjects $request, Classes $class): \Illuminate\Http\JsonResponse
+    public function linkinSubject(StoreTeacherSubjects $request, Classes $class)
     {
         $teacher_subject = TeachersSchools::where('user_uuid', $request->teacher_subject_uuid)->where('class_uuid', $class->uuid)->first();
         if (!$teacher_subject) {
@@ -245,7 +245,7 @@ class TeachersController extends Controller
     /**
      * New Schedules for teacher.
      */
-    public function linkNewSchedules(StoreTeacherSchedules $request, Classes $class): \Illuminate\Http\JsonResponse
+    public function linkNewSchedules(StoreTeacherSchedules $request, Classes $class)
     {
         $teacherSubject = TeachersSubjects::where('uuid', $request->teacher_subject_uuid)->first();
 
