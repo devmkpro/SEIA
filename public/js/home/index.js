@@ -390,6 +390,17 @@ window.addEventListener("load", function () {
     }
 });
 
+const notificationscontainer = document.getElementById("notifications-container");
+const btnMarkRead = document.getElementById("button-check-all");
+
+notificationscontainer.addEventListener('show.bs.dropdown', function () {
+    openMarkAll();
+});
+
+function openMarkAll(){
+    btnMarkRead.classList.toggle("invisible");
+}
+ 
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

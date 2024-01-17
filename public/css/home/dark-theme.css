@@ -139,6 +139,64 @@ body, #content-wrapper {
     color: white !important;
 }
 
+/* acordion */
+
+.navbar-nav .accordion-button:hover{
+    background-color: var(--seia-red) !important;
+    color: white !important;
+}
+
+.navbar-nav .accordion-button:focus {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25) !important;
+    border-color: var(--seia-ligthgrey) !important;
+}
+
+.navbar-nav .accordion-button:not(.collapsed){
+    border-color: var(--seia-ligthgrey) !important;
+    background-color: var(--seia-ligthgrey) !important;
+    box-shadow: none;
+}
+
+.navbar-nav .accordion .accordion-button {
+    background-color: var(--seia-darkback) !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.navbar-nav .accordion-item {
+    background-color: var(--seia-darkback) !important;
+    border: none;
+}
+.navbar-nav .nav-tabs{
+    background-color: var(--seia-darkback) !important;
+}
+
+.navbar-nav .nav-tabs .nav-link.active, 
+.nav-tabs .nav-item.show .nav-link{
+    background-color: var(--seia-darkback) !important;
+    color: white !important;
+}
+
+.navbar-nav .nav-tabs .nav-link:hover{
+    background-color: var(--seia-grey) !important;
+    color: white !important;
+    border-bottom: 1px solid transparent !important;
+}
+
+.markAllCheck .button-check-all,
+.markAllCheck .drop{
+    background-color: var(--seia-darkback) !important;
+}
+
+
+
+/* dropdown */
+.navbar-nav .dropdown-header{
+    background-color: #222121 !important;
+    color: white !important;
+}
+
+
 /* Button toggle */
 
 .sidebar-dark #sidebarToggle:hover{

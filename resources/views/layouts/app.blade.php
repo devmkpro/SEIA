@@ -253,84 +253,207 @@
                         </li>
 
                         @php
-                            $notifications = \App\Models\Notifications::where('user_uuid', auth()->user()->uuid)->where('read', 0)->get();
+                            $notifications = \App\Models\Notifications::where('user_uuid', auth()->user()->uuid)->get();
                         @endphp
 
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <div class="nav-item dropdown no-arrow">
-                                <a class="dropdown-toggle nav-link yellow" aria-expanded="false"
-                                    data-bs-toggle="dropdown" href="#">
+                        <li class="nav-item mx-1">
+                            <div class="dropdown no-arrow">
+                                <a  id="notifications-container" class=" show dropdown-toggle nav-link yellow" aria-expanded="false"
+                                    data-bs-toggle="dropdown"  data-bs-auto-close="outside" href="#">
                                     <span class="badge bg-danger badge-counter">
                                         {{ $notifications->count() }}    
                                     </span><i
                                         class="ph-bell fs-5"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                    <h6 class="dropdown-header text-center">Notificações</h6>
-                                    
-                                    @if ($notifications->count() == 0)
-                                    
-                                        <div class="d-flex justify-content-center py-5">
-                                            <span class="text-center text-dark-seia">
-                                                Nenhuma notificação
+                                <div class="show notification dropdown-menu dropdown-menu-end dropdown-list animated--grow-in seia-shadow">
+                                    <div class="dropdown-header">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="d-flex gap-1 align-items-center fs-6 ">
+                                                <i class="ph ph-info fs-5 "></i> Notificações
                                             </span>
-                                        </div>
-                                        
-                                    @endif
-
-                                    @foreach ($notifications->take(4) as $notification)
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary text-white icon-circle"><i
-                                                        class="{{ $notification->icon }}"></i>
+                                            <div class="relative markAllCheck">
+                                                <a class="dots" onclick="openMarkAll()">
+                                                    <i class="ph ph-dots-three"></i>
+                                                </a>
+                                                <div class="drop invisible" id="button-check-all">
+                                                    <a  class="text-dark-seia button-check-all d-flex justify-content-center align-items-center gap-2" href="#">
+                                                        <i class="ph ph-list-checks fs-5"></i>
+                                                        Marcar todas como lidas
+                                                     </a>
                                                 </div>
                                             </div>
-                                            <div><span class="small text-dark-seia">
-                                                    {{ $notification->created_at->format('d/m/Y - H:i') }}
-                                                </span>
-                                                <p class="fw-bold">
-                                                    {{ $notification->title }}
-                                                    
-                                                </p>
-                                                <hr>
-                                                
-                                                <p>
-                                                    {{$notification->body}}
-                                                </p>
-                                            </div>
-
-                                            @if ($notification->type == "request")
-                                                <div class="d-flex justify-content-end">
-                                                    <form action="{{route('manage.invite.accept')}}" method="POST">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <input type="hidden" name="school_request" value="{{$notification->request_uuid}}">
-                                                        <input type="hidden" name="notification" value="{{ $notification->uuid }}">
-                                                        <button type="submit" class="btn btn-seia-greenligth btn-sm me-2">
-                                                            <i class="ph-check"></i>
-                                                        </button>
-                                                    </form>
-                                                    <form action="#" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <input type="hidden" name="status" value="2">
-                                                        <button type="submit" class="btn btn-seia-red btn-sm">
-                                                            <i class="ph-x"></i>
-                                                        </button>
-                                                    </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="notificationNotRead-tab" data-bs-toggle="tab" data-bs-target="#notificationNotRead" type="button" role="tab" aria-controls="notificationNotRead" aria-selected="true">Não lidas</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="notificationsRead-tab" data-bs-toggle="tab" data-bs-target="#notificationsRead" type="button" role="tab" aria-controls="notificationsRead" aria-selected="false">Lidas</button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="notificationNotRead" role="tabpanel" aria-labelledby="notificationNotRead-tab">
+                                         
+                                            @if($notifications->where('read', false)->count() > 0)
+                                                @foreach ($notifications->where('read', false)->take(4) as $notification)
+                                                        @php
+                                                            $modalId = uniqid('modal_');
+                                                        @endphp
+                                                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                            <div class="accordion-item">
+                                                                <h2 class="accordion-header" id="flush-headingOne">
+                                                                    <button class="accordion-button collapsed {{ $notification->type }}" type="button" data-bs-toggle="collapse" 
+                                                                        data-bs-target="#{{ $modalId }}" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                                        <div class="d-flex flex-column align-items-start text-dark-seia">
+                                                                            <div class="d-flex gap-3">
+                                                                                <i class="{{ $notification->icon }}"> </i> {{ $notification->title }}
+                                                                            </div>
+                                                                        <div class="text-muted " style="font-size: 12px; margin-left: 2.5em">
+                                                                            {{ $notification->created_at->format('d/m/Y - H:i') }}
+                                                                        </div>
+                                                                        </div>
+                                                                    </button>
+                                                                </h2>
+                                                                <div id="{{ $modalId }}" class="accordion-collapse collapse" 
+                                                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                                    <div class="accordion-body text-dark-seia">
+                                                                        {{$notification->body}}
+                                                                        
+                                                                        @if ($notification->type == "request")
+                                                                        <div class="d-flex mt-2">
+                                                                            <form action="{{route('manage.invite.accept')}}" method="POST">
+                                                                                @csrf
+                                                                                @method('POST')
+                                                                                <input type="hidden" name="school_request" value="{{$notification->request_uuid}}">
+                                                                                <input type="hidden" name="notification" value="{{ $notification->uuid }}">
+                                                                                <input type="hidden" name="status" value="accepted">
+                                                                                <button type="submit" class="btn btn-seia-greenligth btn-sm d-flex justify-content-center align-items-center gap-1 fw-semibold me-2">
+                                                                                    <i class="ph-check"></i> Aceitar
+                                                                                </button>
+                                                                            </form>
+                                                                            <form action="#" method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <input type="hidden" name="notification" value="{{ $notification->uuid }}">
+                                                                                <input type="hidden" name="school_request" value="{{$notification->request_uuid}}">
+                                                                                <input type="hidden" name="status" value="rejected">
+                                                                                <button type="submit" class="btn btn-seia-red btn-sm d-flex justify-content-center align-items-center gap-1 fw-semibold">
+                                                                                    <i class="ph-x"></i> Recusar
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                        
+                                                                        @else
+                                                                            <div class="d-flex mt-2">
+                                                                                <button type="submit" class="btn btn-seia-blue btn-sm d-flex justify-content-center align-items-center gap-1 fw-semibold">
+                                                                                    <i class="ph ph-eye-slash"></i> Marcar como não lida
+                                                                                </button>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                            
+                                                            <div class="accordion-item"></div>                                                
+                                                @endforeach
+                                            @else
+                                                <div class="d-flex justify-content-center py-5">
+                                                    <span class="text-center text-dark-seia">
+                                                        Nenhuma notificação
+                                                    </span>
                                                 </div>
                                             @endif
+
+                                        </div>
+                                        <div class="tab-pane fade" id="notificationsRead" role="tabpanel" aria-labelledby="notificationsRead-tab">
+                                            
+                                    
+                                            @if($notifications->where('read', true)->count() > 0)
+                                                @foreach ($notifications->where('read', true)->take(4) as $notification)
+                                                        @php
+                                                            $modalId = uniqid('modal_');
+                                                        @endphp
+                                                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                            <div class="accordion-item">
+                                                                <h2 class="accordion-header" id="flush-headingOne">
+                                                                    <button class="accordion-button collapsed {{ $notification->type }}" type="button" data-bs-toggle="collapse" 
+                                                                        data-bs-target="#{{ $modalId }}" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                                        <div class="d-flex flex-column align-items-start text-dark-seia">
+                                                                            <div class="d-flex gap-3">
+                                                                                <i class="{{ $notification->icon }}"> </i> {{ $notification->title }}
+                                                                            </div>
+                                                                        <div class="text-muted " style="font-size: 12px; margin-left: 2.5em">
+                                                                            {{ $notification->created_at->format('d/m/Y - H:i') }}
+                                                                        </div>
+                                                                        </div>
+                                                                    </button>
+                                                                </h2>
+                                                                <div id="{{ $modalId }}" class="accordion-collapse collapse" 
+                                                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                                    <div class="accordion-body text-dark-seia">
+                                                                        {{$notification->body}}
+                                                                        
+                                                                        @if ($notification->type == "request")
+                                                                            {{-- @if ($notification->request->status == "accepted")
+                                                                                <div class="d-flex mt-2">
+                                                                                    <span class="text-seia-green fw-semibold mt-1">
+                                                                                        Você aceitou o convite
+                                                                                    </span>
+                                                                                </div>
+                                                                            @elseif ($notification->request->status == "refused")
+                                                                                <div class="d-flex mt-2">
+                                                                                    <span class="text-seia-red fw-semibold mt-1">
+                                                                                        Você recusou o convite
+                                                                                    </span>
+                                                                                </div>
+                                                                            @endif --}}
+
+                                                                            <span class="btn btn-seia-red">
+                                                                                Descomentar isso quando tiver a tabela
+                                                                            </span>
+                                                                        
+                                                                        @else
+                                                                            <div class="d-flex mt-2">
+                                                                                <button type="submit" class="btn btn-seia-blue btn-sm d-flex justify-content-center align-items-center gap-1 fw-semibold">
+                                                                                    <i class="ph ph-eye-slash"></i> Marcar como não lida
+                                                                                </button>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                            
+                                                            <div class="accordion-item"></div>                                                
+                                                @endforeach
+                                            @else
+                                                <div class="d-flex justify-content-center py-5">
+                                                    <span class="text-center text-dark-seia">
+                                                        Nenhuma notificação já lida
+                                                    </span>
+                                                </div>
+                                            @endif
+                                        
+                                            
+                                        </div>
+                                    </div>
+
+                                
+
+
+
+                                   <div class="dropdown-footer">
+                                        <a class="dropdown-item text-center small" href="#">
+                                            Ver todas as notificações
                                         </a>
-                                    @endforeach
-
-
-                                    <a class="dropdown-item text-center small text-dark-seia" href="#">
-                                        Ver todas as notificações
-                                    </a>
+                                   </div>
                                 </div>
                             </div>
                         </li>
-
+                     
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link lime"
                                     aria-expanded="false" data-bs-toggle="dropdown" href="#"><span
@@ -520,7 +643,6 @@
         </div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('js/home/index.js') }}?v=1.5"></script>
 @yield('scripts')
