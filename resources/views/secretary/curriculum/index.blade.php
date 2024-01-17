@@ -176,11 +176,11 @@
                         {
                             "render": function(data, type, row, meta) {
                                 return `
-                                    <div class="row">
+                                    
                                             <a href="/gerenciar/matriz-curricular/${row.code}/editar" class="btn btn-seia-blue btn-sm" >
                                                 Gerenciar
                                             </a>
-                                    </div>
+                                 
                                 `;
                             }
                         }
