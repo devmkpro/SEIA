@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\StoreSchoolConnectionRequest;
+use App\Http\Requests\StoreTeacherSchedules;
+use App\Http\Requests\StoreTeacherSubjects;
 use App\Models\Classes;
 use App\Models\Role;
 use App\Models\SchoolConnectionRequest;
@@ -11,6 +13,8 @@ use App\Models\TeachersSchools;
 use App\Models\User;
 use App\Models\State;
 use App\Models\City;
+use App\Models\TeachersSchedules;
+use App\Models\TeachersSubjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,12 +24,8 @@ class TeachersController extends Controller
     /**
      * Render the teachers create view.
      */
-    public function create(Request $request, $code): \Illuminate\View\View
+    public function create(Request $request, Classes $class): \Illuminate\View\View
     {
-        $class = Classes::where('code', $code)->first();
-        if (!$class) {
-            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
-        }
         return view('teachers.create', [
             'title' => 'Cadastrar professor(a)',
             'slot' => 'Você está cadastrando um novo professor(a) para a turma ' . $class->name . '/' . $class->schoolYear->name,
@@ -38,12 +38,10 @@ class TeachersController extends Controller
     /**
      * Store a new teacher.
      */
-    public function store(StoreEmployeeRequest $request, $class_code)
+    public function store(StoreEmployeeRequest $request, Classes $class): \Illuminate\Http\JsonResponse
     {
         $school_home = (new SchoolController)->getHome($request);
-        $class = Classes::where('code', $class_code)->where('schools_uuid', $school_home->uuid)->first();
-        
-        if (!$class || $class->schools_uuid != $school_home->uuid) {
+        if ($class->schools_uuid != $school_home->uuid) {
             return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
         }
 
@@ -99,11 +97,10 @@ class TeachersController extends Controller
     /**
      * Render the teachers view.
      */
-    public function teachers(Request $request, $class_code)
+    public function teachers(Request $request, Classes $class): \Illuminate\View\View
     {
         $school_home = (new SchoolController)->getHome($request);
-        $class = Classes::where('code', $class_code)->where('schools_uuid', $school_home->uuid)->first();
-        if (!$class || $class->schools_uuid != $school_home->uuid) {
+        if ($class->schools_uuid != $school_home->uuid) {
             return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
         }
         return view('teachers.index', [
@@ -116,12 +113,11 @@ class TeachersController extends Controller
     /**
      * Get teachers from class.
      */
-    public function getTeachers(Request $request, $class_code)
+    public function getTeachers(Request $request, Classes $class): \Illuminate\Http\JsonResponse
     {
         $school_home = (new SchoolController)->getHome($request);
-        $class = Classes::where('code', $class_code)->where('schools_uuid', $school_home->uuid)->first();
 
-        if (!$class || $class->schools_uuid != $school_home->uuid) {
+        if ($class->schools_uuid != $school_home->uuid) {
             return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
         }
 
@@ -165,13 +161,8 @@ class TeachersController extends Controller
     /**
      * Create new request to connect school.
      */
-    public function invite(StoreSchoolConnectionRequest $request, $code)
+    public function invite(StoreSchoolConnectionRequest $request, Classes $class): \Illuminate\Http\JsonResponse
     {
-        $class = Classes::where('code', $code)->first();
-        if (!$class) {
-            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
-        }
-
         $user = User::where('username', $request->username)->first();
         $role = Role::where('name', $request->role)->first();
 
@@ -210,7 +201,7 @@ class TeachersController extends Controller
     /**
      * Link teacher to class.
      */
-    public function linkinClass($class_uuid, $user_uuid)
+    public function linkinClass($class_uuid, $user_uuid): \Illuminate\Http\JsonResponse
     {
         $class = Classes::where('uuid', $class_uuid)->first();
         TeachersSchools::create([
@@ -222,5 +213,85 @@ class TeachersController extends Controller
         return response()->json([
             'message' => 'Professor vinculado com sucesso!',
         ], 201);
+    }
+
+    /**
+     * Link teacher to subject.
+     */
+    public function linkinSubject(StoreTeacherSubjects $request, Classes $class): \Illuminate\Http\JsonResponse
+    {
+        $teacher_subject = TeachersSchools::where('user_uuid', $request->teacher_subject_uuid)->where('class_uuid', $class->uuid)->first();
+        if (!$teacher_subject) {
+            return $this->response($request, 'manage.classes', 'Professor não encontrado.', 'error', 404);
+        }
+
+        $curriculum_class = $class->curriculum;
+        $subject = $curriculum_class->subjects->where('uuid', $request->subject)->first();
+        if (!$subject) {
+            return $this->response($request, 'manage.classes', 'Disciplina da matriz curricular não encontrada.', 'error', 404);
+        }
+
+        TeachersSubjects::create([
+            'class_uuid' => $class->uuid,
+            'user_uuid' => $teacher_subject->user_uuid,
+            'subject_uuid' => $subject->uuid,
+            'weekly_workload' => $request->weekly_workload,
+            'primary_teacher' => $request->primary_teacher,
+        ]);
+
+        return $this->response($request, 'manage.classes.teachers', 'Disciplina vinculada com sucesso!', 'message', 200, 'code', $class->code);
+    }
+
+    /**
+     * New Schedules for teacher.
+     */
+    public function linkNewSchedules(StoreTeacherSchedules $request, Classes $class): \Illuminate\Http\JsonResponse
+    {
+        $teacherSubject = TeachersSubjects::where('uuid', $request->teacher_subject_uuid)->first();
+
+        if (!$teacherSubject) {
+            return $this->response($request, 'manage.classes', 'Professor não encontrado.', 'error', 404);
+        }
+
+        $subject = $teacherSubject->subjects;
+        $teacherSchool = TeachersSchools::where('user_uuid', $teacherSubject->user_uuid)->where('class_uuid', $class->uuid)->first();
+        $maxWeeklyWorkload = $teacherSchool->weekly_workload;
+        $userTotalSchedules = TeachersSchedules::where('user_uuid', $teacherSubject->user_uuid)->sum('total_hours');
+        $userTotalSchedulesInSubject = TeachersSchedules::where('user_uuid', $teacherSubject->user_uuid)->where('subject_uuid', $subject->uuid)->sum('total_hours');
+        $totalSubjectSchedules = TeachersSchedules::where('subject_uuid', $subject->uuid)->sum('total_hours');
+        $maxSubjectWorkload = $subject->ch;
+
+        $isSameTeacherSubject = $teacherSubject->uuid == $request->teacher_subject_uuid;
+        $totalSchedulesToCheck = $isSameTeacherSubject ? ($userTotalSchedules - $userTotalSchedulesInSubject + $request->total_hours) : ($userTotalSchedules + $request->total_hours);
+        $maxWorkloadToCheck = $isSameTeacherSubject ? $maxWeeklyWorkload : $maxSubjectWorkload;
+
+        if ($totalSchedulesToCheck > $maxWorkloadToCheck) {
+            $errorMsg = 'Não foi possível cadastrar o horário, pois a carga horária requerida não pode ser maior que a carga horária permitida. (' . $maxWorkloadToCheck . ' horas)';
+            return $this->response($request, 'manage.classes', $errorMsg, 'error', 404);
+        } else if ($totalSubjectSchedules + $request->total_hours > $maxSubjectWorkload) {
+            $errorMsg = 'Não foi possível cadastrar o horário, pois a carga horária requerida não pode ser maior que a carga horária da disciplina. (' . $maxSubjectWorkload . ' horas)';
+            return $this->response($request, 'manage.classes', $errorMsg, 'error', 404);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            TeachersSchedules::updateOrCreate([
+                'user_uuid' => $teacherSubject->user_uuid,
+                'teacher_subject_uuid' => $teacherSubject->uuid,
+                'subject_uuid' => $subject->uuid,
+                'day' => $request->day,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+            ], [
+                'total_hours' => $request->total_hours,
+            ]);
+
+            DB::commit();
+            return $this->response($request, 'manage.classes.teachers', 'Horário cadastrado com sucesso!', 'message', 200, 'code', $class->code);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar horário!', 'error', 500, 'code', $class->code);
+        }
     }
 }

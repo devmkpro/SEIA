@@ -63,7 +63,7 @@ class CurriculumController extends Controller
     /**
      * Format the modality.
      */
-    private function formatModality($modality)
+    public function formatModality($modality)
     {
         $modalityMap = [
             'bercario' => 'Berçário',
@@ -80,6 +80,21 @@ class CurriculumController extends Controller
         return $modalityMap[$modality] ?? '';
     }
 
+    /**
+     * Format the turn.
+     */
+    public function formatTurn($turn)
+    {
+        $turnMap = [
+            'morning' => 'Manhã',
+            'afternoon' => 'Tarde',
+            'night' => 'Noite',
+            'integral' => 'Integral',
+            'other' => 'Outro',
+        ];
+
+        return $turnMap[$turn] ?? '';
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -98,6 +113,7 @@ class CurriculumController extends Controller
             'description' => $request->descricao,
             'complementary_information' => $request->informacoes_complementares,
             'default_time_class' => $request->tempo_padrao_de_aula,
+            'turn' => $request->turno,
         ]);
 
         return $this->response($request, 'manage.curriculum', 'Matriz curricular cadastrada com sucesso!');
@@ -121,6 +137,7 @@ class CurriculumController extends Controller
             'description' => $curriculum->description,
             'complementary_information' => $curriculum->complementary_information,
             'default_time_class' => $curriculum->default_time_class,
+            'turn' => $curriculum->turn,
         ]);
     }
 
@@ -140,6 +157,7 @@ class CurriculumController extends Controller
             'description' => $request->descricao,
             'complementary_information' => $request->informacoes_complementares,
             'default_time_class' => $request->tempo_padrao_de_aula,
+            'turn' => $request->turno,
         ]);
 
         return $this->response($request, 'manage.curriculum', 'Matriz curricular atualizada com sucesso!');
@@ -152,8 +170,8 @@ class CurriculumController extends Controller
     {
         $curriculum = Curriculum::where('code', $request->curriculum)->first();
 
-        if ($curriculum->subjects()->count() > 0) {
-            return $this->response($request, 'manage.curriculum', 'Não é possível excluir uma matriz curricular que possui disciplinas!', 'error', 400);
+        if ($curriculum->subjects()->count() > 0 || $curriculum->classes()->count() > 0) {
+            return $this->response($request, 'manage.curriculum', 'Não é possível excluir a matriz curricular pois ela possui disciplinas e/ou turmas vinculadas!', 'error');
         }
 
         $curriculum->delete();

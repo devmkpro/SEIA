@@ -30,6 +30,8 @@ class TeachersSubjects extends Model
         'user_uuid',
         'class_uuid',
         'subject_uuid',
+        'active',
+        'primary_teacher'
     ];
 
     /**
@@ -53,5 +55,10 @@ class TeachersSubjects extends Model
     */
     public function subjects(){
         return $this->belongsTo(Subjects::class, 'subject_uuid', 'uuid');
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(TeachersSchedules::class, 'teacher_subject_uuid', 'uuid');
     }
 }

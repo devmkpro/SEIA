@@ -45,7 +45,7 @@ return new class extends Migration
                 'other'
             );
 
-
+            $table->enum("turn", ["morning", "afternoon", "night", "integral", "other"]);
             $table->string('description')->nullable();
             $table->string('complementary_information')->nullable();
             $table->timestamps();

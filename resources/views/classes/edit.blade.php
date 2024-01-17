@@ -115,7 +115,7 @@
                         <option value="">Selecione uma matriz curricular</option>
                         @foreach ($curriculums as $curriculum)
                             <option value="{{ $curriculum['uuid'] }}" @if (decrypt($curriculum['uuid']) == $class->curriculum_uuid) selected @endif>
-                                {{ $curriculum['series'] }}
+                                {{ $curriculum['series'] }} - {{ $curriculum['modality'] }} - {{ $curriculum['turn'] }}
                             </option>
                         @endforeach
                     @endif
@@ -316,7 +316,7 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="sala" class="form-label">Sala
+                            <label for="sala" class="form-label">Sala Principal
                             </label>
                             <input type="text" class="form-control" id="sala" name="sala"
                                 placeholder="Digite a sala da turma" value="{{ $class->room }}">

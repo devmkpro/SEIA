@@ -65,8 +65,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -141,7 +139,6 @@
                             </div>
                         </div>
 
-
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="quinta" class="form-label">Quinta-feira</label>
@@ -152,8 +149,6 @@
                                 </select>
                             </div>
                         </div>
-
-
 
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -178,10 +173,9 @@
                             </div>
                         </div>
 
-
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="sala" class="form-label">Sala
+                                <label for="sala" class="form-label">Sala Principal
                                 </label>
                                 <input type="text" class="form-control" id="sala" name="sala"
                                     placeholder="Digite a sala da turma" value="{{ old('sala') }}">

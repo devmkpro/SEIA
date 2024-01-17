@@ -31,6 +31,7 @@ class StoreCurriculumRequest extends FormRequest
             'hora_final' => 'required',
             'informacoes_complementares' => 'nullable|string',
             'descricao' => 'nullable|string',
+            'turno' => 'required|string|in:morning,afternoon,night,integral,other',
         ];
     }
 

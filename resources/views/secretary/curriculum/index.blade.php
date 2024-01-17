@@ -84,16 +84,28 @@
 
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="horas_semanais" class="form-label" required>Horas Semanais</label>
                             <input type="text" class="form-control" name="horas_semanais" placeholder="Ex. 40"
                                 value="{{ old('horas_semanais') }}" required>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="horas_totais" class="form-label" required>Horas Totais</label>
                             <input type="text" class="form-control" name="horas_totais" placeholder="Ex. 2000"
                                 value="{{ old('horas_totais') }}" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="turno" class="form-label">Turno</label>
+                            <select class="form-select" name="turno" id="turno" required>
+                                <option selected>Selecione um turno</option>
+                                <option value="morning">Matutino</option>
+                                <option value="afternoon">Vespertino</option>
+                                <option value="night">Noturno</option>
+                                <option value="integral">Integral</option>
+                                <option value="other">Outro</option>
+                            </select>
                         </div>
                     </div>
 
@@ -177,16 +189,28 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="horas_semanais" class="form-label" required>Horas Semanais</label>
                                 <input type="text" class="form-control" name="horas_semanais" id="weekly_hours"
                                     placeholder="Ex. 40" value="{{ old('horas_semanais') }}" required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="horas_totais" class="form-label" required>Horas Totais</label>
                                 <input type="text" class="form-control" name="horas_totais" id="total_hours"
                                     placeholder="Ex. 2000" value="{{ old('horas_totais') }}" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="turno" class="form-label">Turno</label>
+                                <select class="form-select" name="turno" id="turno" required>
+                                    <option selected>Selecione um turno</option>
+                                    <option value="morning">Matutino</option>
+                                    <option value="afternoon">Vespertino</option>
+                                    <option value="night">Noturno</option>
+                                    <option value="integral">Integral</option>
+                                    <option value="other">Outro</option>
+                                </select>
                             </div>
                         </div>
 
@@ -244,6 +268,7 @@
                         $('#editCurriculumForm #end_time').val(data.end_time);
                         $('#editCurriculumForm #complementary_information').val(data.complementary_information);
                         $('#editCurriculumForm #default_time_class').val(data.default_time_class);
+                        $('#editCurriculumForm #turno').val(data.turn);
 
                     },
                     error: function(data) {
