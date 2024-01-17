@@ -258,7 +258,7 @@
 
                         <li class="nav-item mx-1">
                             <div class="dropdown no-arrow">
-                                <a id="notifications-container" class=" dropdown-toggle nav-link yellow"
+                                <a id="notifications-container" class="show dropdown-toggle nav-link yellow"
                                     aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                     href="#">
                                     <span class="badge bg-danger badge-counter">
@@ -266,7 +266,7 @@
                                     </span><i class="ph-bell fs-5"></i>
                                 </a>
                                 <div
-                                    class=" notification dropdown-menu dropdown-menu-end dropdown-list animated--grow-in seia-shadow">
+                                    class="show notification dropdown-menu dropdown-menu-end dropdown-list animated--grow-in seia-shadow">
                                     <div class="dropdown-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="d-flex gap-1 align-items-center fs-6 ">
