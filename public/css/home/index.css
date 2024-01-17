@@ -371,9 +371,128 @@ input, textarea, select{
     background-color: var(--seia-ambar);
     color: white !important;
 }
+/* acordion */
+.navbar-nav .accordion .request{
+    background-color: #f3f71a11 !important;
+}
+
+.navbar-nav .accordion .warning{
+    background-color: #f74e1a11 !important;
+}
+
+.navbar-nav .accordion .info{
+    background-color: #1addf717 !important;
+}
+
+/* nav nav-tabs */
+.navbar-nav .nav-tabs{
+    background: #FFF !important;
+    color: var(--seia-darkback) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: #D1D5DB 1px solid !important;
+}
+
+.navbar-nav .nav-tabs .nav-link.active, 
+.nav-tabs .nav-item.show .nav-link{
+    background: #FFFFFF !important;
+    border-radius: 0;
+    height: 2.375rem !important;
+
+    color: var(--seia-darkback) !important;
+    font-weight: 700;
+    border: none !important;
+    border-bottom: 1px solid var(--seia-darkblue) !important;
+}
+
+.navbar-nav .nav-tabs .nav-link{
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #D1D5DB !important;
+    border-radius: 0;
+    color: var(--seia-grey) !important;
+    height: 2.375rem !important;
+    padding: 1.2rem 3rem !important;   
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+.navbar-nav .nav-tabs .nav-link:hover{
+    background: var(--seia-darkblue) !important;
+    border-bottom: 1px solid rgba(60, 64, 67, 0.3) !important;
+    border-radius: 0;
+    color: white !important;
+}
+
+/* Mark All Check */
+.markAllCheck .dots{
+    cursor: pointer;
+    color: var(--seia-darkblue) !important;
+    margin: 0.5em 0;
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.markAllCheck .dots:hover{
+    background: #D1D5DB !important;
+}
+
+.markAllCheck .dots i{
+    font-size: 1.7em !important;
+    font-weight: bold;
+}
+
+.markAllCheck .drop{
+    position: absolute;
+    z-index: 4;
+    top: 50px;
+    right: 0.3em;
+     
+    box-shadow: var(--seia-shadow2);
+    background-color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 0;
+}
+
+.markAllCheck .button-check-all{
+    text-transform: none !important;
+    padding: 1em;
+
+    text-decoration: none;
+
+    transition: background-color 0.3s ease-in-out;
+}
+
+.markAllCheck .button-check-all:hover{
+    background-color: var(--seia-darkblue) !important;
+    color: white !important;
+}
+
+/* dropdown-menu */
+
+.dropdown-header{
+    background: white !important;
+    color: var(--seia-darkback) !important;
+    padding: 0 14px !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: #D1D5DB 1px solid !important;
+    border-radius: 0 !important;
+}
+
+.dropdown-menu .dropdown-header .fs-6{
+    text-transform: none !important;
+}
 
 .dropdown-menu{
-    background: rgba(255, 255, 255, 0.726) !important;
+    background: rgba(255, 255, 255, 0.911) !important;
     -webkit-backdrop-filter: blur(50px) !important;
     backdrop-filter: blur(50px) !important;
 }
@@ -385,6 +504,21 @@ input, textarea, select{
 .dropdown-item:hover{
     background-color: var(--seia-darkblue) !important;
     color: white !important;
+}
+
+.dropdown-footer a{
+    background-color: var(--seia-darkblue) !important;
+    transition: background-color 0.3s ease-in-out;
+    color: white !important;
+    color: white !important;
+    text-decoration: none !important;
+    justify-content: center !important;
+    align-items: center !important;
+    display: flex !important;
+}
+
+.dropdown-footer a:hover{
+    background-color: var(--seia-oceanblue) !important;    
 }
 
 /* dropdown-menu sidebar */

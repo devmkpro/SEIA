@@ -82,6 +82,18 @@
     color: var(--seia-grey) !important;
 }
 
+/* acordion */
+
+.navbar-nav .accordion-button:hover{
+    background-color: #fafafa !important;
+    color: white !important;
+}
+
+.navbar-nav .accordion-button:focus {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25) !important;
+    border-color: var(--seia-ligthgrey) !important;
+}
+
 /* Button toggle */
 
 
