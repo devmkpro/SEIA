@@ -12,6 +12,6 @@ class SchoolSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\School::factory(2)->create();
+        \App\Models\School::factory(1)->create();
     }
 }
