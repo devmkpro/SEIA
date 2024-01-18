@@ -46,7 +46,7 @@ class StoreStudentRequest extends FormRequest
             'deficiencia' => 'nullable|boolean',
             'cep' => 'nullable|string|max:255',
             'cpf_responsavel' => 'required|string|max:255|cpf_ou_cnpj',
-            'nome_responsavel' => 'nullable|string|max:255',
+            'nome_responsavel' => 'required|string|max:255',
         ];
     }
 }
