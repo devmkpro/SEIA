@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -19,5 +21,17 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user())],
         ];
+    }
+
+    /**
+     * Return validation errors as JSON response
+     */
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors(),
+            'status' => true
+        ], 422));
     }
 }

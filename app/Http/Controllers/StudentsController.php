@@ -4,27 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
 use App\Models\Classes;
+use App\Models\StudentsClass;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StudentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,7 +19,7 @@ class StudentsController extends Controller
     {
         $school_home = (new SchoolController)->getHome($request);
         if ($class->schools_uuid != $school_home->uuid) {
-            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
+            return $this->response($request, 'manage.classes', 'A turma não pertence a escola selecionada!', 'error', 500);
         }
         $dataToCreateUser = [
             'name' => $request->nome,
@@ -68,7 +54,7 @@ class StudentsController extends Controller
                 'mother_name' => $request->nome_mae,
                 'father_name' => $request->nome_pai,
                 'cpf_responsible' => $request->cpf,
-                'deficiency' => $request->deficiencia,
+                'deficiency' => $request->deficiencia ? true : false,
                 'zip_code' => $request->cep,
                 'cpf_responsible'=> $request->cpf_responsavel,
                 'name_responsible'=> $request->nome_responsavel,
@@ -76,7 +62,7 @@ class StudentsController extends Controller
 
             $user->assignRole('student');
             $user->assignRoleForSchool('student', $school_home->uuid);
-            $this->linkinClass($class->uuid, $user->uuid);
+            $this->linkInClass($class->uuid, $user->uuid);
         } catch (\Throwable $th) {
             DB::rollBack();
             return $this->response($request, 'manage.classes.students.store', 'Erro ao cadastrar aluno(a)!', 'error', 500, 'class', $class->code);
@@ -89,34 +75,17 @@ class StudentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * link in class
      */
-    public function show(string $id)
+    public function linkInClass($class_uuid, $user_uuid): \Illuminate\Http\JsonResponse
     {
-        //
-    }
+        StudentsClass::create([
+            'user_uuid' => $user_uuid,
+            'classes_uuid' => $class_uuid,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json([
+            'message' => 'Aluno(a) cadastrado(a) com sucesso!',
+        ], 200);
     }
 }

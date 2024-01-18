@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreEmployeeRequest extends FormRequest
 {
@@ -39,12 +41,24 @@ class StoreEmployeeRequest extends FormRequest
             'estado_nascimento' => 'required|string|exists:states,ibge_code',
             'cidade_nascimento' => 'required|string|exists:cities,ibge_code',
             'numero' => 'nullable|string|max:255',
-            'zona' => 'nullable|string|max:255|in:U,R',
+            'zona' => 'required|string|max:255|in:U,R',
             'nome_mae' => 'nullable|string|max:255',
             'nome_pai' => 'nullable|string|max:255',
             'tipo_sanguineo' => 'nullable|string|max:255',
             'deficiencia' => 'nullable|boolean',
-            'cep' => 'nullable|string|max:255',
+            'cep' => 'required|string|max:255',
         ];
+    }
+
+    /**
+     * Return validation errors as JSON response
+     */
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors(),
+            'status' => true
+        ], 422));
     }
 }

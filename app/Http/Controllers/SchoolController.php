@@ -76,7 +76,6 @@ class SchoolController extends Controller
      */
     public function setHome(Request $request)
     {
-        $request->validate(['school' => 'required']);
         return $this->response($request, 'panel', 'Escola definida com sucesso!')->withCookie(cookie()->forever('school_home', $request->school));
     }
 
@@ -85,7 +84,6 @@ class SchoolController extends Controller
      */
     public function deleteHome(Request $request)
     {
-        $request->validate(['school' => 'required']);
         return $this->response($request, 'panel', 'Escola removida com sucesso!')->withCookie(cookie()->forget('school_home'));
     }
 

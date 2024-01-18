@@ -26,8 +26,8 @@ class RequireCurriculumSet
     public function terminateError ($request) {
         if ($request->bearerToken()) {
             return response()->json([
-                'message' => 'Matriz curricular ou turma nao encontrada',
-                'error' => 'Matriz curricular ou turma nao encontrada',
+                'message' => 'A turma precisa ter uma matriz curricular definida',
+                'error' => 'A turma precisa ter uma matriz curricular definida',
             ], 404);
         } else {
             return redirect()->route('manage.classes.edit', $request->route('class'))->with(['error' => 'Você precisa definir uma matriz curricular para a turma!']);

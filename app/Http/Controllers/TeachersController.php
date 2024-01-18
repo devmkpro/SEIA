@@ -78,13 +78,13 @@ class TeachersController extends Controller
                 'mother_name' => $request->nome_mae,
                 'father_name' => $request->nome_pai,
                 'cpf_responsible' => $request->cpf,
-                'deficiency' => $request->deficiencia,
+                'deficiency' => $request->deficiencia ? true : false,
                 'zip_code' => $request->cep,
             ]);
 
             $user->assignRole('teacher');
             $user->assignRoleForSchool('teacher', $school_home->uuid);
-            $this->linkinClass($class->uuid, $user->uuid);
+            $this->linkInClass($class->uuid, $user->uuid);
         } catch (\Throwable $th) {
             DB::rollBack();
             return $this->response($request, 'manage.classes.teachers', 'Erro ao cadastrar professor(a)!', 'error', 500, 'class', $class->code);
@@ -201,7 +201,7 @@ class TeachersController extends Controller
     /**
      * Link teacher to class.
      */
-    public function linkinClass($class_uuid, $user_uuid): \Illuminate\Http\JsonResponse
+    public function linkInClass($class_uuid, $user_uuid): \Illuminate\Http\JsonResponse
     {
         $class = Classes::where('uuid', $class_uuid)->first();
         TeachersSchools::create([
