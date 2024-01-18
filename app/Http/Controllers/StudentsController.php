@@ -62,7 +62,6 @@ class StudentsController extends Controller
 
             $user->assignRole('student');
             $user->assignRoleForSchool('student', $school_home->uuid);
-            //
             $this->linkInClass($class->uuid, $user->uuid);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -80,13 +79,6 @@ class StudentsController extends Controller
      */
     public function linkInClass($class_uuid, $user_uuid): \Illuminate\Http\JsonResponse
     {
-
-        // if(StudentsClass::where('user_uuid', $user_uuid)->where('classes_uuid', $class_uuid)->first()){
-        //     return response()->json([
-        //         'message' => 'Erro, aluno(a) já cadastrado(a) nesta turma!',
-        //     ], 500);
-        // }
-
         StudentsClass::create([
             'user_uuid' => $user_uuid,
             'classes_uuid' => $class_uuid,
