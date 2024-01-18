@@ -119,7 +119,19 @@ class CurriculumController extends Controller
         return $this->response($request, 'manage.curriculum', 'Matriz curricular cadastrada com sucesso!');
     }
 
-
+    /**
+     * Edit the curriculum.
+     */
+    public function edit(Curriculum $curriculum): \Illuminate\View\View
+    {
+        return view('secretary.curriculum.edit', [
+            'title' => 'Editar Matriz Curricular',
+            'slot' => 'Você está editando a matriz curricular: ' . $this->formatSeries($curriculum->series) . ' - ' . $this->formatTurn($curriculum->turn) . '.',
+            'seriesFormated' => $this->formatSeries($curriculum->series),
+            'modalityFormated' => $this->formatModality($curriculum->modality),
+            'curriculum' => $curriculum,
+        ]);
+    }
 
     /**
      * Show the curriculum.
@@ -160,7 +172,7 @@ class CurriculumController extends Controller
             'turn' => $request->turno,
         ]);
 
-        return $this->response($request, 'manage.curriculum', 'Matriz curricular atualizada com sucesso!');
+        return $this->response($request, 'manage.curriculum.edit', 'Matriz curricular atualizada com sucesso!', 'message', 200, 'curriculum', $curriculum->code);
     }
 
     /**
@@ -171,7 +183,7 @@ class CurriculumController extends Controller
         $curriculum = Curriculum::where('code', $request->curriculum)->first();
 
         if ($curriculum->subjects()->count() > 0 || $curriculum->classes()->count() > 0) {
-            return $this->response($request, 'manage.curriculum', 'Não é possível excluir a matriz curricular pois ela possui disciplinas e/ou turmas vinculadas!', 'error');
+            return $this->response($request, 'manage.curriculum.edit', 'Não é possível excluir a matriz curricular pois ela possui disciplinas e/ou turmas vinculadas!', 'error', 422, 'curriculum', $curriculum->code);
         }
 
         $curriculum->delete();

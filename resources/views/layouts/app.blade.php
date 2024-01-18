@@ -701,7 +701,6 @@
 <script src="{{ asset('js/home/index.js') }}?v=1.5"></script>
 @yield('scripts')
 
-
 </body>
 
 </html>

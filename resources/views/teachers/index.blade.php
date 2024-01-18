@@ -1,5 +1,5 @@
 <x-app-layout>
-   
+
     @include('components.warnings-panel')
     @include('components.messages-erros')
 
@@ -13,43 +13,37 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="row gap-1 justify-content-between">
-                    <div class="col-md-5">
-                        <a href="{{ route('manage.classes.edit', ['class' => $class->code]) }}"
-                            class="btn btn-seia-jeans d-flex justify-content-center align-items-center gap-1 w-50">
-                            <i class="ph ph-arrow-left"></i>
-                            Voltar para turma</a>
-                    </div>
-
-                    @schoolPermission('create-any-teacher', optional($school_home)->uuid)
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-end mb-3 gap-1">
-                                <a href="{{route('manage.classes.teachers.create', $class->code)}}" class="btn btn-seia-oceanblue d-flex justify-content-center align-items-center gap-1">
-                                    <i class="ph ph-user-plus-bold fs-5"></i>
-                                    Cadastrar novo professor
-                                </a>
-                                <button type="button" class="btn btn-seia-green d-flex justify-content-center align-items-center gap-1" data-bs-toggle="modal"
-                                    data-bs-target="#addTeacherModal">
-                                    <i class="ph ph-plus fs-5"></i>
-                                    Adicionar professor existente
-                                </button>
+                <x-grid-datatables identifier="teachersTable" :columns="['Cód.', 'Nome', 'Disciplinas', 'E-mail', 'Telefone', 'Ações']" 
+                
+                :btnRoute="route('manage.classes.edit', ['class' => $class->code])" btnBack="Voltar para turma">
+                    <x-slot:btns>
+                        @schoolPermission('create-any-teacher', optional($school_home)->uuid)
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-end mb-3 gap-1">
+                                    <a href="{{ route('manage.classes.teachers.create', $class->code) }}"
+                                        class="btn btn-seia-oceanblue d-flex justify-content-center align-items-center gap-1">
+                                        <i class="ph ph-user-plus-bold fs-5"></i>
+                                        Cadastrar novo professor
+                                    </a>
+                                    <button type="button"
+                                        class="btn btn-seia-green d-flex justify-content-center align-items-center gap-1"
+                                        data-bs-toggle="modal" data-bs-target="#addTeacherModal">
+                                        <i class="ph ph-plus fs-5"></i>
+                                        Adicionar professor existente
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    @endschoolPermission
-                </div>
-
-
-                <x-grid-datatables identifier="teachersTable" :columns="['Cód.', 'Nome', 'Disciplinas', 'E-mail', 'Telefone', 'Ações']" />
-
-                </div>
-                        
+                        @endschoolPermission
+                    </x-slot:btns>
+                </x-grid-datatables>
             </div>
+
         </div>
+    </div>
     </div>
     @schoolPermission('create-any-teacher', optional($school_home)->uuid)
         <x-modal titleModal="Adicionar novo Professor" identifier="addTeacherModal" id="addTeacherTable">
             <div class="me-3 ms-3 mt-2">
-
                 <div class="alert alert-warning text-center" role="alert">
                     <i class="ph ph-warning"></i>
                     <span>
@@ -60,13 +54,17 @@
                     </span>
                 </div>
 
-                <label for="teacherEmail" class="form-label">Pesquise por e-mail/código ou 
-                    <a href="{{route('manage.classes.teachers.create', $class->code)}}" class="text-seia-oceanblue">cadastre
-                    um novo professor</a> 
+                <label for="teacherEmail" class="form-label">Pesquise por e-mail/código ou
+                    <a href="{{ route('manage.classes.teachers.create', $class->code) }}"
+                        class="text-seia-oceanblue">cadastre
+                        um novo professor</a>
                 </label>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control"placeholder="Digite o e-mail ou código do professor" id="teacherEmail" name="teacherEmail" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-seia-oceanblue" type="button" id="button-addon2" onclick="searchTeacher()">Pesquisar</button>
+                    <input type="text" class="form-control" placeholder="Digite o e-mail ou código do professor"
+                        id="teacherEmail" name="teacherEmail" aria-label="Recipient's username"
+                        aria-describedby="button-addon2" autocomplete="true" autofocus>
+                    <button class="btn btn-seia-oceanblue" type="button" id="button-addon2"
+                        onclick="searchTeacher()">Pesquisar</button>
                 </div>
 
 
@@ -109,7 +107,7 @@
                                     </div>
                                 </p>
                                 <div class="mt-1 d-flex justify-content-center align-items-center">
-                                    <form action="{{route('manage.classes.teachers.invite', $class->code  )}}" method="POST">
+                                    <form action="{{ route('manage.classes.teachers.invite', $class->code) }}" method="POST">
                                         @csrf
                                         @method('POST')
                                         <input type="hidden" name="username" value="${teacher.username}">
@@ -120,9 +118,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                    `;
+                </div>`;
 
                 return cardHtml;
             }
@@ -144,7 +140,7 @@
                                     <div class="alert alert-info" role="alert">
                                         <i class="ph ph-warning"></i>
                                         <span>
-                                            Nenhum professor encontrado com o e-mail ou codigo informado se acredita que este professor não está cadastrado no sistema, <a href="{{route('manage.classes.teachers.create', $class->code)}}" class="text-seia-oceanblue">clique aqui</a> para cadastrar um novo professor.
+                                            Nenhum professor encontrado com o e-mail ou codigo informado se acredita que este professor não está cadastrado no sistema, <a href="{{ route('manage.classes.teachers.create', $class->code) }}" class="text-seia-oceanblue">clique aqui</a> para cadastrar um novo professor.
                                         </span>
                                     </div>
                                 </div>
@@ -156,9 +152,9 @@
                                 var teacherCard = createTeacherCard(teacher);
                                 $('#teacherCardsContainer').append(teacherCard);
                             });
-                        } 
+                        }
                     },
-                
+
                 })
             }
         </script>

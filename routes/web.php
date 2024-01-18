@@ -43,7 +43,8 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
     // School -> Secretary
     Route::group(['middleware' => ['school.role:secretary']], function () {
         Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'curriculum'])->name('manage.curriculum')->middleware('permission:manage-curricula');
-        Route::get('/gerenciar/matriz-curricular/{code}/disciplinas', [SubjectsController::class, 'subjects'])->name('manage.subjects')->middleware('permission:update-any-subject');
+        Route::get('/gerenciar/matriz-curricular/{curriculum:code}/editar', [CurriculumController::class, 'edit'])->name('manage.curriculum.edit')->middleware('permission:update-any-curriculum');
+        Route::get('/gerenciar/matriz-curricular/{curriculum:code}/disciplinas', [SubjectsController::class, 'subjects'])->name('manage.subjects')->middleware('permission:update-any-subject');
     });
 
     // School -> Secretary | Director
