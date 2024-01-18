@@ -125,7 +125,7 @@
 
                         <div class="col-md-4">
                             <label for="default_time_class" class="form-label" required>Tempo de aula (minutos)</label>
-                            <input type="text" class="form-control" name="tempo_padrao_de_aula" placeholder="Ex. 45"
+                            <input type="number" class="form-control" name="tempo_padrao_de_aula" placeholder="Ex. 45"
                                 value="{{ old('tempo_padrao_de_aula') }}" required>
                         </div>
                     </div>

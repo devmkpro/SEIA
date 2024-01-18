@@ -39,9 +39,13 @@ class StoreSubjectsRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'errors' => $validator->errors(),
-            'status' => true
-        ], 422));
+        if (request()->bearerToken() || request()->expectsJson()) {
+            throw new HttpResponseException(response()->json([
+                'errors' => $validator->errors(),
+                'status' => true
+            ], 422));
+        } else {
+            throw new HttpResponseException(redirect()->back()->withErrors($validator->errors())->withInput());
+        }
     }
 }
