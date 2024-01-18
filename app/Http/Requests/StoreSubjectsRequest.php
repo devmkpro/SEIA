@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreSubjectsRequest extends FormRequest
 {
@@ -29,5 +31,17 @@ class StoreSubjectsRequest extends FormRequest
             'descricao' => ['nullable', 'string'],
             'modalidade' => ['nullable', 'string', 'in:linguagens-e-suas-tecnologias,ciencias-da-natureza-e-suas-tecnologias,ciencias-humanas-e-suas-tecnologias,estudos-literarios,ensino-religioso,parte-diversificada'],
         ];
+    }
+
+    /**
+     * Return validation errors as JSON response
+     */
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors(),
+            'status' => true
+        ], 422));
     }
 }

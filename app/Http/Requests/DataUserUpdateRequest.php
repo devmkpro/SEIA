@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class DataUserUpdateRequest extends FormRequest
 {
@@ -26,5 +26,17 @@ class DataUserUpdateRequest extends FormRequest
             'zip_code' => ['required', 'string', 'max:255'],
             'cpf_responsible' => ['required', 'string', 'max:255'],
         ];
+    }
+
+    /**
+     * Return validation errors as JSON response
+     */
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors(),
+            'status' => true
+        ], 422));
     }
 }
