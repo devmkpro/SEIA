@@ -39,4 +39,30 @@ class NotificationController extends Controller
             'message' => 'Notificação marcada como lida com sucesso!',
         ], 200);
     }
+
+    /**
+     * Mark notification as unread.
+     */
+    public function markAsUnread($uuid): \Illuminate\Http\JsonResponse
+    {
+        $notification = Notifications::where('uuid', $uuid)->first();
+        $notification->read = false;
+        $notification->save();
+
+        return response()->json([
+            'message' => 'Notificação marcada como não lida com sucesso!',
+        ], 200);
+    }
+
+    /**
+     * pagina notifications.
+     */
+    public function notificationsPage()
+    {
+        return view('profile.notifications', [
+            'title' => 'Minhas notificações',
+            'slot' => ' ',
+        ]);
+    }
+
 }

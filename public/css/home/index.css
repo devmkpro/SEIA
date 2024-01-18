@@ -12,6 +12,7 @@
     --seia-greenligth:#00c949;
     --seia-green:#00a149;
     --seia-dark: rgba(56, 56, 56, 0.70);
+    --seia-lightDark: rgba(32, 32, 32, 0.5);
     --seia-darkback:#383737;
     --seia-ligthgrey:#595959;
     --seia-grey:#686868;
@@ -417,7 +418,6 @@ input, textarea, select{
     justify-content: center;
     align-items: center;
     display: flex;
-
 }
 
 .navbar-nav .nav-tabs .nav-link:hover{
@@ -569,6 +569,51 @@ input, textarea, select{
 
 .exit .icons-menu-retraido{
     font-size: 25px !important;
+}
+
+/* notificações card */
+.notification .nav-link{
+    display: flex !important;
+    justify-content: start !important;
+    align-items: center !important;
+    font-weight: 600;
+    gap: 0.5em;
+}
+
+.notification .nav-link:hover{
+    background: #ebebeb !important;
+    color: var(--seia-darkback) !important;
+}
+
+.notification .nav-pills .nav-link.active,
+.nav-pills .show>.nav-link{
+    color: white !important;
+}
+
+.notification .nav-pills .nav-link.active:hover{
+    background: var(--seia-darkblue) !important;
+}
+
+.notification .menu-title{
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.notification .accordion-button,
+.notification .tab-content{
+    width: 100% !important;
+}
+
+.notification .warning{
+    background-color: var(--seia-ligthred) !important;
+}
+
+.notification .request{
+    background-color: var(--seia-yellow) !important;
+}
+
+.notification .info{
+    background-color: var(--seia-oceanblue) !important;
 }
 
 /* avisos card */
