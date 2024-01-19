@@ -28,10 +28,11 @@ class SchoolHomeChangeRequest extends FormRequest
         ];
     }
 
-    
+
     /**
      * Return validation errors as JSON response
      */
+
     protected function failedValidation(Validator $validator)
     {
         if (request()->bearerToken() || request()->expectsJson()) {

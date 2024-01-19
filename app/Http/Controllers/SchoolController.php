@@ -83,7 +83,7 @@ class SchoolController extends Controller
     /**
      * Delete School Home Cookie and redirect to home.
      */
-    public function deleteHome(Request $request)
+    public function deleteHome(SchoolHomeChangeRequest $request)
     {
         return $this->response($request, 'panel', 'Escola removida com sucesso!', 'message')->withCookie(cookie()->forget('school_home'));
     }

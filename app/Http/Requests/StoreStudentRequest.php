@@ -28,7 +28,7 @@ class StoreStudentRequest extends FormRequest
             'celular' => 'required|string|max:255|celular_com_ddd',
             'email' => 'required|string|max:255|unique:users,email',
             'telefone_fixo' => 'nullable|string|max:255|telefone_com_ddd',
-            'cpf' => 'required|string|max:255|cpf_ou_cnpj',
+            'cpf' => 'required|string|max:255|cpf_ou_cnpj|unique:data_users,cpf',
             'rg' => 'required|string|max:255',
             'inep' => 'nullable|string|max:255',
             'data_nascimento' => 'required|date',
