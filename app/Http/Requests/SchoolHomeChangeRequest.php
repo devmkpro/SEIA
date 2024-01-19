@@ -24,9 +24,10 @@ class SchoolHomeChangeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'school' => 'required',
+            'school' => 'required|exists:schools,code',
         ];
     }
+
 
     /**
      * Return validation errors as JSON response

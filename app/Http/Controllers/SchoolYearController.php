@@ -16,7 +16,7 @@ class SchoolYearController extends Controller
     {
         return response()->json(SchoolYear::all()->map(function ($schoolyear) {
             return [
-                'uuid' => encrypt($schoolyear->uuid),
+                'code' => $schoolyear->code,
                 'name' => $schoolyear->name,
                 'start_date' => $schoolyear->start_date,
                 'end_date' => $schoolyear->end_date,
@@ -40,13 +40,10 @@ class SchoolYearController extends Controller
     /**
      * Show School Year
      */
-    public function show($uuidEncoded)
+    public function show(SchoolYear $schoolYear)
     {
-        $uuid = decrypt($uuidEncoded);
-        $schoolYear = SchoolYear::where('uuid', $uuid)->firstOrFail();
-
         return response()->json([
-            'uuid' => encrypt($schoolYear->uuid),
+            'code' => $schoolYear->code,
             'name' => $schoolYear->name,
             'start_date' => $schoolYear->start_date,
             'end_date' => $schoolYear->end_date,
@@ -57,7 +54,7 @@ class SchoolYearController extends Controller
     /**
      * Store a new school year.
      **/
-    public function store(Request $request)
+    public function store(Request $request): mixed
     {
         $request->validate([
             'name' => 'required|string',
@@ -81,27 +78,19 @@ class SchoolYearController extends Controller
     /**
      * Update a school year.
      */
-    public function update(Request $request)
+    public function update(Request $request): mixed
     {
         $request->validate([
             'name' => 'required|string',
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'status' => 'nullable|boolean',
-            'schoolYear' => 'required',
+            'schoolYear' => 'required|string|exists:school_years,code',
         ]);
 
-        try {
-            $schoolYear = SchoolYear::where('uuid', decrypt($request->schoolYear))->firstOrFail();
-        } catch (\Exception $e) {
-            return $this->response($request, 'manage.school-years', 'Ano letivo não encontrado!', 'error');
-        }
-
-        if (!$schoolYear) {
-            return $this->response($request, 'manage.school-years', 'Ano letivo não encontrado!', 'error');
-        }
-
+        $schoolYear = SchoolYear::where('code', $request->schoolYear)->first();
         $hasSchoolYearActive = SchoolYear::where('active', true)->first();
+        
         if ($hasSchoolYearActive && $request->status) {
             $hasSchoolYearActive->update(['active' => false]);
         }
@@ -113,7 +102,7 @@ class SchoolYearController extends Controller
             'active' =>  $request->status,
         ]);
 
-        return redirect()->route('manage.school-years')->with('success', 'Ano letivo atualizado com sucesso!');
+        return $this->response($request, 'manage.school-years', 'Ano letivo atualizado com sucesso!');
     }
 
     /**

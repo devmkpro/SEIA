@@ -45,7 +45,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/verify/schools', [SchoolController::class, 'index'])->name('manage.schools.index')->middleware('permission:view-any-school');
         Route::get('/verify/school-years', [SchoolYearController::class, 'index'])->name('manage.school-years.index')->middleware('permission:manage-school-years');
-        Route::get('/manage/school-years/{schoolYear}', [SchoolYearController::class, 'show'])->name('manage.school-years.show')->middleware('permission:update-any-school-year');
+        Route::get('/manage/school-years/{schoolYear:code}', [SchoolYearController::class, 'show'])->name('manage.school-years.show')->middleware('permission:update-any-school-year');
         Route::post('/manage/school-years/new', [SchoolYearController::class, 'store'])->name('manage.school-years.store')->middleware('permission:create-any-school-year');
         Route::put('/manage/school-years/', [SchoolYearController::class, 'update'])->name('manage.school-years.update')->middleware('permission:update-any-school-year');
         Route::post('/manage/schools/new', [SchoolController::class, 'store'])->name('manage.schools.store')->middleware('permission:create-any-school');

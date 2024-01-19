@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\TeachersController;
+use App\Models\Classes;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\School;
+use PhpParser\Builder\Class_;
 
 class UserSeeder extends Seeder
 {
@@ -81,7 +84,10 @@ class UserSeeder extends Seeder
         $admin->assignRole('admin');
         $secretary->assignRole('secretary');
         $director->assignRole('director');
+
         $teacher->assignRole('teacher');
+        (new TeachersController)->linkInClass(Classes::first()->uuid, $teacher->uuid);
+        
         $student->assignRole('student');
         $director->assignRoleForSchool('director', School::first()->uuid);
         $student->assignRoleForSchool('student', School::first()->uuid);

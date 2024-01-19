@@ -30,8 +30,7 @@ class RequireSchoolYearActive
                 'message' => 'Ano letivo nao definido',
                 'error' => 'O ano letivo nao foi encontrado',
             ], 404);
-        } else {
-            return redirect()->route('panel')->with(['error' => 'Ano letivo não definido no sistema.']);
         }
+        return redirect()->route('panel')->with(['error' => 'Ano letivo não definido no sistema.']);
     }
 }

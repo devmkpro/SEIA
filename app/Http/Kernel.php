@@ -56,7 +56,6 @@ class Kernel extends HttpKernel
         'school_curriculum_set' => [
             \App\Http\Middleware\RequireCurriculumSet::class,
         ],
-
     ];
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\School;
 use Illuminate\Support\ServiceProvider;
 
 class SchoolHomeServiceProvider extends ServiceProvider
@@ -25,8 +26,8 @@ class SchoolHomeServiceProvider extends ServiceProvider
 
             if ($school_cookie) {
                 try {
-                    $decrypted_uuid = decrypt($school_cookie);
-                    $school_home = \App\Models\School::where('uuid', $decrypted_uuid)->first();
+                    $decrypted_code = decrypt($school_cookie);
+                    $school_home = School::where('code', $decrypted_code)->first();
                 } catch (\Exception $e) {
                     report($e);
                 }

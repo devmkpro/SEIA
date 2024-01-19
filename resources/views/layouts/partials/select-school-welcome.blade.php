@@ -15,7 +15,7 @@
                     <select name="school" id="school" class="form-select">
                         <option value="">Selecione a escola</option>
                         @foreach ($schools as $school)
-                            <option value="{{ encrypt($school->uuid) }}">{{ $school->name }}</option>
+                            <option value="{{ $school->code }}">{{ $school->name }}</option>
                         @endforeach
                     </select>
     

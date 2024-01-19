@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             CitySeeder::class,
             SchoolSeeder::class,
-            UserSeeder::class,
             SchoolYearSeeder::class,
+            ClassesSeeder::class,
+            UserSeeder::class,
             CurriculumSeeder::class,
             SubjectsSeeder::class,
-            ClassesSeeder::class,
         ]);
     }
 }
