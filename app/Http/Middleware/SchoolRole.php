@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\School;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -47,12 +48,11 @@ class SchoolRole
         } catch (\Exception $e) {
             return $this->terminateError($request);
         }
-
-
+        $school = School::where('code', $schoolUUID)->first();
         $rolesArray = explode('|', $roles);
 
         foreach ($rolesArray as $role) {
-            if ($schoolUUID && $user->hasRoleForSchool($role, $schoolUUID)) {
+            if ($schoolUUID && $user->hasRoleForSchool($role, $school->uuid)) {
                 return $next($request);
             }
         }

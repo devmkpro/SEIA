@@ -21,7 +21,7 @@
                     </div>
                 </div>
             @endcan
-            <x-grid-datatables identifier="schoolYearTable" :columns="['Nome', 'Início', 'Final', 'Status', 'Ações']" />
+            <x-grid-datatables identifier="schoolYearTable" :columns="['Cód', 'Nome', 'Início', 'Final', 'Status', 'Ações']" />
         </div>
     </div>
     </div>
@@ -112,9 +112,9 @@
 
     @section('scripts')
         <script>
-            function showSchoolYear(uuid) {
+            function showSchoolYear(code) {
                 $.ajax({
-                    url: "{{ route('manage.school-years.show', '') }}" + "/" + uuid,
+                    url: "{{ route('manage.school-years.show', '') }}" + "/" + code,
                     type: "GET",
                     dataType: "json",
                     success: function(data) {
@@ -124,7 +124,7 @@
                         $('#editSchoolYearForm #end_date').val(data.end_date);
                         $('#editSchoolYearForm #status').val(data.status);
                         $('#editSchoolYearForm input[name=schoolYear]').remove();
-                        $('#editSchoolYearForm').append('<input type="hidden" name="schoolYear" value="' + data.uuid +
+                        $('#editSchoolYearForm').append('<input type="hidden" name="schoolYear" value="' + data.code +
                             '">');
                     } , error: function(data) {
                         location.reload();
@@ -143,7 +143,11 @@
                         "type": "GET",
                         "dataSrc": ""
                     },
-                    "columns": [{
+                    "columns": [
+                        {
+                            "data": "code",
+                        },
+                        {
                             "data": "name",
                         },
                         {
@@ -156,7 +160,7 @@
                             "data": "status",
                         },
                         {
-                            "data": "uuid",
+                            "data": "code",
                             "render": function(data, type, row, meta) {
                                 return `<div class="">
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editSchoolYear" onclick="showSchoolYear('${data}')">

@@ -20,17 +20,20 @@ class CheckSchoolCookie
         if (!$request->user() || !$request->cookie('school_home')) {
             return $next($request);
         }
-
-        $schoolUUID = decrypt($request->cookie('school_home'));
-
-        if ($request->user()->hasRole('admin') && School::where('uuid', $schoolUUID)->exists()) {
-            return $next($request);
-        } else if (!School::where('uuid', $schoolUUID)->exists()) {
+        try {
+            $schoolCode = decrypt($request->cookie('school_home'));
+        } catch (\Exception $e) {
             $this->terminate();
-            return $next($request);
         }
 
-        if ($request->user()->schools()->count() > 0 && $request->user()->schools()->where('school_uuid', $schoolUUID)->exists()) {
+        $schoolExists = School::where('code', $schoolCode)->exists();
+        $userHasAdminRole = $request->user()->hasRole('admin');
+        $userHasSchool = $request->user()->schools()->count() > 0 && $request->user()->schools()->where('school_uuid', School::where('code', $schoolCode)->first()->uuid)->exists();
+
+        if ($schoolExists && ($userHasAdminRole || $userHasSchool)) {
+            return $next($request);
+        } elseif (!$userHasSchool) {
+            $this->terminate();
             return $next($request);
         }
 

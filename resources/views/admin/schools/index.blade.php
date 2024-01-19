@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <x-grid-datatables identifier="schoolsTable" :columns="['Nome', 'Email', 'Bairro', 'Cidade', 'Estado', 'Opções']"/>
+                <x-grid-datatables identifier="schoolsTable" :columns="['Cód', 'Nome', 'Email', 'Bairro', 'Cidade', 'Estado', 'Opções']"/>
             </div>
         </div>
     </div>
@@ -28,6 +28,9 @@
                         "dataSrc": ""
                     },
                     "columns": [{
+                            "data": "code",
+                        },
+                        {
                             "data": "name",
                         },
                         {
@@ -47,7 +50,7 @@
                                 return `
                                 <form action="{{ route('set-school-home') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="school" value="${row.uuid}">
+                                    <input type="hidden" name="school" value="${row.code}">
                                     <button type="submit" class="btn btn-seia-oceanblue btn-sm">Gerenciar</button>
                                 </form> `;
                             }

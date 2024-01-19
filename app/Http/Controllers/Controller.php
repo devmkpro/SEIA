@@ -13,9 +13,11 @@ class Controller extends BaseController
     /**
      * Return a response to the user.
      */
-    public function response($request, $route, $message = null, $withMessage = 'message', $status = 200, $routeDataName = null, $routeData = null): mixed
+    public function response($request, $route, $message = null, $withMessage = 'message', $status = 200, $routeDataName = null, $routeData = null,
+    $jsonResponse = false
+    ): mixed
     {
-        if ($request->bearerToken() || $request->expectsJson()) {
+        if ($request->bearerToken() || $request->expectsJson() || $jsonResponse) {
             return response()->json([
                 'status' => $status,
                 'message' => $message,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SchoolHomeChangeRequest;
 use Illuminate\Http\Request;
 use App\Models\City;
 use App\Models\State;
@@ -18,7 +19,7 @@ class SchoolController extends Controller
     {
         return response()->json(School::all()->map(function ($school) {
             return [
-                'uuid' => encrypt($school->uuid),
+                'code' => $school->code,
                 'name' => $school->name,
                 'email' => $school->email,
                 'city' => $school->city->name,
@@ -74,9 +75,9 @@ class SchoolController extends Controller
     /**
      * Set School Home Cookie and redirect to home.
      */
-    public function setHome(Request $request)
+    public function setHome(SchoolHomeChangeRequest $request)
     {
-        return $this->response($request, 'panel', 'Escola definida com sucesso!')->withCookie(cookie()->forever('school_home', $request->school));
+        return $this->response($request, 'panel', 'Escola definida com sucesso!')->withCookie(cookie()->forever('school_home', encrypt($request->school)));
     }
 
     /**
@@ -84,7 +85,7 @@ class SchoolController extends Controller
      */
     public function deleteHome(Request $request)
     {
-        return $this->response($request, 'panel', 'Escola removida com sucesso!')->withCookie(cookie()->forget('school_home'));
+        return $this->response($request, 'panel', 'Escola removida com sucesso!', 'message')->withCookie(cookie()->forget('school_home'));
     }
 
     /**
@@ -97,7 +98,7 @@ class SchoolController extends Controller
             return null;
         }
 
-        return School::where('uuid', decrypt($school_home))->first();
+        return School::where('code', decrypt($school_home))->first();
     }
 
 }

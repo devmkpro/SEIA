@@ -19,12 +19,18 @@ class RequireSchoolHome
      */
     public function handle(Request $request, Closure $next, $guard = null): Response
     {
-        if (!$request->cookie('school_home') || School::where('uuid', decrypt($request->cookie('school_home')))->first() == null) {
+        try{
+            $schoolHome = decrypt($request->cookie('school_home'));
+        } catch (\Exception $e) {
+            return $this->terminateError($request);
+        }
+        $school = School::where('code', $schoolHome)->first();
+
+        if (!$school) {
             return $this->terminateError($request);
         }
 
         $authGuard = Auth::guard($guard);
-
         $user = $authGuard->user();
 
         if (! $user && $request->bearerToken() && config('permission.use_passport_client_credentials')) {
@@ -44,11 +50,8 @@ class RequireSchoolHome
                 'message' => 'School Home nao definida',
                 'error' => 'Escola nao encontrada',
             ], 404);
-        } else {
-            return redirect()->route('panel')->with(['error' => 'Primeiro selecione uma escola!']);
-        }
+        } 
+            
+        return redirect()->route('panel')->with(['error' => 'Primeiro selecione uma escola!']);
     }
-
-
-
 }
