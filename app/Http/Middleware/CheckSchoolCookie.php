@@ -27,10 +27,15 @@ class CheckSchoolCookie
         }
 
         $schoolExists = School::where('code', $schoolCode)->exists();
+        if (!$schoolExists) {
+            $this->terminate();
+            return $next($request);
+        }
+
         $userHasAdminRole = $request->user()->hasRole('admin');
         $userHasSchool = $request->user()->schools()->count() > 0 && $request->user()->schools()->where('school_uuid', School::where('code', $schoolCode)->first()->uuid)->exists();
 
-        if ($schoolExists && ($userHasAdminRole || $userHasSchool)) {
+        if ($userHasAdminRole || $userHasSchool) {
             return $next($request);
         } elseif (!$userHasSchool) {
             $this->terminate();
