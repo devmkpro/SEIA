@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('user_uuid')->references('uuid')->on('users');         
             $table->foreign('school_uuid')->references('uuid')->on('schools');
             $table->foreign('class_uuid')->references('uuid')->on('classes');
-            $table->integer("weekly_workload")->default(0); 
+            $table->integer("weekly_workload")->default(40); 
             $table->timestamps();
         });
     }

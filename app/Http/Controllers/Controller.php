@@ -15,16 +15,20 @@ class Controller extends BaseController
      */
   
     public function response($request, $route, $message = null, $withMessage = 'message', $status = 200, $routeDataName = null, $routeData = null,
-    $jsonResponse = false
+    $jsonResponse = false, $backRoute = false
     ): mixed
     {
-        if ($request->bearerToken() || $request->expectsJson() || $jsonResponse) {
+        if ($request->bearerToken() || $jsonResponse) {
             return response()->json([
                 'status' => $status,
                 'message' => $message,
             ]);
         }
 
+        if ($backRoute) {
+            return redirect()->back()->with($withMessage, $message);
+        }
+        
         return redirect()->route($route, [$routeDataName => $routeData])->with($withMessage, $message);
     }
 }

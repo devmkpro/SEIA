@@ -86,10 +86,11 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                     Route::post('/manage/classes/{class:code}/teachers/invite', [TeachersController::class, 'invite'])->name('manage.classes.teachers.invite')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers', [TeachersController::class, 'store'])->name('manage.classes.teachers.store')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers/subjects', [TeachersController::class, 'linkinSubject'])->name('manage.classes.teachers.subjects')->middleware('permission:update-any-teacher');
-                    Route::post('/manage/classes/{class:code}/teachers/schedules', [TeachersController::class, 'linkNewSchedules'])->name('manage.classes.teachers.schedules')->middleware('permission:update-any-teacher');
-                    
-                    Route::post('/manage/classes/{class:code}/students', [StudentsController::class, 'store'])->name('manage.classes.students.store')->middleware('permission:create-any-student');
+                    Route::delete('/manage/classes/{class:code}/teachers/subjects', [TeachersController::class, 'unlinkSubject'])->name('manage.classes.teachers.subjects')->middleware('permission:update-any-teacher');
 
+                    Route::post('/manage/classes/{class:code}/teachers/schedules', [TeachersController::class, 'linkNewSchedules'])->name('manage.classes.teachers.schedules')->middleware('permission:update-any-teacher');
+                    Route::post('/manage/classes/{class:code}/students', [StudentsController::class, 'store'])->name('manage.classes.students.store')->middleware('permission:create-any-student');
+                    Route::get('/manage/classes/{class:code}/subjects/{teacherUsername?}', [SubjectsController::class, 'getSubjects'])->name('manage.classes.subjects.get')->middleware('permission:manage-subjects');
                 });
                 
             });

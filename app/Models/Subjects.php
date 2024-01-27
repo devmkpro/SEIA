@@ -15,6 +15,7 @@ class Subjects extends Model
 
     protected $fillable = [
         'uuid',
+        'code',
         'name',
         'curriculum_uuid',
         'ch',
@@ -31,7 +32,25 @@ class Subjects extends Model
         parent::boot();
         static::creating(function ($model) {
             $model->uuid = Str::uuid()->toString();
+            $model->code = $model->generateCode();
         });
+    }
+
+    public function generateCode()
+    {
+        $baseCode = 'DSC';
+        $counter = 1;
+        $code = $baseCode . $counter;
+    
+        do {
+            $code = $baseCode . $counter;
+            if (!Subjects::where('code', $code)->exists()) {
+                return $code;
+            }
+            $counter++;
+        } while (Subjects::where('code', $code)->exists());
+
+        return $code;
     }
 
     /**
@@ -45,6 +64,14 @@ class Subjects extends Model
     public function name()
     {
         return $this->name;
+    }
+
+    /**
+     * Get teachers that belongs to the subject.
+     */
+    public function teachers()
+    {
+        return $this->belongsTo(TeachersSubjects::class, 'uuid', 'subject_uuid');
     }
 
     

@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students_classes', function (Blueprint $table) {
+        Schema::create('classes_rooms', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
-            $table->uuid('user_uuid');
-            $table->uuid('classes_uuid');
-            $table->foreign('user_uuid')->references('uuid')->on('users');
-            $table->foreign('classes_uuid')->references('uuid')->on('classes');
+            $table->uuid('class_uuid');
+            $table->foreign('class_uuid')->references('uuid')->on('classes')->onDelete('cascade');
+            $table->uuid('rooms_uuid');
+            $table->foreign('rooms_uuid')->references('uuid')->on('rooms')->onDelete('cascade');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students_classes');
+        Schema::dropIfExists('classes_rooms');
     }
 };

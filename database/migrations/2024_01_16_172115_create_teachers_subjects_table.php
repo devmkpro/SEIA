@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("class_uuid");
             $table->uuid("subject_uuid");
             $table->boolean("active")->default(true);
-            $table->boolean("primay_teacher")->default(true);
+            $table->boolean("primary_teacher")->default(true);
             $table->foreign("user_uuid")->references("uuid")->on("users");
             $table->foreign("class_uuid")->references("uuid")->on("classes");
             $table->foreign("subject_uuid")->references("uuid")->on("subjects");

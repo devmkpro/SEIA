@@ -13,8 +13,8 @@ class CurriculumController extends Controller
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $school_home = decrypt($request->cookie('school_home'));
-        $curriculums = Curriculum::where('school_uuid', $school_home)->get()->map(function ($curriculum) {
+        $school_home = (new SchoolController)->getHome($request);
+        $curriculums = Curriculum::where('school_uuid', $school_home->uuid)->get()->map(function ($curriculum) {
             return [
                 'code' => $curriculum->code,
                 'series' => $this->formatSeries($curriculum->series),

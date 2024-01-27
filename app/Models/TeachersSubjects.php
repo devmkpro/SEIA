@@ -27,6 +27,7 @@ class TeachersSubjects extends Model
     }
 
     protected $fillable = [
+        'uuid',
         'user_uuid',
         'class_uuid',
         'subject_uuid',

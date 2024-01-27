@@ -59,7 +59,7 @@ class Classes extends Model
         'start_time',
         'end_time',
         'max_students',
-        'room',
+        'primary_room',
         'teacher_responsible_uuid',
     ];
 
@@ -103,6 +103,14 @@ class Classes extends Model
     public function school()
     {
         return $this->belongsTo(School::class, 'schools_uuid', 'uuid');
+    }
+
+    /**
+     * Get the students of the class
+     */
+    public function rooms()
+    {
+        return $this->belongsToMany(Rooms::class, 'classes_rooms', 'class_uuid', 'rooms_uuid', 'uuid', 'uuid');
     }
 
 }

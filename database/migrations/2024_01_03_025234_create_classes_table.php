@@ -15,6 +15,8 @@ return new class extends Migration
 
             $table->uuid('uuid')->primary();
             $table->string('name');
+            $table->uuid('primary_room')->nullable();
+            $table->foreign('primary_room')->references('code')->on('rooms')->onDelete('cascade')->onUpdate('cascade');
             $table->uuid('schools_uuid');
             $table->foreign('schools_uuid')->references('uuid')->on('schools')->onDelete('cascade');
             $table->uuid('school_years_uuid');
@@ -34,10 +36,9 @@ return new class extends Migration
 
             
             $table->uuid('teacher_responsible_uuid')->nullable();
-            $table->foreign('teacher_responsible_uuid')->references('uuid')->on('users')->onDelete('cascade');
+            $table->foreign('teacher_responsible_uuid')->references('uuid')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->uuid('curriculum_uuid')->nullable();
-            $table->foreign('curriculum_uuid')->references('uuid')->on('curricula')->onDelete('cascade');
-            $table->string('room')->nullable();
+            $table->foreign('curriculum_uuid')->references('uuid')->on('curricula')->onDelete('cascade')->onUpdate('cascade');
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->timestamps();

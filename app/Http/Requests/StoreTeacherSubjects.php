@@ -24,10 +24,9 @@ class StoreTeacherSubjects extends FormRequest
     public function rules(): array
     {
         return [
-            'teacher' => 'required|string|exists:users,uuid',
-            'subject' => 'required|string|exists:subjects,uuid',
-            'primay_teacher' => 'required|boolean',
-            'weekly_workload' => 'required|integer',
+            'teacher' => 'required|string|exists:users,username',
+            'subject' => 'required|string|exists:subjects,code',
+            'primay_teacher' => 'nullable|boolean',
         ];
     }
 

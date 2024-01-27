@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
             SchoolSeeder::class,
             SchoolYearSeeder::class,
+            RoomsSeeder::class,
             ClassesSeeder::class,
             UserSeeder::class,
             CurriculumSeeder::class,
