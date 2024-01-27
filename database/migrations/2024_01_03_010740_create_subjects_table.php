@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->uuid("uuid")->primary();
+            $table->string("code")->unique();
             $table->uuid("curriculum_uuid");
             $table->string("name")
             ->enum([

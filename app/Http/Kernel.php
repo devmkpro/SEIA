@@ -56,6 +56,9 @@ class Kernel extends HttpKernel
         'school_curriculum_set' => [
             \App\Http\Middleware\RequireCurriculumSet::class,
         ],
+        'check_if_valid_teacher' => [
+            \App\Http\Middleware\CheckIFValidTeacher::class,
+        ],
     ];
 
     /**

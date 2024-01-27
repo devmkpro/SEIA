@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('classes_uuid')->references('uuid')->on('classes');
             $table->timestamps();
         });
+
     }
 
     /**

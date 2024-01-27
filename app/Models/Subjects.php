@@ -15,6 +15,7 @@ class Subjects extends Model
 
     protected $fillable = [
         'uuid',
+        'code',
         'name',
         'curriculum_uuid',
         'ch',
@@ -31,7 +32,21 @@ class Subjects extends Model
         parent::boot();
         static::creating(function ($model) {
             $model->uuid = Str::uuid()->toString();
+            $model->code = $model->generateCode();
         });
+    }
+
+    public function generateCode()
+    {
+        $code = 'DSC';
+        $lastItem = Subjects::orderBy('uuid', 'desc')->first();
+        if ($lastItem) {
+            $code .= str_pad((int) substr($lastItem->code, 3) + 1, 2, '0', STR_PAD_LEFT);
+        } else {
+            $code .= '01';
+        }
+
+        return $code;
     }
 
     /**
@@ -45,6 +60,14 @@ class Subjects extends Model
     public function name()
     {
         return $this->name;
+    }
+
+    /**
+     * Get teachers that belongs to the subject.
+     */
+    public function teachers()
+    {
+        return $this->belongsTo(TeachersSubjects::class, 'uuid', 'subject_uuid');
     }
 
     

@@ -56,6 +56,10 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
                 Route::get('/gerenciar/turmas/{class:code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
                 Route::get('/gerenciar/turmas/{class:code}/professores/cadastrar', [TeachersController::class, 'create'])->name('manage.classes.teachers.create')->middleware('permission:create-any-teacher');
             });
+
+            Route::middleware(['check_if_valid_teacher'])->group(function () {
+                Route::get('/gerenciar/turmas/{class:code}/professores/{username}/editar', [TeachersController::class, 'edit'])->name('manage.classes.teachers.edit')->middleware('permission:update-any-teacher');
+            });
         });
     });
 });

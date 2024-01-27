@@ -55,8 +55,8 @@ class TeachersSchools extends Model
     /**
      * Get the subject that owns the TeachersSchools
      */
-    public function subjects(){
-        return $this->belongsTo(Subjects::class, 'subject_uuid', 'uuid');
+    public function teacherSubjects(){
+        return $this->belongsTo(TeachersSubjects::class, 'user_uuid', 'user_uuid');
     }
 
 }

@@ -14,7 +14,6 @@
         <div class="col-sm-12">
             <div class="card">
                 <x-grid-datatables identifier="teachersTable" :columns="['Cód.', 'Nome', 'Disciplinas', 'E-mail', 'Telefone', 'Ações']" 
-                
                 :btnRoute="route('manage.classes.edit', ['class' => $class->code])" btnBack="Voltar para turma">
                     <x-slot:btns>
                         @schoolPermission('create-any-teacher', optional($school_home)->uuid)
@@ -196,7 +195,8 @@
                         {
                             "render": function(data, type, row) {
                                 return `
-                                <a href="#" class="btn btn-seia-oceanblue btn-sm">
+                                <a href="/gerenciar/turmas/{{$class->code}}/professores/${row.username}/editar"
+                                    class="btn btn-seia-oceanblue btn-sm">
                                     Gerenciar
                                 </a>`
                             }

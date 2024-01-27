@@ -36,6 +36,46 @@ class TeachersController extends Controller
     }
 
     /**
+     * Render Edit teacher view.
+     */
+    public function edit(Request $request, Classes $class, $username): \Illuminate\View\View
+    {
+        $user = User::where('username', $username)->first();
+        $datauser = $user->datauser;
+        $teacherSchool = TeachersSchools::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
+        return view('teachers.edit', [
+            'title' => 'Editando professor(a): ' . $user->name,
+            'slot' => 'Turma: ' . $class->name . '/' . $class->schoolYear->name,
+            'class' => $class,
+            'user' => $user,
+            'datauser' => $datauser,
+            'teacherSchool' => $teacherSchool,
+            'alerts' => $this->getAlerts($teacherSchool),
+        ]);
+    }
+
+
+    /**
+     * Get alerts of edit
+     */
+    public function getAlerts($teacherSchool): array
+    {
+        $alerts = [];
+        if ($teacherSchool->teacherSubjects){
+            $userTotalSchedules = TeachersSchedules::where('user_uuid', $teacherSchool->teacherSubjects->user_uuid)->sum('total_hours');
+            $maxWeeklyWorkload = $teacherSchool->weekly_workload;
+            if ($userTotalSchedules >= $maxWeeklyWorkload * 0.8) {
+                $alerts[] = [
+                    'type' => 'warning',
+                    'message' => 'A carga horária do professor está perto de atingir o limite semanal.',
+                ];
+            }
+        }
+
+        return $alerts;
+    }
+
+    /**
      * Store a new teacher.
      */
     public function store(StoreEmployeeRequest $request, Classes $class)

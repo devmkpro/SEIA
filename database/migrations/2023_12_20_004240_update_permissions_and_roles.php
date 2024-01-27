@@ -68,6 +68,7 @@ return new class extends Migration
             'update-any-teacher',
             'delete-any-teacher', 
             'manage-students',
+            'manage-subjects',
         ];
 
         $teacherPermissions = [
