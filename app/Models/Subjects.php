@@ -38,10 +38,18 @@ class Subjects extends Model
 
     public function generateCode()
     {
-        $code = Str::random(6);
-        if (Subjects::where('code', $code)->exists()) {
-            return $this->generateCode();
-        }
+        $baseCode = 'DSC';
+        $counter = 1;
+        $code = $baseCode . $counter;
+    
+        do {
+            $code = $baseCode . $counter;
+            if (!Subjects::where('code', $code)->exists()) {
+                return $code;
+            }
+            $counter++;
+        } while (Subjects::where('code', $code)->exists());
+
         return $code;
     }
 

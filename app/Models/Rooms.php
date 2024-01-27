@@ -36,12 +36,20 @@ class Rooms extends Model
     /**
      * Generate a unique code for the room.
      */
-    private function generateCode(): string
+    public function generateCode()
     {
-        $code = Str::random(6);
-        if (Rooms::where('code', $code)->exists()) {
-            return $this->generateCode();
-        }
+        $baseCode = 'SALA';
+        $counter = 1;
+        $code = $baseCode . $counter;
+    
+        do {
+            $code = $baseCode . $counter;
+            if (!Rooms::where('code', $code)->exists()) {
+                return $code;
+            }
+            $counter++;
+        } while (Rooms::where('code', $code)->exists());
+
         return $code;
     }
 
