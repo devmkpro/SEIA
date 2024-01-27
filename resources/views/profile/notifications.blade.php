@@ -7,7 +7,15 @@
     @endphp
     <div class="notification">
         <div class="card container-fluid ">
-            <div class="d-flex align-items-start">
+            <div class="d-flex align-items-start ">
+                <select class="form-select mb-3" id="nav-select">
+                    <option value="v-pills-home"> Todas</option>
+                    <option value="v-pills-read">Lidas</option>
+                    <option value="v-pills-unread">Não lidas</option>
+                    <option value="v-pills-invitationToClasses">Convites para turmas</option>
+                    <option value="v-pills-invitationToSchools">Convite para escolas</option>
+                    <option value="v-pills-system">Sistema</option>
+                </select>
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                   <button class="nav-link text-dark-seia active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                     <i class="ph ph-tray"></i>Todas

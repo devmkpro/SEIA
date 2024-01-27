@@ -372,18 +372,6 @@ input, textarea, select{
     background-color: var(--seia-ambar);
     color: white !important;
 }
-/* acordion */
-.navbar-nav .accordion .request{
-    background-color: #f3f71a11 !important;
-}
-
-.navbar-nav .accordion .warning{
-    background-color: #f74e1a11 !important;
-}
-
-.navbar-nav .accordion .info{
-    background-color: #1addf717 !important;
-}
 
 /* nav nav-tabs */
 .navbar-nav .nav-tabs{
@@ -606,15 +594,40 @@ input, textarea, select{
 
 .notification .warning{
     background-color: var(--seia-ligthred) !important;
+    color: white !important;
 }
 
 .notification .request{
     background-color: var(--seia-yellow) !important;
+    color: white !important;
 }
 
 .notification .info{
+    color: white !important;
     background-color: var(--seia-oceanblue) !important;
 }
+
+.notification #nav-select{
+    display: none;
+}
+
+@media (max-width: 1025px) {
+    .notification #v-pills-tab {
+        display: none;
+    }
+
+    .notification #nav-select{
+        display: block !important;
+    }
+
+    .notification .align-items-start{
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+}
+
 
 /* avisos card */
 

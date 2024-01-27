@@ -262,7 +262,7 @@
                                     aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                     href="#">
                                     <span class="badge bg-danger badge-counter">
-                                        {{ $notifications->count() }}
+                                        {{ $notifications->where('read', false)->count() }}
                                     </span><i class="ph-bell fs-5"></i>
                                 </a>
                                 <div
@@ -315,19 +315,19 @@
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header" id="flush-headingOne">
                                                                 <button
-                                                                    class="accordion-button collapsed {{ $notification->type }}"
+                                                                    class="accordion-button collapsed "
                                                                     type="button" data-bs-toggle="collapse"
                                                                     data-bs-target="#{{ $modalId }}"
                                                                     aria-expanded="false"
                                                                     aria-controls="flush-collapseOne">
                                                                     <div
                                                                         class="d-flex flex-column align-items-start text-dark-seia">
-                                                                        <div class="d-flex gap-3">
-                                                                            <i class="{{ $notification->icon }}">
+                                                                        <div class="d-flex justify-content-center align-items-center gap-1 notification">
+                                                                            <i class="{{ $notification->icon }} {{ $notification->type }} p-2 text-white rounded-circle">
                                                                             </i> {{ $notification->title }}
                                                                         </div>
                                                                         <div class="text-muted "
-                                                                            style="font-size: 12px; margin-left: 2.5em">
+                                                                            style="font-size: 12px; margin-left: 3em">
                                                                             {{ $notification->created_at->format('d/m/Y - H:i') }}
                                                                         </div>
                                                                     </div>
@@ -426,19 +426,19 @@
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header" id="flush-headingOne">
                                                                 <button
-                                                                    class="accordion-button collapsed {{ $notification->type }}"
+                                                                    class="accordion-button collapsed "
                                                                     type="button" data-bs-toggle="collapse"
                                                                     data-bs-target="#{{ $modalId }}"
                                                                     aria-expanded="false"
                                                                     aria-controls="flush-collapseOne">
                                                                     <div
                                                                         class="d-flex flex-column align-items-start text-dark-seia">
-                                                                        <div class="d-flex gap-3">
-                                                                            <i class="{{ $notification->icon }}">
+                                                                        <div class="d-flex justify-content-center align-items-center gap-1 notification">
+                                                                            <i class="{{ $notification->icon }} {{ $notification->type }} p-2 text-white rounded-circle">
                                                                             </i> {{ $notification->title }}
                                                                         </div>
                                                                         <div class="text-muted "
-                                                                            style="font-size: 12px; margin-left: 2.5em">
+                                                                            style="font-size: 12px; margin-left: 3em">
                                                                             {{ $notification->created_at->format('d/m/Y - H:i') }}
                                                                         </div>
                                                                     </div>
@@ -500,7 +500,7 @@
 
 
                                     <div class="dropdown-footer">
-                                        <a class="dropdown-item text-center small" href="#">
+                                        <a class="dropdown-item text-center small" href="{{route('profile.notifications')}}">
                                             Ver todas as notificações
                                         </a>
                                     </div>
