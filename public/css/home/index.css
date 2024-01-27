@@ -12,6 +12,7 @@
     --seia-greenligth:#00c949;
     --seia-green:#00a149;
     --seia-dark: rgba(56, 56, 56, 0.70);
+    --seia-lightDark: rgba(32, 32, 32, 0.5);
     --seia-darkback:#383737;
     --seia-ligthgrey:#595959;
     --seia-grey:#686868;
@@ -371,18 +372,6 @@ input, textarea, select{
     background-color: var(--seia-ambar);
     color: white !important;
 }
-/* acordion */
-.navbar-nav .accordion .request{
-    background-color: #f3f71a11 !important;
-}
-
-.navbar-nav .accordion .warning{
-    background-color: #f74e1a11 !important;
-}
-
-.navbar-nav .accordion .info{
-    background-color: #1addf717 !important;
-}
 
 /* nav nav-tabs */
 .navbar-nav .nav-tabs{
@@ -417,7 +406,6 @@ input, textarea, select{
     justify-content: center;
     align-items: center;
     display: flex;
-
 }
 
 .navbar-nav .nav-tabs .nav-link:hover{
@@ -570,6 +558,76 @@ input, textarea, select{
 .exit .icons-menu-retraido{
     font-size: 25px !important;
 }
+
+/* notificações card */
+.notification .nav-link{
+    display: flex !important;
+    justify-content: start !important;
+    align-items: center !important;
+    font-weight: 600;
+    gap: 0.5em;
+}
+
+.notification .nav-link:hover{
+    background: #ebebeb !important;
+    color: var(--seia-darkback) !important;
+}
+
+.notification .nav-pills .nav-link.active,
+.nav-pills .show>.nav-link{
+    color: white !important;
+}
+
+.notification .nav-pills .nav-link.active:hover{
+    background: var(--seia-darkblue) !important;
+}
+
+.notification .menu-title{
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.notification .accordion-button,
+.notification .tab-content{
+    width: 100% !important;
+}
+
+.notification .warning{
+    background-color: var(--seia-ligthred) !important;
+    color: white !important;
+}
+
+.notification .request{
+    background-color: var(--seia-yellow) !important;
+    color: white !important;
+}
+
+.notification .info{
+    color: white !important;
+    background-color: var(--seia-oceanblue) !important;
+}
+
+.notification #nav-select{
+    display: none;
+}
+
+@media (max-width: 1025px) {
+    .notification #v-pills-tab {
+        display: none;
+    }
+
+    .notification #nav-select{
+        display: block !important;
+    }
+
+    .notification .align-items-start{
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+}
+
 
 /* avisos card */
 

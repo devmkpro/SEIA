@@ -141,38 +141,46 @@ body, #content-wrapper {
 
 /* acordion */
 
-.navbar-nav .accordion-button:hover{
-    background-color: var(--seia-red) !important;
+.navbar-nav .accordion-button:hover,
+.notification .accordion-button:hover{
+    background-color: var(--seia-lightDark) !important;
     color: white !important;
 }
 
-.navbar-nav .accordion-button:focus {
+.navbar-nav .accordion-button:focus,
+.notification .accordion-button:focus{
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25) !important;
     border-color: var(--seia-ligthgrey) !important;
 }
 
-.navbar-nav .accordion-button:not(.collapsed){
+.navbar-nav .accordion-button:not(.collapsed)
+.notification .accordion-button:not(.collapsed){
     border-color: var(--seia-ligthgrey) !important;
     background-color: var(--seia-ligthgrey) !important;
     box-shadow: none;
 }
 
-.navbar-nav .accordion .accordion-button {
+.navbar-nav .accordion .accordion-button,
+.notification .accordion-button {
     background-color: var(--seia-darkback) !important;
     outline: none !important;
     border: none !important;
 }
 
-.navbar-nav .accordion-item {
-    background-color: var(--seia-darkback) !important;
+.navbar-nav .accordion-item,
+.notification .accordion-item{
+    background-color: var(--seia-lightDark) !important;
     border: none;
 }
-.navbar-nav .nav-tabs{
+.navbar-nav .nav-tabs,
+.notification .nav-tabs{
     background-color: var(--seia-darkback) !important;
 }
 
 .navbar-nav .nav-tabs .nav-link.active, 
-.nav-tabs .nav-item.show .nav-link{
+.nav-tabs .nav-item.show .nav-link,
+.notification .nav-tabs .nav-link.active,
+.notification .nav-tabs .nav-item.show .nav-link{
     background-color: var(--seia-darkback) !important;
     color: white !important;
 }
@@ -305,8 +313,12 @@ body, #content-wrapper {
     border: 1px solid rgba(56,55,55,0.25) !important;
 }
 
+/* notificações card */
 
-
+.notificacoes .card{
+    background: var(--seia-darkback) !important;
+    box-shadow: var(--seia-shadow2) !important;
+}
 
 /* avisos */
 .avisos {

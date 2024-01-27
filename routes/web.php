@@ -9,6 +9,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\TeachersController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         return view('welcome');
     })->name('panel');
     Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/perfil/notificacoes', [NotificationController::class, 'notificationsPage'])->name('profile.notifications');
 
     // System -> Admin
     Route::group(['middleware' => ['role:admin']], function () {
@@ -51,10 +53,10 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
     Route::middleware(['school.role:secretary|director'])->group(function () {
         Route::group(['middleware' => ['school_year_active']], function () {
             Route::get('/gerenciar/turmas', [ClassesController::class, 'classes'])->name('manage.classes')->middleware('permission:manage-classes');
-            Route::get('/gerenciar/turmas/{class:code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
+            Route::get('/gerenciar/turmas/{code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
             Route::middleware(['school_curriculum_set'])->group(function () {
-                Route::get('/gerenciar/turmas/{class:code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
-                Route::get('/gerenciar/turmas/{class:code}/professores/cadastrar', [TeachersController::class, 'create'])->name('manage.classes.teachers.create')->middleware('permission:create-any-teacher');
+                Route::get('/gerenciar/turmas/{code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
+                Route::get('/gerenciar/turmas/{code}/professores/cadastrar', [TeachersController::class, 'create'])->name('manage.classes.teachers.create')->middleware('permission:create-any-teacher');
             });
 
             Route::middleware(['check_if_valid_teacher'])->group(function () {
