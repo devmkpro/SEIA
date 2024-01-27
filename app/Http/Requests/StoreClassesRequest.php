@@ -37,7 +37,7 @@ class StoreClassesRequest extends FormRequest
             'horario_inicio' => 'nullable|date_format:H:i',
             'horario_fim' => 'nullable|date_format:H:i',
             'max_estudantes' => 'required|integer',
-            'sala' => 'nullable|string',
+            'sala' => 'nullable|string|exists:rooms,code',
         ];
     }
 

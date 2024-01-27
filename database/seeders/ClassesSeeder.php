@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Classes;
+use App\Models\Rooms;
 use App\Models\School;
 use App\Models\SchoolYear;
 
@@ -28,7 +29,7 @@ class ClassesSeeder extends Seeder
             'saturday' => false,
             'sunday' => false,
             'max_students' => 30,
-            'room' => 'A',
+            'primary_room' => Rooms::first()->code,
             'start_time' => '07:00:00',
             'end_time' => '12:00:00',
             'schools_uuid' => School::first()->uuid,

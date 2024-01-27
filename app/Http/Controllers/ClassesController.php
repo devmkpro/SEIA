@@ -29,6 +29,7 @@ class ClassesController extends Controller
         }));
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -49,7 +50,7 @@ class ClassesController extends Controller
             'saturday' => $request->sabado,
             'sunday' => $request->domingo,
             'max_students' => $request->max_estudantes,
-            'room' => $request->sala,
+            'primary_room' => $request->sala,
             'start_time' => $request->horario_inicio,
             'end_time' => $request->horario_fim,
             'schools_uuid' => $school_home->uuid,
@@ -91,7 +92,31 @@ class ClassesController extends Controller
             'class' => $class,
             'curriculum_modality' => $class->curriculum ? (new CurriculumController)->formatSeries($class->curriculum->series) : null,
             'curriculums' => $curriculumns,
+            'alerts' => $this->getAlerts($class),
         ]);
+    }
+
+    /**
+     * Get alerts of edit
+     */
+    public function getAlerts(Classes $class): array
+    {
+        $alerts = [];
+        if (!$class->curriculum) {
+            $alerts[] = [
+                'type' => 'danger',
+                'message' => 'Turma sem matriz curricular.',
+            ];
+        }
+
+        if ($class->teachers->count() == 0) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'Turma sem professores.',
+            ];
+        }
+
+        return $alerts;
     }
 
     /**
@@ -139,7 +164,7 @@ class ClassesController extends Controller
             'saturday' => $request->sabado,
             'sunday' => $request->domingo,
             'max_students' => $request->max_estudantes,
-            'room' => $request->sala,
+            'primary_room' => $request->sala,
             'start_time' => $request->horario_inicio,
             'end_time' => $request->horario_fim,
         ]);

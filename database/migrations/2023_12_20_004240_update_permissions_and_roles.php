@@ -51,6 +51,11 @@ return new class extends Migration
             'manage-classes', 
             'create-any-class',
             'update-any-class',
+            'delete-any-class',
+            'manage-rooms',
+            'create-any-room',
+            'update-any-room',
+            'delete-any-room',
             
 
         ];
@@ -69,6 +74,10 @@ return new class extends Migration
             'delete-any-teacher', 
             'manage-students',
             'manage-subjects',
+            'manage-rooms',
+            'create-any-room',
+            'update-any-room',
+            'delete-any-room',
         ];
 
         $teacherPermissions = [

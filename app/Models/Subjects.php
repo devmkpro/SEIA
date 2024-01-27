@@ -38,14 +38,10 @@ class Subjects extends Model
 
     public function generateCode()
     {
-        $code = 'DSC';
-        $lastItem = Subjects::orderBy('uuid', 'desc')->first();
-        if ($lastItem) {
-            $code .= str_pad((int) substr($lastItem->code, 3) + 1, 2, '0', STR_PAD_LEFT);
-        } else {
-            $code .= '01';
+        $code = Str::random(6);
+        if (Subjects::where('code', $code)->exists()) {
+            return $this->generateCode();
         }
-
         return $code;
     }
 

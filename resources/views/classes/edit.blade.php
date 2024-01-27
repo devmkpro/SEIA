@@ -53,16 +53,20 @@
             </div>
         @endsection
         @section('alerts')
-            <div class="d-flex align-items-center mb-2 text-dark-seia">
-                @if (!$class->curriculum_uuid)
-                    <i class="ph ph-warning text-seia-red me-2" style="font-size: 1.3rem"></i>
-                    <span>Matriz curricular não informada!</span>
-                @endif
-            </div>
-            <div class="d-flex align-items-center text-dark-seia">
-                <i class="ph ph-warning-circle text-seia-ambar me-2" style="font-size: 1.3rem"></i>
-                <span>Turma sem professores!</span>
-            </div>
+            @isset ($alerts)
+                @foreach ($alerts as $alert)
+                    <div class="d-flex align-items-center mb-2 text-dark-seia">
+                        @if ($alert['type'] == 'warning')
+                            <i class="ph ph-warning-circle text-seia-ambar me-2" style="font-size: 1.3rem"></i>
+                        @elseif ($alert['type'] == 'danger')
+                            <i class="ph ph-warning text-seia-red me-2" style="font-size: 1.3rem"></i>
+                        @endif
+                        <span class="fw-bolder">{{ $alert['message'] }}</span>
+                    </div>
+                @endforeach
+            @else
+                Nenhum aviso para exibir.
+            @endisset
         @endsection
         @section('actions')
             <div class="row row-cols-md-3 row-cols-sm-1 justify-content-center gap-3 gap-y-2">
@@ -313,8 +317,16 @@
                                     <div class="mb-3">
                                         <label for="sala" class="form-label">Sala Principal
                                         </label>
-                                        <input type="text" class="form-control" id="sala" name="sala"
-                                            placeholder="Digite a sala da turma" value="{{ $class->room }}">
+                                        <select class="form-select" aria-label="Default select example" id="sala"
+                                            name="sala" >
+                                            <option value="">Selecione uma sala</option>
+                                            @foreach ($class->rooms as $classroom)
+                                                <option value="{{ $classroom->uuid }}"
+                                                    @if ($classroom->uuid == $class->classroom_uuid) selected @endif>
+                                                    {{ $classroom->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 

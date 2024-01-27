@@ -14,7 +14,11 @@
                 <a href="mailto:{{ $user->email }}">
                     {{ $user->email }}
                 </a></span>
-            Celular: <span class="fw-bolder text-dark-seia">{{ $user->phone }}</span>
+            Celular: <span class="fw-bolder text-dark-seia">
+                <a href="tel:{{ $user->phone }}">
+                    {{ $user->phone }}
+                </a>
+            </span>
             CH Semanal: <span class="fw-bolder text-dark-seia">{{ $teacherSchool->weekly_workload }}</span>
 
             <p class="mb-4">
@@ -28,7 +32,7 @@
 
         @endsection
         @section('alerts')
-            @if ($alerts)
+            @isset ($alerts)
                 @foreach ($alerts as $alert)
                     <div class="d-flex align-items-center mb-2 text-dark-seia">
                         @if ($alert['type'] == 'warning')
@@ -41,17 +45,25 @@
                 @endforeach
             @else
                 Nenhum aviso para exibir.
-            @endif
+            @endisset
         @endsection
         @section('actions')
-            @schoolPermission('manage-subjects', optional($school_home)->uuid)
-                <div class="row row-cols-md-3 row-cols-sm-1 justify-content-center gap-3 gap-y-2">
+            <div class="row row-cols-md-3 row-cols-sm-1 justify-content-center gap-3 gap-y-2">
+                @schoolPermission('manage-subjects', optional($school_home)->uuid)
                     <a data-bs-toggle="modal" data-bs-target="#changeSubjectsModal"
                         class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-green">
                         Disciplinas
                     </a>
-                </div>
-            @endschoolPermission
+                @endschoolPermission
+
+                @schoolPermission('update-any-teacher', optional($school_home)->uuid)
+                    <a data-bs-toggle="modal" data-bs-target="#changeWeeklyWorkloadModal"
+                        class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-yellow">
+                        CH Semanal
+                    </a>
+                @endschoolPermission
+            </div>
+          
         @endsection
         @section('modals')
             @schoolPermission('manage-subjects', optional($school_home)->uuid)
@@ -69,7 +81,8 @@
             @schoolPermission('update-any-teacher', optional($school_home)->uuid)
                 <x-modal titleModal="" idModal="modifySubjectModal" identifier="modifySubjectModal" id="modifySubjectModal">
                     <div class="me-3 ms-3 mt-2">
-                        <form action="{{route('manage.classes.teachers.subjects', $class->code)}}" method="POST" id="modifySubjectForm">
+                        <form action="{{ route('manage.classes.teachers.subjects', $class->code) }}" method="POST"
+                            id="modifySubjectForm">
                             @csrf
                             <input type="hidden" name="teacher" value="{{ $user->username }}">
                             <input type="hidden" name="subject" value="">
@@ -121,7 +134,7 @@
                 });
 
                 function mostrarModalDisciplina(action, code, name) {
-                    
+
                     $(`#modifySubjectModal .body-modal`).empty();
                     const modalTitle = action === 'add' ? `Vincular disciplina ao professor(a): {{ $user->name }}` :
                         `Remover disciplina do professor(a): {{ $user->name }}`;

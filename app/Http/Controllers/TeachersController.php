@@ -38,7 +38,7 @@ class TeachersController extends Controller
     /**
      * Render Edit teacher view.
      */
-    public function edit(Request $request, Classes $class, $username): \Illuminate\View\View
+    public function edit(Classes $class, $username): \Illuminate\View\View
     {
         $user = User::where('username', $username)->first();
         $datauser = $user->datauser;
