@@ -126,7 +126,6 @@
                     const modalTitle = action === 'add' ? `Vincular disciplina ao professor(a): {{ $user->name }}` :
                         `Remover disciplina do professor(a): {{ $user->name }}`;
 
-
                     const modalBody = `<div class="row mb-3">
                     <div class="col-12">
                       O sistema irá ${action === 'add' ? 'vincular' : 'desvincular'} a disciplina <span class="fw-bolder">${name}</span> a(o) professor(a) <span class="fw-bolder">{{ $user->name }}.</span>  <p> Clique em salvar para prosseguir.
@@ -140,12 +139,6 @@
                     if (action == 'remove') {
                         $(`#modifySubjectForm`).append(`<input type="hidden" name="_method" value="DELETE">`);
                     }
-
-
-
-                    action == 'remove' ?? $(`#modifySubjectForm`).append(`
-                  <small class="text-danger"> Isso não afetará as notas já lançadas pelo(a) professor(a) para os alunos.</small>
-                  `);
                 }
             </script>
         @endschoolPermission
