@@ -85,6 +85,7 @@ class ClassesController extends Controller
                 'turn' => (new CurriculumController)->formatTurn($curriculum->turn),
             ];
         });
+
         return view('classes.edit', [
             'title' => 'Gerenciar Turma',
             'slot' => 'Você está gerenciando a turma do ' . $class->name . '/' . $class->schoolYear->name,

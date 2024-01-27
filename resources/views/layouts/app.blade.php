@@ -136,7 +136,7 @@
                 </li>
 
                 <li class="nav-item" data-bs-toggle="tooltip" data-bs-title="Notificações">
-                    <a class="nav-link yellow center" href="#">
+                    <a class="nav-link yellow center" href="{{route('profile.notifications')}}">
                         <i class="ph-bell-fill icons-menu"></i>
                         <span class="a-name">Notificações</span>
                     </a>
