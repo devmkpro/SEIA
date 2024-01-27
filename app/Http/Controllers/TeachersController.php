@@ -260,27 +260,57 @@ class TeachersController extends Controller
      */
     public function linkinSubject(StoreTeacherSubjects $request, Classes $class)
     {
-        $teacher_subject = TeachersSchools::where('user_uuid', $request->teacher_subject_uuid)->where('class_uuid', $class->uuid)->first();
-        if (!$teacher_subject) {
-            return $this->response($request, 'manage.classes', 'Professor não encontrado.', 'error', 404);
+        $user = User::where('username', $request->teacher)->first();
+        $teacher_school = TeachersSchools::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
+        if (!$teacher_school) {
+            return $this->response($request, 'manage.classes.teachers', 'Professor não encontrado.', 'error', 404);
         }
 
         $curriculum_class = $class->curriculum;
-        $subject = $curriculum_class->subjects->where('uuid', $request->subject)->first();
+        $subject = $curriculum_class->subjects->where('code', $request->subject)->first();
         if (!$subject) {
             return $this->response($request, 'manage.classes', 'Disciplina da matriz curricular não encontrada.', 'error', 404);
         }
 
+        $teacher_subject = TeachersSubjects::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->where('subject_uuid', $subject->uuid)->first();
+        if ($teacher_subject) {
+            return $this->response($request, 'manage.classes.teachers', 'Disciplina já vinculada.', 'error', 404, null, null, false, true);
+        }
+
         TeachersSubjects::create([
             'class_uuid' => $class->uuid,
-            'user_uuid' => $teacher_subject->user_uuid,
+            'user_uuid' => $teacher_school->user_uuid,
             'subject_uuid' => $subject->uuid,
-            'weekly_workload' => $request->weekly_workload,
-            'primary_teacher' => $request->primary_teacher,
+            'primary_teacher' => $request->primary_teacher ? true : false,
         ]);
 
-        return $this->response($request, 'manage.classes.teachers', 'Disciplina vinculada com sucesso!', 'message', 200, 'class', $class->code);
+        return $this->response($request, 'manage.classes.teachers', 'Disciplina vinculada com sucesso!', 'message', 200, null, null, false, true);
+
     }
+
+    /**
+     * Unlink teacher to subject.
+     */
+    public function unlinkSubject(StoreTeacherSubjects $request, Classes $class)
+    {
+        $user = User::where('username', $request->teacher)->first();
+        $subject = $class->curriculum->subjects->where('code', $request->subject)->first();
+
+        if (!$subject) {
+            return $this->response($request, 'manage.classes', 'Disciplina não encontrada.', 'error', 404);
+        }
+
+        $teacher_subject = TeachersSubjects::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->where('subject_uuid', $subject->uuid)->first();
+
+        if (!$teacher_subject) {
+            return $this->response($request, 'manage.classes.teachers', 'Vinculo não encontrado.', 'error', 404, null, null, false, true);
+        }
+
+        $teacher_subject->delete();
+
+
+        return $this->response($request, 'manage.classes.teachers', 'Disciplina desvinculada com sucesso!', 'message', 200, null, null, false, true);
+        }
 
     /**
      * New Schedules for teacher.

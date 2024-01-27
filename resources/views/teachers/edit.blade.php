@@ -66,6 +66,17 @@
                 </x-modal>
                 </form>
             @endschoolPermission
+            @schoolPermission('update-any-teacher', optional($school_home)->uuid)
+                <x-modal titleModal="" idModal="modifySubjectModal" identifier="modifySubjectModal" id="modifySubjectModal">
+                    <div class="me-3 ms-3 mt-2">
+                        <form action="{{route('manage.classes.teachers.subjects', $class->code)}}" method="POST" id="modifySubjectForm">
+                            @csrf
+                            <input type="hidden" name="teacher" value="{{ $user->username }}">
+                            <input type="hidden" name="subject" value="">
+                    </div>
+                </x-modal>
+                </form>
+            @endschoolPermission
         @endsection
     </x-global-manage-layout>
 
@@ -96,15 +107,46 @@
                                 "data": "isTeacher",
                                 "render": function(data, type, row) {
                                     if (data == true) {
-                                        return `<a href="#" class="btn btn-sm btn-seia-red" data-bs-toggle="modal" data-bs-target="#removeSubjectModal" data-bs-code="${row.code}" data-bs-name="${row.name}">Desvincular</a>`;
+                                        return `<a href="#" class="btn btn-sm btn-seia-red" data-bs-toggle="modal" data-bs-target="#modifySubjectModal" data-bs-code="${row.code}" data-bs-name="${row.name}" onclick="mostrarModalDisciplina('remove', '${row.code}', '${row.name}')">Remover</a>`;
                                     } else {
-                                        return `<a href="#" class="btn btn-sm btn-seia-green" data-bs-toggle="modal" data-bs-target="#addSubjectModal" data-bs-code="${row.code}" data-bs-name="${row.name}">Vincular</a>`;
+                                        return `<a href="#" class="btn btn-sm btn-seia-green" 
+                                        data-bs-toggle="modal" data-bs-target="#modifySubjectModal"
+                                        data-bs-code="${row.code}" data-bs-name="${row.name}" 
+                                        onclick="mostrarModalDisciplina('add', '${row.code}', '${row.name}')">Adicionar</a>`;
                                     }
                                 }
                             }
                         ],
                     });
                 });
+
+                function mostrarModalDisciplina(action, code, name) {
+                    
+                    $(`#modifySubjectModal .body-modal`).empty();
+                    const modalTitle = action === 'add' ? `Vincular disciplina ao professor(a): {{ $user->name }}` :
+                        `Remover disciplina do professor(a): {{ $user->name }}`;
+
+
+                    const modalBody = `<div class="row mb-3">
+                    <div class="col-12">
+                      O sistema irá ${action === 'add' ? 'vincular' : 'desvincular'} a disciplina <span class="fw-bolder">${name}</span> a(o) professor(a) <span class="fw-bolder">{{ $user->name }}.</span>  <p> Clique em salvar para prosseguir.
+                    </div>
+                  </div>`;
+
+                    $(`#modifySubjectModal`).modal('show');
+                    $(`#modifySubjectModal .modal-title`).text(modalTitle);
+                    $(`#modifySubjectForm`).append(modalBody);
+                    $(`#modifySubjectForm input[name="subject"]`).val(code);
+                    if (action == 'remove') {
+                        $(`#modifySubjectForm`).append(`<input type="hidden" name="_method" value="DELETE">`);
+                    }
+
+
+
+                    action == 'remove' ?? $(`#modifySubjectForm`).append(`
+                  <small class="text-danger"> Isso não afetará as notas já lançadas pelo(a) professor(a) para os alunos.</small>
+                  `);
+                }
             </script>
         @endschoolPermission
     @endsection
