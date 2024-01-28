@@ -27,13 +27,21 @@ class SchoolYear extends Model
     }
 
     /**
-     * Generate a code for this model
+     * Generate a unique code for the subject.
      */
-    public function generateCode(): string
+    public function generateCode()
     {
+        $baseCode = 'SEIAYEAR';
+        $counter = 1;
+        $code = $baseCode . $counter;
+    
         do {
-            $code = rand(100000, 999999);
-        } while (School::where('code', $code)->exists());
+            $code = $baseCode . $counter;
+            if (!$this::where('code', $code)->exists()) {
+                return $code;
+            }
+            $counter++;
+        } while ($this::where('code', $code)->exists());
 
         return $code;
     }

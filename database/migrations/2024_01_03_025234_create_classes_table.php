@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
 
             $table->uuid('uuid')->primary();
+            $table->string('code')->unique();
             $table->string('name');
             $table->uuid('primary_room')->nullable();
             $table->foreign('primary_room')->references('code')->on('rooms')->onDelete('cascade')->onUpdate('cascade');
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->uuid('school_years_uuid');
             $table->foreign('school_years_uuid')->references('uuid')->on('school_years')->onDelete('cascade');
             $table->enum('modality', ['regular', 'eja', 'eja_fundamental', 'eja_medio'])->default('regular');
-            $table->integer('code')->unique();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('turn', ['morning', 'afternoon', 'night'])->default('morning');
             $table->boolean('monday')->default(false);

@@ -36,6 +36,9 @@ class Subjects extends Model
         });
     }
 
+    /**
+     * Generate a unique code for the subject.
+     */
     public function generateCode()
     {
         $baseCode = 'DSC';
@@ -44,11 +47,11 @@ class Subjects extends Model
     
         do {
             $code = $baseCode . $counter;
-            if (!Subjects::where('code', $code)->exists()) {
+            if (!$this::where('code', $code)->exists()) {
                 return $code;
             }
             $counter++;
-        } while (Subjects::where('code', $code)->exists());
+        } while ($this::where('code', $code)->exists());
 
         return $code;
     }
