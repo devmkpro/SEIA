@@ -334,7 +334,7 @@
                                             @else
                                                 <div class="d-flex justify-content-center py-5">
                                                     <span class="text-center text-dark-seia">
-                                                        Nenhuma notificação já lida
+                                                        Nenhuma notificação
                                                     </span>
                                                 </div>
                                             @endif

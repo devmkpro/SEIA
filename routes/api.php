@@ -15,7 +15,7 @@ use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\StudentsController;
-use Illuminate\Notifications\Notification;
+
 
 /*
 |--------------------------------------------------------------------------

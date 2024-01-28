@@ -44,11 +44,11 @@ class Rooms extends Model
     
         do {
             $code = $baseCode . $counter;
-            if (!Rooms::where('code', $code)->exists()) {
+            if (!$this::where('code', $code)->exists()) {
                 return $code;
             }
             $counter++;
-        } while (Rooms::where('code', $code)->exists());
+        } while ($this::where('code', $code)->exists());
 
         return $code;
     }

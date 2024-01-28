@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->uuid("uuid")->primary();
-            $table->integer("code")->unique();
+            $table->string("code")->unique();
 
             $table->uuid("city_uuid");
             $table->foreign("city_uuid")->references("uuid")->on("cities");

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('school_years', function (Blueprint $table) {
             $table->uuid("uuid")->primary();
-            $table->integer('code')->unique();
+            $table->string('code')->unique();
             $table->boolean('active')->default(false);
             $table->date('start_date');
             $table->date('end_date');

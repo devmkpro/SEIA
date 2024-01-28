@@ -41,19 +41,27 @@ class Curriculum extends Model
             $model->code = $model->generateCode();
         });
     }
-    
+
     /**
-     * Generate a unique code for the curriculum.
+     * Generate a unique code for the subject.
      */
-    protected function generateCode(): int
+    public function generateCode()
     {
-        $code = rand(100000, 999999);
-        if (Curriculum::where('code', $code)->exists()) {
-            return $this->generateCode();
-        }
+        $baseCode = 'SEIAMatriz';
+        $counter = 1;
+        $code = $baseCode . $counter;
+
+        do {
+            $code = $baseCode . $counter;
+            if (!$this::where('code', $code)->exists()) {
+                return $code;
+            }
+            $counter++;
+        } while ($this::where('code', $code)->exists());
+
         return $code;
     }
-    
+
     /**
      * Get the school that owns the curriculum.
      */
@@ -77,6 +85,4 @@ class Curriculum extends Model
     {
         return $this->hasMany(Classes::class, 'curriculum_uuid', 'uuid');
     }
-
-
 }
