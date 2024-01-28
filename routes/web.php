@@ -9,6 +9,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\TeachersController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         return view('welcome');
     })->name('panel');
     Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/perfil/notificacoes', [NotificationController::class, 'page'])->name('profile.notifications');
 
     // System -> Admin
     Route::group(['middleware' => ['role:admin']], function () {

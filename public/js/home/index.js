@@ -416,3 +416,11 @@ function openMarkAll(){
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
+const navSelect = document.getElementById('nav-select');
+
+navSelect.addEventListener('change', function() {
+    const selectedTab = new bootstrap.Tab(document.getElementById(`${this.value}-tab`));
+    selectedTab.show();
+});

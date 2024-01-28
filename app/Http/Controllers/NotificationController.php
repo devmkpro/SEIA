@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MarkNotificationRequest;
 use App\Models\Notifications;
 
 class NotificationController extends Controller
@@ -29,14 +30,26 @@ class NotificationController extends Controller
     /**
      * Mark notification as read.
      */
-    public function markAsRead($uuid): \Illuminate\Http\JsonResponse
+    public function markAsRead(MarkNotificationRequest $request)
     {
-        $notification = Notifications::where('uuid', $uuid)->first();
+        $notification = Notifications::where('code', $request->notification)->first();
         $notification->read = true;
         $notification->save();
 
-        return response()->json([
-            'message' => 'Notificação marcada como lida com sucesso!',
-        ], 200);
+        return $this->response($request, 'panel', 'Notificação marcada como lida com sucesso!', 'message', 200, null, null, false, true);
+
     }
+
+    /**
+     * Render notifications page.
+     */
+    public function page()
+    {
+        return view('profile.notifications', [
+            'title' => 'Minhas notificações',
+            'slot' => 'Aqui você pode ver todas as suas notificações.',
+            'notifications' => Notifications::where('user_uuid', auth()->user()->uuid)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+
 }

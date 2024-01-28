@@ -8,12 +8,14 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DataUserController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolConnectionController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\StudentsController;
+use Illuminate\Notifications\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch('/data-user', [DataUserController::class, 'update'])->name('data-user.update');
     Route::post('/manage/school/invite/accept', [SchoolConnectionController::class, 'acceptOrReject'])->name('manage.invite.acceptOrReject');
+    Route::put('/manage/notification/read', [NotificationController::class, 'markAsRead'])->name('notification.read');
 
     // Rotas abaixo não retornar nenhum dado comprometedor, apenas dados publicos do ibge
     Route::get('/states/cities', [StateController::class, 'cities'])->name('manage.states.cities');
