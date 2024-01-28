@@ -23,6 +23,7 @@ class Notifications extends Model
 
         static::creating(function ($model) {
             $model->uuid = Str::uuid()->toString();
+            $model->code = date('YmdHis') . Str::random(6);
         });
     }
 
@@ -34,6 +35,8 @@ class Notifications extends Model
         'read',
         'request_uuid',
         'user_uuid',
+        'type',
+        'code'
     ];
 
     protected $casts = [

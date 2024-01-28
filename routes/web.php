@@ -28,7 +28,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         return view('welcome');
     })->name('panel');
     Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/perfil/notificacoes', [NotificationController::class, 'notificationsPage'])->name('profile.notifications');
+    Route::get('/perfil/notificacoes', [NotificationController::class, 'page'])->name('profile.notifications');
 
     // System -> Admin
     Route::group(['middleware' => ['role:admin']], function () {

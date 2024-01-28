@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeConnectionRequest;
+use App\Models\Notifications;
 use App\Models\Role;
 use App\Models\School;
 use Illuminate\Http\Request;
@@ -29,15 +31,14 @@ class SchoolConnectionController extends Controller
     /**
      * Accept a school connection request.
      */
-    public function acceptOrReject(Request $request): mixed
+    public function acceptOrReject(ChangeConnectionRequest $request): mixed
     {
-        $request->validate([
-            'school_request' => 'required|string|exists:school_connection_requests,uuid',
-            'notification' => 'required|string|exists:notifications,uuid',
-            'status' => 'required|string|in:accepted,rejected',
-        ]);
-
-        (new NotificationController())->markAsRead($request->notification);
+        $notication = Notifications::where('code', $request->notification)->first();
+        
+        if (!$notication->read){
+            $notication->read = true;
+            $notication->save();
+        }
 
         $request_connection = SchoolConnectionRequest::where('uuid', $request->school_request)->first();
         $user = Auth::user();
