@@ -1,4 +1,3 @@
-@include('components.messages-erros')
 @php
     $schools = Auth::user()->schools;
 @endphp
