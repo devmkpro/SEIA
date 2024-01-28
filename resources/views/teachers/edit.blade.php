@@ -57,9 +57,16 @@
                 @endschoolPermission
 
                 @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-                    <a data-bs-toggle="modal" data-bs-target="#changeWeeklyWorkloadModal"
+                    <a data-bs-toggle="modal" data-bs-target="#modifySubjectModal"
                         class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-yellow">
                         CH Semanal
+                    </a>
+                @endschoolPermission
+
+                @schoolPermission('update-any-teacher', optional($school_home)->uuid)
+                    <a data-bs-toggle="modal" data-bs-target="#manageScheduleModal"
+                        class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-darkblue">
+                       horários
                     </a>
                 @endschoolPermission
             </div>
@@ -79,17 +86,50 @@
                 </form>
             @endschoolPermission
             @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-                <x-modal titleModal="" idModal="modifySubjectModal" identifier="modifySubjectModal" id="modifySubjectModal">
+                <x-modal titleModal="Modificar carga horária semanal" idModal="modifySubjectModal" identifier="modifySubjectModal" id="modifySubjectModal">
                     <div class="me-3 ms-3 mt-2">
                         <form action="{{ route('manage.classes.teachers.subjects', $class->code) }}" method="POST"
                             id="modifySubjectForm">
                             @csrf
                             <input type="hidden" name="teacher" value="{{ $user->username }}">
                             <input type="hidden" name="subject" value="">
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                   Modificar carga horária semanal do(a) professor(a) <span class="fw-bolder">{{ $user->name }}</span> que atualmente é de <span class="fw-bolder">{{ $teacherSchool->weekly_workload }}</span> horas.
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label for="weeklyHours" class="form-label">Nova carga horária semanal:</label>
+                                    <input type="number" name="weeklyHours" id="weeklyHours" class="form-control rounded-md" required>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </x-modal>
-                </form>
             @endschoolPermission
+            @schoolPermission('update-any-teacher', optional($school_home)->uuid)
+            <x-modal titleModal="Modificar horários de aula" idModal="manageScheduleModal" identifier="manageScheduleModal" id="manageScheduleModal">
+                <div class="me-3 ms-3 mt-2">
+                    <form action="{{ route('manage.classes.teachers.subjects', $class->code) }}" method="POST"
+                        id="modifySubjectForm">
+                        @csrf
+                        <input type="hidden" name="teacher" value="{{ $user->username }}">
+                        <input type="hidden" name="subject" value="">
+                        <div class="d-flex">
+                            <div class="weekDays">
+
+                            </div>
+                            <div class="manageSchedule">
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </x-modal>
+        @endschoolPermission
         @endsection
     </x-global-manage-layout>
 
