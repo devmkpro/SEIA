@@ -46,7 +46,7 @@ class RoomsController extends Controller
     {
         $failed = $this->validateRequest($request, [
             'room_code' => 'required|string|exists:rooms,code',
-        ]);
+        ],'manage.rooms');
 
         if ($failed) {
             return $failed;
