@@ -6,8 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-
-class StoreRoomsRequest extends FormRequest
+class UpdateRoomsRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,10 +16,9 @@ class StoreRoomsRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'room_code' => 'required|exists:rooms,code',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'school_code' => 'required|exists:schools,code',
-            'class_code' => 'required|exists:classes,code',
         ];
     }
 

@@ -86,9 +86,9 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::put('/manage/classes/{class:code}/change-curriculum', [ClassesController::class, 'setCurriculum'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
 
                 Route::get('/manage/teachers/classes/{class:code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
-                Route::post('/manage/rooms/new', [RoomsController::class, 'store'])->name('manage.rooms.store')->middleware('permission:create-any-room');
-                Route::delete('/manage/rooms/delete', [RoomsController::class, 'destroy'])->name('manage.rooms.destroy')->middleware('permission:delete-any-room');
-                //Route::update('manage.rooms.update', [RoomsController::class, 'update'])->name('manage.rooms.update');
+                Route::post('/manage/rooms', [RoomsController::class, 'store'])->name('manage.rooms.store')->middleware('permission:create-any-room');
+                Route::delete('/manage/rooms', [RoomsController::class, 'destroy'])->name('manage.rooms.destroy')->middleware('permission:delete-any-room');
+                Route::put('/manage/rooms', [RoomsController::class, 'update'])->name('manage.rooms.update')->middleware('permission:update-any-room');
                 Route::middleware(['school_curriculum_set'])->group(function () {
                     Route::post('/manage/classes/{class:code}/teachers/invite', [TeachersController::class, 'invite'])->name('manage.classes.teachers.invite')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers', [TeachersController::class, 'store'])->name('manage.classes.teachers.store')->middleware('permission:create-any-teacher');

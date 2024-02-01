@@ -53,9 +53,13 @@ class Rooms extends Model
         return $code;
     }
 
+
+    /**
+     * Get the school that owns the room.
+     */
     public function classes()
     {
-        return $this->hasMany(ClassesRooms::class, 'classes_uuid', 'uuid');
+        return $this->hasMany(ClassesRooms::class, 'rooms_uuid', 'uuid');
     }
 
 }
