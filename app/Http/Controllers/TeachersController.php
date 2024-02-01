@@ -78,13 +78,9 @@ class TeachersController extends Controller
     /**
      * Store a new teacher.
      */
-    public function store(StoreEmployeeRequest $request, Classes $class)
+    public function store(StoreEmployeeRequest $request, Classes $class): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
-        if ($class->schools_uuid != $school_home->uuid) {
-            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
-        }
-
         $dataToCreateUser = [
             'name' => $request->nome,
             'email' => $request->email,
@@ -137,12 +133,8 @@ class TeachersController extends Controller
     /**
      * Render the teachers view.
      */
-    public function teachers(Request $request, Classes $class): \Illuminate\View\View
+    public function teachers(Request $request, Classes $class): mixed
     {
-        $school_home = (new SchoolController)->getHome($request);
-        if ($class->schools_uuid != $school_home->uuid) {
-            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
-        }
         return view('teachers.index', [
             'class' => $class,
             'title' => 'Aqui você pode gerenciar os professores da turma ' . $class->name . '/' . $class->schoolYear->name,
@@ -167,12 +159,6 @@ class TeachersController extends Controller
      */
     public function getTeachers(Request $request, Classes $class)
     {
-        $school_home = (new SchoolController)->getHome($request);
-
-        if ($class->schools_uuid != $school_home->uuid) {
-            return $this->response($request, 'manage.classes', 'Turma não encontrada.', 'error', 404);
-        }
-
         if ($request->search) {
             $users = User::where('email', $request->search)->orWhere('username', $request->search)->get();
             $users = $users->filter(function ($user) {

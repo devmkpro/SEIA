@@ -62,13 +62,6 @@
                         CH Semanal
                     </a>
                 @endschoolPermission
-
-                @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-                    <a data-bs-toggle="modal" data-bs-target="#manageScheduleModal"
-                        class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-darkblue">
-                       horários
-                    </a>
-                @endschoolPermission
             </div>
           
         @endsection
@@ -111,26 +104,6 @@
                     </div>
                 </x-modal>
             @endschoolPermission
-            @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-            <x-modal titleModal="Modificar horários de aula" idModal="manageScheduleModal" identifier="manageScheduleModal" id="manageScheduleModal">
-                <div class="me-3 ms-3 mt-2">
-                    <form action="#" method="POST"
-                        id="modifySubjectForm">
-                        @csrf
-                        <input type="hidden" name="teacher" value="{{ $user->username }}">
-                        <input type="hidden" name="subject" value="">
-                        <div class="d-flex">
-                            <div class="weekDays">
-
-                            </div>
-                            <div class="manageSchedule">
-                                
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </x-modal>
-        @endschoolPermission
         @endsection
     </x-global-manage-layout>
 

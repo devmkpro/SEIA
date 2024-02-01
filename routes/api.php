@@ -96,7 +96,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 
                 
                 // school_curriculum_set necessita de class:code valido
-                Route::middleware(['school_curriculum_set'])->group(function () {
+                Route::middleware(['school_curriculum_set', 'check_if_valid_class_of_school'])->group(function () {
                     Route::post('/manage/classes/{class:code}/teachers/invite', [TeachersController::class, 'invite'])->name('manage.classes.teachers.invite')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers', [TeachersController::class, 'store'])->name('manage.classes.teachers.store')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers/subjects', [LinkTeacherSubjectController::class, 'store'])->name('manage.classes.teachers.subjects.link')->middleware('permission:update-any-teacher');

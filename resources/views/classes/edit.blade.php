@@ -74,11 +74,11 @@
                     class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-greenligth">
                     Gerenciar professores
                 </a>
-                <a href="#"
+                <a href=""
                     class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-oceanblue">
                     Gerenciar alunos
                 </a>
-                <a href="#"
+                <a href="{{ route('manage.classes.schedule', $class->code) }}"
                     class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-ambar">
                     Horários e salas
                 </a>

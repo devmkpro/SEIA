@@ -17,10 +17,10 @@ class GetClassSubjectsController extends Controller
         return $subjects->map(function ($subject) use ($teacherUsername) {
             return [
                 'code' => $subject->code,
-                'name' => $this->formatName($subject->name),
+                'name' => (new SubjectsController)->formatName($subject->name),
                 'ch_week' => $subject->ch_week,
                 'teachers' =>  $subject->teachers,
-                'isTeacher' => $this->verifyTeacherOfSubject($subject, $teacherUsername)
+                'isTeacher' => (new SubjectsController)->verifyTeacherOfSubject($subject, $teacherUsername)
             ];
         });
     }

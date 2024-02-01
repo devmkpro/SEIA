@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\ClassesScheduleController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
@@ -53,10 +54,12 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
     Route::middleware(['school.role:secretary|director'])->group(function () {
         Route::group(['middleware' => ['school_year_active']], function () {
             Route::get('/gerenciar/turmas', [ClassesController::class, 'classes'])->name('manage.classes')->middleware('permission:manage-classes');
-            Route::get('/gerenciar/turmas/{class:code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
-            Route::middleware(['school_curriculum_set'])->group(function () {
+            // school_curriculum_set necessita de class:code valido
+            Route::middleware(['school_curriculum_set', 'check_if_valid_class_of_school'])->group(function () {
+                Route::get('/gerenciar/turmas/{class:code}/horarios', [ClassesScheduleController::class, 'edit'])->name('manage.classes.schedule')->middleware('permission:manage-classes-schedule');
                 Route::get('/gerenciar/turmas/{class:code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
                 Route::get('/gerenciar/turmas/{class:code}/professores/cadastrar', [TeachersController::class, 'create'])->name('manage.classes.teachers.create')->middleware('permission:create-any-teacher');
+                Route::get('/gerenciar/turmas/{class:code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
             });
 
             Route::middleware(['check_if_valid_teacher'])->group(function () {
