@@ -39,18 +39,4 @@ class Controller extends BaseController
 
         return redirect()->route($route, [$routeDataName => $routeData])->with($withMessage, $message);
     }
-
-    /**
-     * Validate the request.
-     */
-    public function validateRequest($request, $rules): mixed
-    {
-        $validator = Validator::make($request->all(), $rules);
-        
-        if ($validator->fails()) {
-            return $this->response($request, '' , $validator->errors()->first(), 'error', 400, null, null, false, true);
-        }
-
-        return null;
-    }
 }

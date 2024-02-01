@@ -126,14 +126,6 @@ class ClassesController extends Controller
      */
     public function update(StoreClassesRequest $request): mixed
     {
-        $failed = $this->validateRequest($request, [
-            'class' => 'required|exists:classes,code'
-        ]);
-
-        if ($failed) {
-            return $failed;
-        }
-
         $school_home = (new SchoolController)->getHome($request);
         $class = Classes::where('code', $request->class)->first();
 
