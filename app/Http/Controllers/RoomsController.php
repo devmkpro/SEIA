@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyRoomRequest;
 use App\Http\Requests\StoreRoomsRequest;
 use App\Http\Requests\UpdateRoomsRequest;
 use App\Models\Rooms;
@@ -42,16 +43,8 @@ class RoomsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request): mixed
+    public function destroy(DestroyRoomRequest $request): mixed
     {
-        $failed = $this->validateRequest($request, [
-            'room_code' => 'required|string|exists:rooms,code',
-        ],'manage.rooms');
-
-        if ($failed) {
-            return $failed;
-        }
-
         $room = Rooms::where('code', $request->room_code)->first();
 
         if ($room->classes) {

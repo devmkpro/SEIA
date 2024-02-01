@@ -57,7 +57,7 @@
                 @endschoolPermission
 
                 @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-                    <a data-bs-toggle="modal" data-bs-target="#modifySubjectModal"
+                    <a data-bs-toggle="modal" 
                         class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-yellow">
                         CH Semanal
                     </a>
@@ -88,11 +88,12 @@
             @schoolPermission('update-any-teacher', optional($school_home)->uuid)
                 <x-modal titleModal="Modificar carga horária semanal" idModal="modifySubjectModal" identifier="modifySubjectModal" id="modifySubjectModal">
                     <div class="me-3 ms-3 mt-2">
-                        <form action="{{ route('manage.classes.teachers.subjects', $class->code) }}" method="POST"
+                        <form action="#" method="POST"
                             id="modifySubjectForm">
                             @csrf
                             <input type="hidden" name="teacher" value="{{ $user->username }}">
                             <input type="hidden" name="subject" value="">
+                            <input type="hidden" name="class" value="{{ $class->code }}">
 
                             <div class="row mb-3">
                                 <div class="col-12">
@@ -113,7 +114,7 @@
             @schoolPermission('update-any-teacher', optional($school_home)->uuid)
             <x-modal titleModal="Modificar horários de aula" idModal="manageScheduleModal" identifier="manageScheduleModal" id="manageScheduleModal">
                 <div class="me-3 ms-3 mt-2">
-                    <form action="{{ route('manage.classes.teachers.subjects', $class->code) }}" method="POST"
+                    <form action="#" method="POST"
                         id="modifySubjectForm">
                         @csrf
                         <input type="hidden" name="teacher" value="{{ $user->username }}">
@@ -160,12 +161,9 @@
                                 "data": "isTeacher",
                                 "render": function(data, type, row) {
                                     if (data == true) {
-                                        return `<a href="#" class="btn btn-sm btn-seia-red" data-bs-toggle="modal" data-bs-target="#modifySubjectModal" data-bs-code="${row.code}" data-bs-name="${row.name}" onclick="mostrarModalDisciplina('remove', '${row.code}', '${row.name}')">Remover</a>`;
+                                        return `<a href="#" class="btn btn-sm btn-seia-red">Remover</a>`;
                                     } else {
-                                        return `<a href="#" class="btn btn-sm btn-seia-green" 
-                                        data-bs-toggle="modal" data-bs-target="#modifySubjectModal"
-                                        data-bs-code="${row.code}" data-bs-name="${row.name}" 
-                                        onclick="mostrarModalDisciplina('add', '${row.code}', '${row.name}')">Adicionar</a>`;
+                                        return `<a href="#" class="btn btn-sm btn-seia-green">Adicionar</a>`;
                                     }
                                 }
                             }
@@ -173,26 +171,6 @@
                     });
                 });
 
-                function mostrarModalDisciplina(action, code, name) {
-
-                    $(`#modifySubjectModal .body-modal`).empty();
-                    const modalTitle = action === 'add' ? `Vincular disciplina ao professor(a): {{ $user->name }}` :
-                        `Remover disciplina do professor(a): {{ $user->name }}`;
-
-                    const modalBody = `<div class="row mb-3">
-                    <div class="col-12">
-                      O sistema irá ${action === 'add' ? 'vincular' : 'desvincular'} a disciplina <span class="fw-bolder">${name}</span> a(o) professor(a) <span class="fw-bolder">{{ $user->name }}.</span>  <p> Clique em salvar para prosseguir.
-                    </div>
-                  </div>`;
-
-                    $(`#modifySubjectModal`).modal('show');
-                    $(`#modifySubjectModal .modal-title`).text(modalTitle);
-                    $(`#modifySubjectForm`).append(modalBody);
-                    $(`#modifySubjectForm input[name="subject"]`).val(code);
-                    if (action == 'remove') {
-                        $(`#modifySubjectForm`).append(`<input type="hidden" name="_method" value="DELETE">`);
-                    }
-                }
             </script>
         @endschoolPermission
     @endsection

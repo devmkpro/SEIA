@@ -81,6 +81,7 @@ class ClassesController extends Controller
         $curriculumns = $curriculumns->map(function ($curriculum) {
             return [
                 'uuid' => encrypt($curriculum->uuid),
+                'code' => $curriculum->code,
                 'series' => (new CurriculumController)->formatSeries($curriculum->series),
                 'modality' => (new CurriculumController)->formatModality($curriculum->modality),
                 'turn' => (new CurriculumController)->formatTurn($curriculum->turn),
@@ -121,38 +122,17 @@ class ClassesController extends Controller
     }
 
     /**
-     * Set class curriculum.
-     */
-    public function setCurriculum(Request $request, Classes $class): mixed
-    {
-        $school_home = (new SchoolController)->getHome($request);
-
-        try{
-            $curriculum = Curriculum::where('uuid', decrypt($request->curriculum))->where('school_uuid', $school_home->uuid)->first();
-        } catch(\Exception $e){
-            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'class', $class->code);
-        }
-
-        if (!$curriculum) {
-            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'class', $class->code);
-        }
-
-        $class->update([
-            'curriculum_uuid' => $curriculum->uuid,
-        ]);
-
-        return $this->response($request, 'manage.classes.edit', 'Matriz curricular alterada com sucesso.', 'message', 200, 'class', $class->code);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(StoreClassesRequest $request, Classes $class): mixed
+    public function update(StoreClassesRequest $request): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
+        $class = Classes::where('code', $request->class)->first();
+
         if ($class->schools_uuid != $school_home->uuid) {
             return $this->response($request, 'manage.classes.edit', 'Turma não encontrada.', 'error', 404, 'class', $class->code);
         }
+
         $class->update([
             'name' => $request->nome,
             'turn' => $request->turno,
@@ -169,6 +149,7 @@ class ClassesController extends Controller
             'start_time' => $request->horario_inicio,
             'end_time' => $request->horario_fim,
         ]);
+        
         return $this->response($request, 'manage.classes.edit', 'Turma alterada com sucesso.', 'message', 200, 'class', $class->code);
     }
 }

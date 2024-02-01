@@ -171,23 +171,7 @@ class SubjectsController extends Controller
         return $this->response($request, 'manage.subjects', 'Disciplina excluída com sucesso', 'message', 200, 'curriculum', $subject->curriculum->code);
     }
 
-    /**
-     * Get subjects of a class
-     */
-
-    public function getSubjects(Classes $class, $teacherUsername=null)
-    {
-        $subjects = $class->curriculum->subjects()->get();
-        return $subjects->map(function ($subject) use ($teacherUsername) {
-            return [
-                'code' => $subject->code,
-                'name' => $this->formatName($subject->name),
-                'ch_week' => $subject->ch_week,
-                'teachers' =>  $subject->teachers,
-                'isTeacher' => $this->verifyTeacherOfSubject($subject, $teacherUsername)
-            ];
-        });
-    }
+ 
 
     /**
      * Verify if a user is teacher of a subject

@@ -18,7 +18,7 @@ class ClassesSeeder extends Seeder
     public function run(): void
     {
         Classes::create([
-            'name' => 'Turma A',
+            'name' => '9º ano A',
             'turn' => 'morning',
             'monday' => true,
             'modality' => 'regular',

@@ -173,14 +173,6 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="sala" class="form-label">Sala Principal
-                                </label>
-                                <input type="text" class="form-control" id="sala" name="sala"
-                                    placeholder="Digite a sala da turma" value="{{ old('sala') }}">
-                            </div>
-                        </div>
 
                     </div>
 
