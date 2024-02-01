@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Validator;
 
 class Controller extends BaseController
 {
@@ -38,19 +37,5 @@ class Controller extends BaseController
         }
 
         return redirect()->route($route, [$routeDataName => $routeData])->with($withMessage, $message);
-    }
-
-    /**
-     * Validate the request.
-     */
-    public function validateRequest($request, $rules, $route): mixed
-    {
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return $this->response($request, $route, $validator->errors()->first(), 'error', 400);
-        }
-
-        return null;
     }
 }
