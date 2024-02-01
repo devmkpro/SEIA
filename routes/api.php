@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\SchoolConnectionController;
 use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\SetClassCurriculumController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\StudentsController;
@@ -81,9 +82,9 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
         Route::middleware(['school.role:secretary|director'])->group(function () {
             Route::group(['middleware' => ['school_year_active']], function () {
                 Route::get('/verify/classes', [ClassesController::class, 'index'])->name('manage.classes.index')->middleware('permission:manage-classes');
-                Route::post('/manage/classes/new', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
-                Route::put('/manage/classes/{class:code}', [ClassesController::class, 'update'])->name('manage.classes.update')->middleware('permission:update-any-class');
-                Route::put('/manage/classes/{class:code}/change-curriculum', [ClassesController::class, 'setCurriculum'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
+                Route::post('/manage/classes', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
+                Route::put('/manage/classes', [ClassesController::class, 'update'])->name('manage.classes.update')->middleware('permission:update-any-class');
+                Route::put('/manage/classes/change/curriculum', [SetClassCurriculumController::class, 'store'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
 
                 Route::get('/manage/teachers/classes/{class:code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
                 Route::post('/manage/rooms', [RoomsController::class, 'store'])->name('manage.rooms.store')->middleware('permission:create-any-room');
