@@ -172,36 +172,25 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
                     },
-                    "ajax": {
-                        "url": "{{ route('manage.classes.teachers.get', ['class' => $class->code]) }}",
-                        "type": "GET",
-                        "dataSrc": ""
-                    },
-                    "columns": [{
-                            "data": "username"
-                        },
-                        {
-                            "data": "name"
-                        },
-                        {
-                            "data": "subjects"
-                        },
-                        {
-                            "data": "email"
-                        },
-                        {
-                            "data": "phone"
-                        },
-                        {
-                            "render": function(data, type, row) {
-                                return `
-                                <a href="/gerenciar/turmas/{{$class->code}}/professores/${row.username}/editar"
+                 
+
+                    "data": [
+                        @foreach ($teachers as $teacher)
+                            [
+                                '{{ $teacher["username"] }}',
+                                '{{ $teacher["name"] }}',
+                                '{{ $teacher["subjects"] }}',
+                                '{{ $teacher["email"] }}',
+                                '{{ $teacher["phone"] }}',
+                                `
+                                <a href="/gerenciar/turmas/{{$class->code}}/professores/{{ $teacher['username'] }}/editar"
                                     class="btn btn-seia-oceanblue btn-sm">
                                     Gerenciar
-                                </a>`
-                            }
-                        }
-                    ]
+                                </a>`,
+                            ],
+                        @endforeach
+                    ],
+
                 });
             });
 

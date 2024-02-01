@@ -147,6 +147,18 @@ class TeachersController extends Controller
             'class' => $class,
             'title' => 'Aqui você pode gerenciar os professores da turma ' . $class->name . '/' . $class->schoolYear->name,
             'slot' => 'Os professores são responsáveis por gerenciar as notas e faltas dos alunos, e também por lançar os conteúdos e atividades.',
+            'teachers' => $class->teachers->map(function ($teacher) {
+
+                $subjects = $teacher->subjects ? $teacher->subjects->pluck('name')->map(fn ($subject) => ucfirst($subject))->implode(', ') : 'Nenhuma disciplina vinculada';
+
+                return [
+                    'name' => $teacher->user->name,
+                    'email' => $teacher->user->email,
+                    'phone' => $teacher->user->phone,
+                    'username' => $teacher->user->username,
+                    'subjects' => $subjects,
+                ];
+            }),
         ]);
     }
 
@@ -180,13 +192,10 @@ class TeachersController extends Controller
 
         $teachers = $class->teachers;
         return $teachers->map(function ($teacher) {
-            if ($teacher->subjects) {
-                $subjects = $teacher->subjects->pluck('name')->map(function ($subject) {
-                    return ucfirst($subject);
-                })->implode(', ');
-            } else {
-                $subjects = 'Nenhuma disciplina vinculada';
-            }
+            
+            $subjects = $teacher->subjects ? $teacher->subjects->pluck('name')->map(function ($subject) {
+                return ucfirst($subject);
+            })->implode(', ') : 'Nenhuma disciplina vinculada';
 
             return [
                 'name' => $teacher->user->name,
