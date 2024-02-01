@@ -43,12 +43,12 @@ class Controller extends BaseController
     /**
      * Validate the request.
      */
-    public function validateRequest($request, $rules): mixed
+    public function validateRequest($request, $rules, $route): mixed
     {
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return $this->response($request, 'manage.rooms', $validator->errors()->first(), 'error', 400);
+            return $this->response($request, $route, $validator->errors()->first(), 'error', 400);
         }
 
         return null;
