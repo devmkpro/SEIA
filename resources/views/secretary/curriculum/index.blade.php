@@ -10,15 +10,8 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <div class="card">    
-                <x-grid-datatables identifier="schoolsTable" :columns="[
-                    'Cód.',
-                    'Série/Etapa',
-                    'Modalidade',
-                    'Horas semanais',
-                    'Total de Horas',
-                    'Ações',
-                ]" >
+            <div class="card">
+                <x-grid-datatables identifier="schoolsTable" :columns="['Cód.', 'Série/Etapa', 'Modalidade', 'Horas semanais', 'Total de Horas', 'Ações']">
                     <x-slot:btns>
                         @schoolPermission('create-any-curriculum', optional($school_home)->uuid)
                             <div class="col-md-12">
@@ -151,40 +144,21 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
                     },
-                    "ajax": {
-                        "url": "{{ route('manage.curriculum.index') }}",
-                        "type": "GET",
-                        "dataSrc": ""
-                    },
-                    "columns": [{
-                            "data": "code"
-                        },
-                        {
-                            "data": "series"
-                        },
-                        {
-                            "data": "modality"
-                        },
+                    "data": [
+                        @foreach ($curriculums as $curriculum)
+                            [
+                                '{{ $curriculum["code"] }}',
+                                '{{ $curriculum["series"] }}',
+                                '{{ $curriculum["modality"] }}',
+                                '{{ $curriculum["weekly_hours"] }}',
+                                '{{ $curriculum["total_hours"] }}',
+                                `<a href="{{route('manage.curriculum.edit', $curriculum['code'])}}" class="btn btn-seia-blue btn-sm" >
+                                        Gerenciar
+                                </a> `,	
+                            ],
+                        @endforeach
+                    ],
 
-                        {
-                            "data": "weekly_hours"
-                        },
-                        {
-                            "data": "total_hours"
-                        },
-
-                        {
-                            "render": function(data, type, row, meta) {
-                                return `
-                                    
-                                            <a href="/gerenciar/matriz-curricular/${row.code}/editar" class="btn btn-seia-blue btn-sm" >
-                                                Gerenciar
-                                            </a>
-                                 
-                                `;
-                            }
-                        }
-                    ]
                 });
             });
         </script>

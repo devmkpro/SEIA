@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreClassesRequest;
 use App\Models\Classes;
 use App\Models\Curriculum;
+use Illuminate\View\View;
 
 class ClassesController extends Controller
 {
@@ -27,6 +28,32 @@ class ClassesController extends Controller
                 'max_students' => $class->max_students,
             ];
         }));
+    }
+
+    /**
+     * Index classes.
+     */
+    public function classes(Request $request): View
+    {
+        $school_home = (new SchoolController)->getHome($request);
+        $school_year = (new SchoolYearController)->getActive();
+
+        $classes = Classes::where('schools_uuid', $school_home->uuid)->where('school_years_uuid', $school_year->uuid)->get()->map(function ($class) {
+            return [
+                'status' => $class->status ? 'Ativa' : 'Inativa',
+                'name' => $class->name,
+                'school_year' => $class->schoolYear->name,
+                'code' => $class->code,
+                'turno' => $class->turn == 'morning' ? 'Manhã' : ($class->turn == 'afternoon' ? 'Tarde' : 'Noite'),
+                'max_students' => $class->max_students,
+            ];
+        });
+
+        return view('classes.index', [
+            'title' => 'Gerenciar Turmas',
+            'slot' => 'Você está gerenciando as turmas da sua escola do ano de ' . (new SchoolYearController)->getActive()->name,
+            'classes' => $classes,
+        ]);
     }
 
 
@@ -58,17 +85,6 @@ class ClassesController extends Controller
         ]);
 
         return $this->response($request, 'manage.classes', 'Turma criada com sucesso.', 'message', 201);
-    }
-
-    /**
-     * Index classes.
-     */
-    public function classes()
-    {
-        return view('classes.index', [
-            'title' => 'Gerenciar Turmas',
-            'slot' => 'Você está gerenciando as turmas da sua escola do ano de ' . (new SchoolYearController)->getActive()->name,
-        ]);
     }
 
     /**
@@ -149,7 +165,7 @@ class ClassesController extends Controller
             'start_time' => $request->horario_inicio,
             'end_time' => $request->horario_fim,
         ]);
-        
+
         return $this->response($request, 'manage.classes.edit', 'Turma alterada com sucesso.', 'message', 200, 'class', $class->code);
     }
 }

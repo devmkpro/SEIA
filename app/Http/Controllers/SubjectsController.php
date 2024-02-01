@@ -30,6 +30,30 @@ class SubjectsController extends Controller
         }));
     }
 
+    
+    /**
+     * Render a views subjects
+     */
+    public function subjects(Request $request, Curriculum $curriculum)
+    {
+        $curriculum = Curriculum::where('code', $curriculum->code)->first();
+        $subjects = $curriculum->subjects()->get();
+        return view('secretary.subjects.index', ['curriculum' => $curriculum,
+            'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
+            'slot' => 'Aqui você pode gerenciar as disciplinas da matriz curricular',
+            'subjects' => $subjects->map(function ($subject) {
+                return [
+                    'uuid' => encrypt($subject->uuid),
+                    'name' => $this->formatName($subject->name),
+                    'ch' => $subject->ch,
+                    'ch_week' => $subject->ch_week,
+                    'description' => $subject->description,
+                    'modality' => $this->formatModality($subject->modality)
+                ];
+            })
+        ]);
+    }
+
     /**
      * Form Name 
      */
@@ -113,18 +137,6 @@ class SubjectsController extends Controller
             'modality' => $subject->modality
         ]);
     }
-
-    /**
-     * Render a views subjects
-     */
-    public function subjects(Request $request, Curriculum $curriculum)
-    {
-        return view('secretary.subjects.index', ['curriculum' => $curriculum,
-            'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
-            'slot' => 'Aqui você pode gerenciar as disciplinas da matriz curricular',
-        ]);
-    }
-
 
     /**
      * Store a new subject

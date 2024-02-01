@@ -30,6 +30,27 @@ class SchoolController extends Controller
     }
 
     /**
+     * Render the all schools edit.
+     */
+    public function schools(): \Illuminate\Contracts\View\View
+    {
+        return view('admin.schools.index',[
+            'title' => 'Gerenciar Escolas',
+            'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de escolas. Aqui você pode gerenciar as escolas cadastradas no sistema.',
+            'schools' => School::all()->map(function ($school) {
+                return [
+                    'code' => $school->code,
+                    'name' => $school->name,
+                    'email' => $school->email,
+                    'city' => $school->city->name,
+                    'state' => $school->state->name,
+                    'district' => $school->district,
+                ];
+            }),
+        ]);
+    }
+
+    /**
      * Display the schools create.
      */
     public function create(): \Illuminate\Contracts\View\View
@@ -60,17 +81,6 @@ class SchoolController extends Controller
         return $this->response($request, 'manage.schools', 'Escola cadastrada com sucesso!');
     }
 
-    /**
-     * Render the all schools edit.
-     */
-    public function schools(): \Illuminate\Contracts\View\View
-    {
-        return view('admin.schools.index',[
-            'title' => 'Gerenciar Escolas',
-            'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de escolas. Aqui você pode gerenciar as escolas cadastradas no sistema.',
-            'schools' => School::all(),
-        ]);
-    }
 
     /**
      * Set School Home Cookie and redirect to home.
