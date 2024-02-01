@@ -22,40 +22,24 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
                     },
-                    "ajax": {
-                        "url": "{{ route('manage.schools.index') }}",
-                        "type": "GET",
-                        "dataSrc": ""
-                    },
-                    "columns": [{
-                            "data": "code",
-                        },
-                        {
-                            "data": "name",
-                        },
-                        {
-                            "data": "email",
-                        },
-                        {
-                            "data": "district",
-                        },
-                        {
-                            "data": "city",
-                        },
-                        {
-                            "data": "state",
-                        },
-                        {
-                            "render": function(data, type, row, meta) {
-                                return `
+                    "data": [
+                        @foreach ($schools as $school)
+                            [
+                                '{{ $school["code"] }}',
+                                '{{ $school["name"] }}',
+                                '{{ $school["email"] }}',
+                                '{{ $school["district"] }}',
+                                '{{ $school["city"] }}',
+                                '{{ $school["state"] }}',
+                                `
                                 <form action="{{ route('set-school-home') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="school" value="${row.code}">
+                                    <input type="hidden" name="school" value="{{ $school['code'] }}">
                                     <button type="submit" class="btn btn-seia-oceanblue btn-sm">Gerenciar</button>
-                                </form> `;
-                            }
-                        }
-                    ]
+                                </form> `,	
+                            ],
+                        @endforeach
+                    ],
                 });
             });
 

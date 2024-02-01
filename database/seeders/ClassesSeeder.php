@@ -18,7 +18,7 @@ class ClassesSeeder extends Seeder
     public function run(): void
     {
         Classes::create([
-            'name' => 'Turma A',
+            'name' => '9º ano A',
             'turn' => 'morning',
             'monday' => true,
             'modality' => 'regular',
@@ -29,7 +29,6 @@ class ClassesSeeder extends Seeder
             'saturday' => false,
             'sunday' => false,
             'max_students' => 30,
-            'primary_room' => Rooms::first()->code,
             'start_time' => '07:00:00',
             'end_time' => '12:00:00',
             'schools_uuid' => School::first()->uuid,

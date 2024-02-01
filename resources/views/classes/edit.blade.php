@@ -97,7 +97,7 @@
                 <x-modal titleModal="Alterar Matriz Curricular" idModal="changeCurriculumModal"
                     identifier="changeCurriculumModal" id="changeCurriculumModal">
                     <div class="me-3 ms-3 mt-2">
-                        <form action="{{ route('manage.classes.change.curriculum', $class->code) }}" method="POST"
+                        <form action="{{ route('manage.classes.change.curriculum') }}" method="POST"
                             id="changeCurriculumForm">
                             @csrf
                             @method('PUT')
@@ -107,16 +107,16 @@
                                 @else
                                     <option value="">Selecione uma matriz curricular</option>
                                     @foreach ($curriculums as $curriculum)
-                                        <option value="{{ $curriculum['uuid'] }}"
+                                        <option value="{{ $curriculum['code'] }}"
                                             @if (decrypt($curriculum['uuid']) == $class->curriculum_uuid) selected @endif>
                                             {{ $curriculum['series'] }} - {{ $curriculum['modality'] }} -
                                             {{ $curriculum['turn'] }}
                                         </option>
                                     @endforeach
                                 @endif
-
-
                             </select>
+
+                            <input type="hidden" name="class" value="{{ $class->code }}">
                     </div>
                 </x-modal>
                 </form>
@@ -126,6 +126,8 @@
                         <form action="{{ route('manage.classes.update', $class->code) }}" method="POST" id="updateClassForm">
                             @csrf
                             @method('PUT')
+                            
+                            <input type="hidden" name="class" value="{{ $class->code }}">
 
                             <h5 class="mt-3 h5">Dados da Turma</h5>
                             <small class="text-muted">Os campos marcados com

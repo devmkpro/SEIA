@@ -30,6 +30,30 @@ class SubjectsController extends Controller
         }));
     }
 
+    
+    /**
+     * Render a views subjects
+     */
+    public function subjects(Request $request, Curriculum $curriculum)
+    {
+        $curriculum = Curriculum::where('code', $curriculum->code)->first();
+        $subjects = $curriculum->subjects()->get();
+        return view('secretary.subjects.index', ['curriculum' => $curriculum,
+            'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
+            'slot' => 'Aqui você pode gerenciar as disciplinas da matriz curricular',
+            'subjects' => $subjects->map(function ($subject) {
+                return [
+                    'uuid' => encrypt($subject->uuid),
+                    'name' => $this->formatName($subject->name),
+                    'ch' => $subject->ch,
+                    'ch_week' => $subject->ch_week,
+                    'description' => $subject->description,
+                    'modality' => $this->formatModality($subject->modality)
+                ];
+            })
+        ]);
+    }
+
     /**
      * Form Name 
      */
@@ -115,18 +139,6 @@ class SubjectsController extends Controller
     }
 
     /**
-     * Render a views subjects
-     */
-    public function subjects(Request $request, Curriculum $curriculum)
-    {
-        return view('secretary.subjects.index', ['curriculum' => $curriculum,
-            'title' => 'Disciplinas da Matriz Curricular: ' . $curriculum->code,
-            'slot' => 'Aqui você pode gerenciar as disciplinas da matriz curricular',
-        ]);
-    }
-
-
-    /**
      * Store a new subject
      */
     public function store(StoreSubjectsRequest $request)
@@ -171,23 +183,7 @@ class SubjectsController extends Controller
         return $this->response($request, 'manage.subjects', 'Disciplina excluída com sucesso', 'message', 200, 'curriculum', $subject->curriculum->code);
     }
 
-    /**
-     * Get subjects of a class
-     */
-
-    public function getSubjects(Classes $class, $teacherUsername=null)
-    {
-        $subjects = $class->curriculum->subjects()->get();
-        return $subjects->map(function ($subject) use ($teacherUsername) {
-            return [
-                'code' => $subject->code,
-                'name' => $this->formatName($subject->name),
-                'ch_week' => $subject->ch_week,
-                'teachers' =>  $subject->teachers,
-                'isTeacher' => $this->verifyTeacherOfSubject($subject, $teacherUsername)
-            ];
-        });
-    }
+ 
 
     /**
      * Verify if a user is teacher of a subject

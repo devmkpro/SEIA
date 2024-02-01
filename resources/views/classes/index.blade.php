@@ -173,14 +173,6 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="sala" class="form-label">Sala Principal
-                                </label>
-                                <input type="text" class="form-control" id="sala" name="sala"
-                                    placeholder="Digite a sala da turma" value="{{ old('sala') }}">
-                            </div>
-                        </div>
 
                     </div>
 
@@ -199,37 +191,22 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
                     },
-                    "ajax": {
-                        "url": "{{ route('manage.classes.index') }}",
-                        "type": "GET",
-                        "dataSrc": ""
-                    },
-                    "columns": [{
-                            "data": "class",
-                        },
-                        {
-                            "data": "name",
-                        },
-                        {
-                            "data": "status",
-                        },
-                        {
-                            "data": "school_year",
-                        },
-                        {
-                            "data": "turno",
-                        },
-                        {
-                            "data": "max_students",
-                        },
-                        {
-                            "render": function(data, type, row, meta) {
-                                return `
-                                    <a href="/gerenciar/turmas/${row.class}/editar" class="btn btn-sm btn-seia-oceanblue">Gerenciar</a>
-                                `;
-                            }
-                        }
-                    ]
+
+                    "data": [
+                        @foreach ($classes as $class)
+                            [
+                                '{{ $class["code"] }}',
+                                '{{ $class["name"] }}',
+                                '{{ $class["status"] }}',
+                                '{{ $class["school_year"] }}',
+                                '{{ $class["turno"] }}',
+                                '{{ $class["max_students"] }}',
+                                `<a href="{{ route('manage.classes.edit', $class['code']) }}" class="btn btn-seia-blue btn-sm" >
+                                        Gerenciar
+                                </a> `,
+                            ],
+                        @endforeach
+                    ],
                 });
             });
         </script>

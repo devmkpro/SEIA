@@ -8,14 +8,18 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\DataUserController;
+use App\Http\Controllers\GetClassSubjectsController;
+use App\Http\Controllers\LinkTeacherSubjectController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\SchoolConnectionController;
 use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\SetClassCurriculumController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\StudentsController;
-
+use App\Http\Controllers\UnlinkTeacherSubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,24 +83,32 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
         // School -> Secretary | Director
         Route::middleware(['school.role:secretary|director'])->group(function () {
             Route::group(['middleware' => ['school_year_active']], function () {
+
                 Route::get('/verify/classes', [ClassesController::class, 'index'])->name('manage.classes.index')->middleware('permission:manage-classes');
-                Route::post('/manage/classes/new', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
-                Route::put('/manage/classes/{class:code}', [ClassesController::class, 'update'])->name('manage.classes.update')->middleware('permission:update-any-class');
-                Route::put('/manage/classes/{class:code}/change-curriculum', [ClassesController::class, 'setCurriculum'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
+                Route::post('/manage/classes', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
+                Route::put('/manage/classes', [ClassesController::class, 'update'])->name('manage.classes.update')->middleware('permission:update-any-class');
+                Route::put('/manage/classes/change/curriculum', [SetClassCurriculumController::class, 'store'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
 
                 Route::get('/manage/teachers/classes/{class:code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
+                Route::post('/manage/rooms', [RoomsController::class, 'store'])->name('manage.rooms.store')->middleware('permission:create-any-room');
+                Route::delete('/manage/rooms', [RoomsController::class, 'destroy'])->name('manage.rooms.destroy')->middleware('permission:delete-any-room');
+                Route::put('/manage/rooms', [RoomsController::class, 'update'])->name('manage.rooms.update')->middleware('permission:update-any-room');
+                
+                
+                // school_curriculum_set necessita de class:code valido
                 Route::middleware(['school_curriculum_set'])->group(function () {
                     Route::post('/manage/classes/{class:code}/teachers/invite', [TeachersController::class, 'invite'])->name('manage.classes.teachers.invite')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers', [TeachersController::class, 'store'])->name('manage.classes.teachers.store')->middleware('permission:create-any-teacher');
-                    Route::post('/manage/classes/{class:code}/teachers/subjects', [TeachersController::class, 'linkinSubject'])->name('manage.classes.teachers.subjects')->middleware('permission:update-any-teacher');
-                    Route::delete('/manage/classes/{class:code}/teachers/subjects', [TeachersController::class, 'unlinkSubject'])->name('manage.classes.teachers.subjects')->middleware('permission:update-any-teacher');
+                    Route::post('/manage/classes/{class:code}/teachers/subjects', [LinkTeacherSubjectController::class, 'store'])->name('manage.classes.teachers.subjects.link')->middleware('permission:update-any-teacher');
+                    Route::delete('/manage/classes/{class:code}/teachers/subjects', [UnlinkTeacherSubjectController::class, 'store'])->name('manage.classes.teachers.subjects.unlink')->middleware('permission:update-any-teacher');
 
                     Route::post('/manage/classes/{class:code}/teachers/schedules', [TeachersController::class, 'linkNewSchedules'])->name('manage.classes.teachers.schedules')->middleware('permission:update-any-teacher');
                     Route::post('/manage/classes/{class:code}/students', [StudentsController::class, 'store'])->name('manage.classes.students.store')->middleware('permission:create-any-student');
-                    Route::get('/manage/classes/{class:code}/subjects/{teacherUsername?}', [SubjectsController::class, 'getSubjects'])->name('manage.classes.subjects.get')->middleware('permission:manage-subjects');
+                    Route::get('/manage/classes/{class:code}/subjects/{teacherUsername?}', [GetClassSubjectsController::class, 'store'])->name('manage.classes.subjects.get')->middleware('permission:manage-subjects');
                 });
                 
             });
         });
     });
 });
+

@@ -32,11 +32,25 @@ class CurriculumController extends Controller
     /**
      * Render the curriculum view.
      */
-    public function curriculum(): \Illuminate\View\View
+    public function curriculum(Request $request): \Illuminate\View\View
     {
+        $school_home = (new SchoolController)->getHome($request);
+        $curriculums = Curriculum::where('school_uuid', $school_home->uuid)->get()->map(function ($curriculum) {
+            return [
+                'code' => $curriculum->code,
+                'series' => $this->formatSeries($curriculum->series),
+                'modality' => $this->formatModality($curriculum->modality),
+                'weekly_hours' => $curriculum->weekly_hours,
+                'start_time' => $curriculum->start_time,
+                'end_time' => $curriculum->end_time,
+                'total_hours' => $curriculum->total_hours,
+            ];
+        });
+
         return view('secretary.curriculum.index', [
             'title' => 'Matrizes Curriculares',
             'slot' => 'Olá, nesta página você pode gerenciar as matrizes curriculares da sua escola! Filtrando por modalidade e série, você pode adicionar, editar e excluir as disciplinas que compõem a matriz curricular.',
+            'curriculums' => $curriculums,
         ]);
     }
 

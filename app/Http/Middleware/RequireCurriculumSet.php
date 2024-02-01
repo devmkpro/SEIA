@@ -16,18 +16,23 @@ class RequireCurriculumSet
     public function handle(Request $request, Closure $next): Response
     {
         $class = $request->route('class');
-        if (!$class || !$class->curriculum_uuid) {
-            return $this->terminateError($request);
+        
+        if (!$class) {
+            return $this->terminateError($request, 'Turma não encontrada.');
+        }
+
+        if (!$class->curriculum) {
+            return $this->terminateError($request, 'Você precisa definir uma matriz curricular para a turma!');
         }
 
         return $next($request);
     }
 
-    public function terminateError ($request) {
+    public function terminateError ($request, $message) {
         if ($request->bearerToken()) {
             return response()->json([
-                'message' => 'A turma precisa ter uma matriz curricular definida',
-                'error' => 'A turma precisa ter uma matriz curricular definida',
+                'message' => $message,
+                'error' => $message,
             ], 404);
         } else {
             return redirect()->route('manage.classes.edit', $request->route('class'))->with(['error' => 'Você precisa definir uma matriz curricular para a turma!']);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreClassesRequest;
 use App\Models\Classes;
 use App\Models\Curriculum;
+use Illuminate\View\View;
 
 class ClassesController extends Controller
 {
@@ -27,6 +28,32 @@ class ClassesController extends Controller
                 'max_students' => $class->max_students,
             ];
         }));
+    }
+
+    /**
+     * Index classes.
+     */
+    public function classes(Request $request): View
+    {
+        $school_home = (new SchoolController)->getHome($request);
+        $school_year = (new SchoolYearController)->getActive();
+
+        $classes = Classes::where('schools_uuid', $school_home->uuid)->where('school_years_uuid', $school_year->uuid)->get()->map(function ($class) {
+            return [
+                'status' => $class->status ? 'Ativa' : 'Inativa',
+                'name' => $class->name,
+                'school_year' => $class->schoolYear->name,
+                'code' => $class->code,
+                'turno' => $class->turn == 'morning' ? 'Manhã' : ($class->turn == 'afternoon' ? 'Tarde' : 'Noite'),
+                'max_students' => $class->max_students,
+            ];
+        });
+
+        return view('classes.index', [
+            'title' => 'Gerenciar Turmas',
+            'slot' => 'Você está gerenciando as turmas da sua escola do ano de ' . (new SchoolYearController)->getActive()->name,
+            'classes' => $classes,
+        ]);
     }
 
 
@@ -61,17 +88,6 @@ class ClassesController extends Controller
     }
 
     /**
-     * Index classes.
-     */
-    public function classes()
-    {
-        return view('classes.index', [
-            'title' => 'Gerenciar Turmas',
-            'slot' => 'Você está gerenciando as turmas da sua escola do ano de ' . (new SchoolYearController)->getActive()->name,
-        ]);
-    }
-
-    /**
      * edit class by code.
      */
     public function edit(Request $request, Classes $class): mixed
@@ -81,6 +97,7 @@ class ClassesController extends Controller
         $curriculumns = $curriculumns->map(function ($curriculum) {
             return [
                 'uuid' => encrypt($curriculum->uuid),
+                'code' => $curriculum->code,
                 'series' => (new CurriculumController)->formatSeries($curriculum->series),
                 'modality' => (new CurriculumController)->formatModality($curriculum->modality),
                 'turn' => (new CurriculumController)->formatTurn($curriculum->turn),
@@ -121,38 +138,17 @@ class ClassesController extends Controller
     }
 
     /**
-     * Set class curriculum.
-     */
-    public function setCurriculum(Request $request, Classes $class): mixed
-    {
-        $school_home = (new SchoolController)->getHome($request);
-
-        try{
-            $curriculum = Curriculum::where('uuid', decrypt($request->curriculum))->where('school_uuid', $school_home->uuid)->first();
-        } catch(\Exception $e){
-            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'class', $class->code);
-        }
-
-        if (!$curriculum) {
-            return $this->response($request, 'manage.classes.edit', 'Matriz curricular não encontrada.', 'error', 404, 'class', $class->code);
-        }
-
-        $class->update([
-            'curriculum_uuid' => $curriculum->uuid,
-        ]);
-
-        return $this->response($request, 'manage.classes.edit', 'Matriz curricular alterada com sucesso.', 'message', 200, 'class', $class->code);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(StoreClassesRequest $request, Classes $class): mixed
+    public function update(StoreClassesRequest $request): mixed
     {
         $school_home = (new SchoolController)->getHome($request);
+        $class = Classes::where('code', $request->class)->first();
+
         if ($class->schools_uuid != $school_home->uuid) {
             return $this->response($request, 'manage.classes.edit', 'Turma não encontrada.', 'error', 404, 'class', $class->code);
         }
+
         $class->update([
             'name' => $request->nome,
             'turn' => $request->turno,
@@ -169,6 +165,7 @@ class ClassesController extends Controller
             'start_time' => $request->horario_inicio,
             'end_time' => $request->horario_fim,
         ]);
+
         return $this->response($request, 'manage.classes.edit', 'Turma alterada com sucesso.', 'message', 200, 'class', $class->code);
     }
 }
