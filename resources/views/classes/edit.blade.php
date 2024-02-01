@@ -123,7 +123,7 @@
 
                 <x-modal titleModal="Atualizar Turma" identifier="updateClassModal" id="updateClassModal">
                     <div class="me-3 ms-3 mt-2">
-                        <form action="{{ route('manage.classes.update') }}" method="POST" id="updateClassForm">
+                        <form action="{{ route('manage.classes.update', $class->code) }}" method="POST" id="updateClassForm">
                             @csrf
                             @method('PUT')
                             
