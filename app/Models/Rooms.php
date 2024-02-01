@@ -55,7 +55,7 @@ class Rooms extends Model
 
     public function classes()
     {
-        return $this->hasMany(Classes::class, 'primary_room', 'code');
+        return $this->hasMany(ClassesRooms::class, 'classes_uuid', 'uuid');
     }
 
 }
