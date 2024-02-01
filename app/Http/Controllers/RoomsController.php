@@ -7,9 +7,7 @@ use App\Http\Requests\StoreRoomsRequest;
 use App\Http\Requests\UpdateRoomsRequest;
 use App\Models\Rooms;
 use App\Models\School;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+
 
 class RoomsController extends Controller
 {
