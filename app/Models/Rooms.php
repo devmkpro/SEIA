@@ -53,6 +53,9 @@ class Rooms extends Model
         return $code;
     }
 
-
+    public function classes()
+    {
+        return $this->hasMany(Classes::class, 'primary_room', 'code');
+    }
 
 }
