@@ -52,15 +52,15 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
     Route::group(['middleware' => ['checkIfSetSchoolHome']], function () {
         // School -> Secretary
         Route::group(['middleware' => ['school.role:secretary']], function () {
-            Route::get('/verificar/curriculo', [CurriculumController::class, 'index'])->name('manage.curriculum.index')->middleware('permission:manage-curricula');
-            Route::post('/gerenciar/curriculo/novo', [CurriculumController::class, 'store'])->name('manage.curriculum.store')->middleware('permission:create-any-curriculum');
+            Route::get('/verificar/matriz-curricular', [CurriculumController::class, 'index'])->name('manage.curriculum.index')->middleware('permission:manage-curricula');
+            Route::post('/gerenciar/matriz-curricular/novo', [CurriculumController::class, 'store'])->name('manage.curriculum.store')->middleware('permission:create-any-curriculum');
             // Require Curriculum in request
             Route::middleware(['school.curriculum'])->group(function () {
-                Route::get('/gerenciar/curriculo', [CurriculumController::class, 'show'])->name('manage.curriculum.show')->middleware('permission:update-any-curriculum');
-                Route::put('/gerenciar/curriculo', [CurriculumController::class, 'update'])->name('manage.curriculum.update')->middleware('permission:update-any-curriculum');
-                Route::get('/verificar/disciplinas/curriculo', [SubjectsController::class, 'index'])->name('manage.subjects.index')->middleware('permission:manage.subjects');
-                Route::post('/gerenciar/curriculo/disciplinas', [SubjectsController::class, 'store'])->name('manage.subjects.store')->middleware('permission:create-any-subject');
-                Route::delete('/gerenciar/curriculo/deletar', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
+                Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'show'])->name('manage.curriculum.show')->middleware('permission:update-any-curriculum');
+                Route::put('/gerenciar/matriz-curricular', [CurriculumController::class, 'update'])->name('manage.curriculum.update')->middleware('permission:update-any-curriculum');
+                Route::get('/verificar/disciplinas/matriz-curricular', [SubjectsController::class, 'index'])->name('manage.subjects.index')->middleware('permission:manage.subjects');
+                Route::post('/gerenciar/matriz-curricular/disciplinas', [SubjectsController::class, 'store'])->name('manage.subjects.store')->middleware('permission:create-any-subject');
+                Route::delete('/gerenciar/matriz-curricular/deletar', [CurriculumController::class, 'destroy'])->name('manage.curriculum.destroy')->middleware('permission:delete-any-curriculum');
             });
             // Require Subject in request
             Route::middleware(['school.curriculum.subject'])->group(function () {
@@ -77,7 +77,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::get('/verificar/turmas', [ClassesController::class, 'index'])->name('manage.classes.index')->middleware('permission:manage-classes');
                 Route::post('/gerenciar/turmas', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
                 Route::put('/gerenciar/turmas', [ClassesController::class, 'update'])->name('manage.classes.update')->middleware('permission:update-any-class');
-                Route::put('/gerenciar/turmas/mudar/curriculo', [SetClassCurriculumController::class, 'store'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
+                Route::put('/gerenciar/turmas/mudar/matriz-curricular', [SetClassCurriculumController::class, 'store'])->name('manage.classes.change.curriculum')->middleware('permission:update-any-class');
 
                 Route::get('/gerenciar/professores/turmas/{class:code}', [TeachersController::class, 'getTeachers'])->name('manage.classes.teachers.get')->middleware('permission:manage-teachers');
                 Route::post('/gerenciar/salas', [RoomsController::class, 'store'])->name('manage.rooms.store')->middleware('permission:create-any-room');
