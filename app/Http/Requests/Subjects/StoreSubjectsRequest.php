@@ -1,21 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Subjects;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\BaseRequest;
 
-class StoreSubjectsRequest extends FormRequest
+class StoreSubjectsRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -31,21 +21,5 @@ class StoreSubjectsRequest extends FormRequest
             'descricao' => ['nullable', 'string'],
             'modalidade' => ['nullable', 'string', 'in:linguagens-e-suas-tecnologias,ciencias-da-natureza-e-suas-tecnologias,ciencias-humanas-e-suas-tecnologias,estudos-literarios,ensino-religioso,parte-diversificada'],
         ];
-    }
-
-    /**
-     * Return validation errors as JSON response
-     */
-
-    protected function failedValidation(Validator $validator)
-    {
-        if (request()->bearerToken() || request()->expectsJson()) {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors(),
-                'status' => true
-            ], 422));
-        } else {
-            throw new HttpResponseException(redirect()->back()->withErrors($validator->errors())->withInput());
-        }
     }
 }

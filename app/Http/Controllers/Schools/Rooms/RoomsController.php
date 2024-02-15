@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Schools\Rooms;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DestroyRoomRequest;
-use App\Http\Requests\StoreRoomsRequest;
-use App\Http\Requests\UpdateRoomsRequest;
+use App\Http\Requests\Rooms\DestroyRoomRequest;
+use App\Http\Requests\Rooms\StoreRoomsRequest;
+use App\Http\Requests\Rooms\UpdateRoomsRequest;
 use App\Models\Room\Rooms;
 use App\Models\School\School;
 

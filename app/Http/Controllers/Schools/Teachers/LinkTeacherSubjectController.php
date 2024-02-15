@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Schools\Teachers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LinkTeacherSubjectsRequest;
+use App\Http\Requests\User\Teachers\LinkTeacherSubjectsRequest;
 use App\Models\Teacher\TeachersSchools;
 use App\Models\User;
 use App\Models\Classes\Classes;

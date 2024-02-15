@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User\Data;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DataUserUpdateRequest;
+use App\Http\Requests\User\DataUserUpdateRequest;
 
 class DataUserController extends Controller
 {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Schools\Subjects;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\SchoolController;
-use App\Http\Requests\StoreSubjectsRequest;
+use App\Http\Requests\Subjects\StoreSubjectsRequest;
 use Illuminate\Http\Request;
 use App\Models\Curriculum\Curriculum;
 use App\Models\Subject\Subjects;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Schools\Classes;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\SchoolController;
-use App\Http\Requests\UpdateClassCurriculum;
+use App\Http\Requests\Classes\UpdateClassCurriculum;
 use App\Models\Curriculum\Curriculum;
 use App\Models\Classes\Classes;
 

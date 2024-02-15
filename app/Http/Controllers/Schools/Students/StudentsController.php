@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Schools\Students;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\SchoolController;
 use App\Http\Controllers\User\ProfileController;
-use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\User\Students\StoreStudentRequest;
 use App\Models\Student\StudentsClass;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;

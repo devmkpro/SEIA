@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User\Notification;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MarkNotificationRequest;
+use App\Http\Requests\Notifications\MarkNotificationRequest;
 use App\Models\Notification\Notifications;
 
 class NotificationController extends Controller

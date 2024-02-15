@@ -1,21 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Classes;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\BaseRequest;
 
-class StoreClassesRequest extends FormRequest
+class UpdateClassesRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,6 +14,7 @@ class StoreClassesRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'class' => 'required|exists:classes,code',
             'nome' => 'required|string',
             'turno' => 'required|string|in:morning,afternoon,night',
             'modalidade' => 'required|string|in:regular,eja,eja_fundamental,eja_medio',
@@ -39,21 +30,5 @@ class StoreClassesRequest extends FormRequest
             'max_estudantes' => 'required|integer',
             'sala' => 'nullable|string|exists:rooms,code',
         ];
-    }
-
-    /**
-     * Return validation errors as JSON response
-     */
-
-    protected function failedValidation(Validator $validator)
-    {
-        if (request()->bearerToken() || request()->expectsJson()) {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors(),
-                'status' => true
-            ], 422));
-        } else {
-            throw new HttpResponseException(redirect()->back()->withErrors($validator->errors())->withInput());
-        }
     }
 }

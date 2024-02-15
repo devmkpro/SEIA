@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Schools;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\BaseRequest;
 
-class StoreSchoolRequest extends FormRequest
+class StoreSchoolRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -36,21 +34,5 @@ class StoreSchoolRequest extends FormRequest
             'complement' => 'nullable|string',
             'cnpj' => 'nullable|cnpj',
         ];
-    }
-
-    /**
-     * Return validation errors as JSON response
-     */
-
-    protected function failedValidation(Validator $validator)
-    {
-        if (request()->bearerToken() || request()->expectsJson()) {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors(),
-                'status' => true
-            ], 422));
-        } else {
-            throw new HttpResponseException(redirect()->back()->withErrors($validator->errors())->withInput());
-        }
     }
 }

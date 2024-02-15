@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Schools;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\Teachers\TeachersController;
-use App\Http\Requests\ChangeConnectionRequest;
+use App\Http\Requests\Notifications\ChangeConnectionRequest;
 use App\Models\Notification\Notifications;
 use Illuminate\Support\Facades\Auth;
 use App\Models\School\School;

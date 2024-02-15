@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User\Students;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\BaseRequest;
 
-class StoreEmployeeRequest extends FormRequest
+class StoreStudentRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -20,7 +18,7 @@ class StoreEmployeeRequest extends FormRequest
             'celular' => 'required|string|max:255|celular_com_ddd',
             'email' => 'required|string|max:255|unique:users,email',
             'telefone_fixo' => 'nullable|string|max:255|telefone_com_ddd',
-            'cpf' => 'required|string|max:255|cpf_ou_cnpj',
+            'cpf' => 'required|string|max:255|cpf_ou_cnpj|unique:data_users,cpf',
             'rg' => 'required|string|max:255',
             'inep' => 'nullable|string|max:255',
             'data_nascimento' => 'required|date',
@@ -39,22 +37,8 @@ class StoreEmployeeRequest extends FormRequest
             'tipo_sanguineo' => 'nullable|string|max:255',
             'deficiencia' => 'nullable|boolean',
             'cep' => 'required|string|max:255',
+            'cpf_responsavel' => 'required|string|max:255|cpf_ou_cnpj',
+            'nome_responsavel' => 'required|string|max:255',
         ];
-    }
-
-    /**
-     * Return validation errors as JSON response
-     */
-
-    protected function failedValidation(Validator $validator)
-    {
-        if (request()->bearerToken() || request()->expectsJson()) {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors(),
-                'status' => true
-            ], 422));
-        } else {
-            throw new HttpResponseException(redirect()->back()->withErrors($validator->errors())->withInput());
-        }
     }
 }

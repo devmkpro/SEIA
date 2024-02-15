@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Schools;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SchoolHomeChangeRequest;
+use App\Http\Requests\Schools\SchoolHomeChangeRequest;
+use App\Http\Requests\Schools\StoreSchoolRequest;
 use App\Models\Location\City;
 use App\Models\Location\State;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreSchoolRequest;
 use App\Models\School\School;
 
 
