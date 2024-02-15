@@ -10,17 +10,19 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\StoreSchoolConnectionRequest;
 use App\Http\Requests\StoreTeacherSchedules;
-use App\Models\Classes;
-use App\Models\Role;
-use App\Models\SchoolConnectionRequest;
-use App\Models\TeachersSchools;
-use App\Models\User;
-use App\Models\State;
-use App\Models\City;
-use App\Models\TeachersSchedules;
-use App\Models\TeachersSubjects;
+use App\Models\Location\City;
+use App\Models\Location\State;
+use App\Models\Teacher\TeachersSchedules;
+use App\Models\Teacher\TeachersSchools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\School\SchoolConnectionRequest;
+use App\Models\Role;
+use App\Models\Classes\Classes;
+use App\Models\Teacher\TeachersSubjects;
+
+
 
 class TeachersController extends Controller
 {

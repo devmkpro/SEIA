@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Schools\Subjects;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\SchoolController;
 use App\Http\Requests\StoreSubjectsRequest;
-use App\Models\Classes;
-use App\Models\Curriculum;
-use App\Models\Subjects;
 use Illuminate\Http\Request;
-
+use App\Models\Curriculum\Curriculum;
+use App\Models\Subject\Subjects;
 class SubjectsController extends Controller
 {
 

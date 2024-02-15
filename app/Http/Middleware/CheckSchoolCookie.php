@@ -6,7 +6,7 @@ use App\Http\Controllers\Session\CookieController;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\School;
+use App\Models\School\School;
 
 class CheckSchoolCookie
 {

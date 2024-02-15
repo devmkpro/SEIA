@@ -8,9 +8,10 @@ use App\Http\Controllers\Schools\SchoolController;
 use App\Http\Controllers\Schools\SchoolYearController;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreClassesRequest;
-use App\Models\Classes;
-use App\Models\Curriculum;
 use Illuminate\View\View;
+use App\Models\Curriculum\Curriculum;
+use App\Models\Classes\Classes;
+
 
 class ClassesController extends Controller
 {

@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use App\Http\Controllers\Schools\Teachers\TeachersController;
-use App\Models\Classes;
+use App\Models\Classes\Classes;
+use App\Models\School\School;
 use Illuminate\Database\Seeder;
-use App\Models\School;
 
 class UserSeeder extends Seeder
 {

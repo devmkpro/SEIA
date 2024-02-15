@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Schools;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\Teachers\TeachersController;
 use App\Http\Requests\ChangeConnectionRequest;
-use App\Models\Notifications;
-use App\Models\Role;
-use App\Models\School;
-use Illuminate\Http\Request;
-use App\Models\SchoolConnectionRequest;
-use App\Models\User;
+use App\Models\Notification\Notifications;
 use Illuminate\Support\Facades\Auth;
+use App\Models\School\School;
+use App\Models\User;
+use App\Models\School\SchoolConnectionRequest;
+use App\Models\Role;
+
+
 
 class SchoolConnectionController extends Controller
 {

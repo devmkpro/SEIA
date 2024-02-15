@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Rooms;
+use App\Models\Room\Rooms;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

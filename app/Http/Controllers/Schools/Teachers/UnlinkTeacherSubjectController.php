@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools\Teachers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LinkTeacherSubjectsRequest;
-use App\Models\Classes;
-use App\Models\TeachersSubjects;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Classes\Classes;
+use App\Models\Teacher\TeachersSubjects;
+
+
 
 class UnlinkTeacherSubjectController extends Controller
 {

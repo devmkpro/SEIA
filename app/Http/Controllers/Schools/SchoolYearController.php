@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Schools;
 
 use App\Http\Controllers\Controller;
-use App\Models\SchoolYear;
 use Illuminate\Http\Request;
+use App\Models\School\SchoolYear;
 
 class SchoolYearController extends Controller
 {

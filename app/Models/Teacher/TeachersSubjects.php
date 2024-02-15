@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Teacher;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\Subject\Subjects;
+use App\Models\User;
+use App\Models\Classes\Classes;
 
 class TeachersSubjects extends Model
 {

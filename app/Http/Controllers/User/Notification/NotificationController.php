@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User\Notification;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MarkNotificationRequest;
-use App\Models\Notifications;
+use App\Models\Notification\Notifications;
 
 class NotificationController extends Controller
 {

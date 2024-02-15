@@ -1,24 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Location;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ClassesRooms extends Model
+
+class State extends Model
 {
     use HasFactory;
-
     protected $primaryKey = 'uuid';
     public $incrementing = false;
-    protected $table = 'classes_rooms';
 
-    protected $fillable = [
-        'uuid',
-        'classes_uuid',
-        'rooms_uuid',
-    ];
 
     /**
      * The "booting" method of the model.
@@ -32,11 +26,28 @@ class ClassesRooms extends Model
         });
     }
 
+
+    protected $fillable = [
+        'name',
+        'ibge_code',
+    ];
+
     /**
-     * Get the classes associated with the classes_rooms.
+     * Get the quantity of schools in this state.
      */
-    public function classes()
+    public function cities()
     {
-        return $this->belongsTo(Classes::class, 'classes_uuid', 'uuid');
+        return $this->hasMany(City::class, 'state_id', 'ibge_code');
     }
+
+    /**
+     * Get the quantity of schools in this state.
+     */
+
+    public function schools()
+    {
+        return $this->cities()->with('schools')->get()->pluck('schools')->flatten(1);
+    }
+
+
 }

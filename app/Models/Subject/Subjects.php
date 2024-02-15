@@ -1,32 +1,30 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Subject;
 
+use App\Models\Teacher\TeachersSubjects;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\Curriculum\Curriculum;
 
-class Curriculum extends Model
+
+class Subjects extends Model
 {
     use HasFactory;
     protected $primaryKey = 'uuid';
     public $incrementing = false;
-    protected $table = 'curricula';
+    protected $table = 'subjects';
 
     protected $fillable = [
         'uuid',
         'code',
-        'school_uuid',
-        'series',
-        'weekly_hours',
-        'total_hours',
-        'start_time',
-        'end_time',
+        'name',
+        'curriculum_uuid',
+        'ch',
+        'ch_week',
         'description',
-        'modality',
-        'complementary_information',
-        'default_time_class',
-        'turn',
+        'modality'
     ];
 
     /**
@@ -35,7 +33,6 @@ class Curriculum extends Model
     protected static function boot(): void
     {
         parent::boot();
-
         static::creating(function ($model) {
             $model->uuid = Str::uuid()->toString();
             $model->code = $model->generateCode();
@@ -47,10 +44,10 @@ class Curriculum extends Model
      */
     public function generateCode()
     {
-        $baseCode = 'SEIAMatriz';
+        $baseCode = 'DSC';
         $counter = 1;
         $code = $baseCode . $counter;
-
+    
         do {
             $code = $baseCode . $counter;
             if (!$this::where('code', $code)->exists()) {
@@ -63,26 +60,25 @@ class Curriculum extends Model
     }
 
     /**
-     * Get the school that owns the curriculum.
+     * Get the curriculum that owns the subject.
      */
-    public function school()
+    public function curriculum()
     {
-        return $this->belongsTo(School::class);
+        return $this->belongsTo(Curriculum::class, 'curriculum_uuid', 'uuid');
+    }
+
+    public function name()
+    {
+        return $this->name;
     }
 
     /**
-     * Subjects that belong to the curriculum.
+     * Get teachers that belongs to the subject.
      */
-    public function subjects()
+    public function teachers()
     {
-        return $this->hasMany(Subjects::class, 'curriculum_uuid', 'uuid');
+        return $this->belongsTo(TeachersSubjects::class, 'uuid', 'subject_uuid');
     }
 
-    /**
-     * Get classes that belong to the curriculum.
-     */
-    public function classes()
-    {
-        return $this->hasMany(Classes::class, 'curriculum_uuid', 'uuid');
-    }
+    
 }

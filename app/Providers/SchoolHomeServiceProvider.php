@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\School;
+use App\Models\School\School;
 use Illuminate\Support\ServiceProvider;
 
 class SchoolHomeServiceProvider extends ServiceProvider

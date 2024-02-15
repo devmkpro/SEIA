@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Schools;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SchoolHomeChangeRequest;
+use App\Models\Location\City;
+use App\Models\Location\State;
 use Illuminate\Http\Request;
-use App\Models\City;
-use App\Models\State;
-use App\Models\School;
 use App\Http\Requests\StoreSchoolRequest;
+use App\Models\School\School;
+
 
 class SchoolController extends Controller
 {

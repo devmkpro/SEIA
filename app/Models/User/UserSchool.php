@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\TeachersSubjects;
-
+use App\Models\School\School;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\Teacher\TeachersSubjects;
 class UserSchool extends Model
 {
     use HasFactory;

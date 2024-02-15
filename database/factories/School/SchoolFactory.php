@@ -1,11 +1,12 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\School;
 
+use App\Models\Location\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\School>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\School\School>
  */
 class SchoolFactory extends Factory
 {
@@ -22,7 +23,7 @@ class SchoolFactory extends Factory
             'zip_code' => $this->faker->postcode,
             'district' => $this->faker->city,
             'email_responsible' => $this->faker->companyEmail,
-            'city_uuid' => \App\Models\City::where('ibge_code', '1100015')->first()->uuid,
+            'city_uuid' => City::where('ibge_code', '1100015')->first()->uuid,
         ];
     }
 }

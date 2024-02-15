@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyRoomRequest;
 use App\Http\Requests\StoreRoomsRequest;
 use App\Http\Requests\UpdateRoomsRequest;
-use App\Models\Rooms;
-use App\Models\School;
+use App\Models\Room\Rooms;
+use App\Models\School\School;
 
 
 class RoomsController extends Controller

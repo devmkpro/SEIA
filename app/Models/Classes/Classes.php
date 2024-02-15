@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Classes;
 
+use App\Models\Curriculum\Curriculum;
+use App\Models\Room\Rooms;
+use App\Models\School\School;
+use App\Models\School\SchoolYear;
+use App\Models\Subject\Subjects;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\TeachersSchools;
 
 class Classes extends Model
 {

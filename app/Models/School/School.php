@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\School;
 
+use App\Models\Location\City;
+use App\Models\Location\State;
+use App\Models\Role;
+use App\Models\User\UserSchool;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
+use App\Models\User;
 
 class School extends Model
 {

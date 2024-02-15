@@ -12,7 +12,7 @@ use App\Http\Controllers\Schools\SchoolController;
 use App\Http\Controllers\Schools\SchoolYearController;
 use App\Http\Controllers\Schools\Subjects\SubjectsController;
 use App\Http\Controllers\Schools\Teachers\TeachersController;
-use App\Http\Controllers\UnlinkTeacherSubjectController;
+use App\Http\Controllers\Schools\Teachers\UnlinkTeacherSubjectController;
 use App\Http\Controllers\User\Data\DataUserController;
 use App\Http\Controllers\User\Notification\NotificationController;
 use App\Http\Controllers\User\ProfileController;

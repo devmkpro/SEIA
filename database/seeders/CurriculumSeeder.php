@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Curriculum\Curriculum;
+use App\Models\School\School;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Curriculum;
-use App\Models\School;
-
 
 class CurriculumSeeder extends Seeder
 {

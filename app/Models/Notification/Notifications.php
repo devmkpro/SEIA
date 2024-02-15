@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Notification;
 
+use App\Models\School\SchoolConnectionRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class Notifications extends Model
 {

@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Schools\Classes;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\Subjects\SubjectsController;
-use App\Models\Classes;
-use Illuminate\Http\Request;
+use App\Models\Classes\Classes;
 
 class GetClassSubjectsController extends Controller
 {

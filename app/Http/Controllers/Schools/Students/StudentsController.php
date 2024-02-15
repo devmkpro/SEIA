@@ -6,11 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Schools\SchoolController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Requests\StoreStudentRequest;
-use App\Models\Classes;
-use App\Models\StudentsClass;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Student\StudentsClass;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\Classes\Classes;
 
 class StudentsController extends Controller
 {

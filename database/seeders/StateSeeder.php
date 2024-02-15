@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location\State;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\State;
 
 class StateSeeder extends Seeder
 {

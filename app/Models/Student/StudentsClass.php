@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Student;
 
+use App\Models\Classes\Classes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\User;
 
-
-class State extends Model
+class StudentsClass extends Model
 {
     use HasFactory;
     protected $primaryKey = 'uuid';
     public $incrementing = false;
-
+    protected $table = 'students_classes';
 
     /**
      * The "booting" method of the model.
@@ -26,28 +27,18 @@ class State extends Model
         });
     }
 
-
     protected $fillable = [
-        'name',
-        'ibge_code',
+        'user_uuid',
+        'classes_uuid',
     ];
 
-    /**
-     * Get the quantity of schools in this state.
-     */
-    public function cities()
+    public function user()
     {
-        return $this->hasMany(City::class, 'state_id', 'ibge_code');
+        return $this->belongsTo(User::class, 'user_uuid', 'uuid');
     }
 
-    /**
-     * Get the quantity of schools in this state.
-     */
-
-    public function schools()
+    public function classes()
     {
-        return $this->cities()->with('schools')->get()->pluck('schools')->flatten(1);
+        return $this->belongsTo(Classes::class, 'classes_uuid', 'uuid');
     }
-
-
 }

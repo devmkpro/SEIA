@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Location;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
+use App\Models\Location\City;
 
 class CityController extends Controller
 {
