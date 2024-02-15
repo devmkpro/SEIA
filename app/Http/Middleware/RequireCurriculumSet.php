@@ -31,7 +31,6 @@ class RequireCurriculumSet
     public function terminateError ($request, $message) {
         if ($request->bearerToken()) {
             return response()->json([
-                'message' => $message,
                 'error' => $message,
             ], 404);
         } else {

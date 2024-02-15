@@ -58,11 +58,11 @@ class CheckIFSetSchoolHome
      * terminateError
      */
 
-    public function terminateError($request, $message = null)
+    public function terminateError($request, $message)
     {
         if ($request->bearerToken()) {
             return response()->json([
-                'message' => $message ?? 'Data nao definida',
+                'error' => $message,
             ], 404);
         }
 

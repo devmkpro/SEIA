@@ -52,10 +52,10 @@ class CheckSchoolCurriculum
     /**
      * terminateError
      */
-    public function terminateError ($request, $message=null) {
+    public function terminateError ($request, $message) {
         if ($request->bearerToken()) {
             return response()->json([
-                'message' => $message ?? 'Data nao definida',
+                'message' => $message,
             ], 404);
         } else {
             return redirect()->route('manage.curriculum')->withErrors(['error' => $message ?? 'Sem permissão']);

@@ -46,7 +46,7 @@ class SchoolRole
         try {
             $schoolUUID = decrypt($schoolUUID);
         } catch (\Exception $e) {
-            return $this->terminateError($request);
+            return $this->terminateError($request, 'Escola não encontrada');
         }
         $school = School::where('code', $schoolUUID)->first();
         $rolesArray = explode('|', $roles);
@@ -57,14 +57,13 @@ class SchoolRole
             }
         }
 
-        return $this->terminateError($request);
+        return $this->terminateError($request, 'Você não tem permissão para acessar essa página!');
     }
 
-    public function terminateError ($request) {
+    public function terminateError ($request, $message) {
         if ($request->bearerToken()) {
             return response()->json([
-                'message' => 'Escola invalida ou sem permissao',
-                'error' => 'Escola nao encontrada',
+                'error' => $message,
             ], 404);
         } else {
             return redirect()->route('panel')->with(['error' => 'Escola inválida ou sem permissão!']);
