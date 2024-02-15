@@ -23,9 +23,8 @@ class ChangeConnectionRequest extends FormRequest
     }
 
     /**
- * Return validation errors as JSON response
- */
-
+     * Return validation errors as JSON response
+     */
     protected function failedValidation(Validator $validator)
     {
         if (request()->bearerToken() || request()->expectsJson()) {

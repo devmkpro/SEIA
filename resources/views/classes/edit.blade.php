@@ -321,13 +321,17 @@
                                         </label>
                                         <select class="form-select" aria-label="Default select example" id="sala"
                                             name="sala" >
+                                            @if ($class->rooms->count() == 0)
+                                                <option value="">Não há salas cadastradas</option>
+                                            @else
                                             <option value="">Selecione uma sala</option>
-                                            @foreach ($class->rooms as $classroom)
-                                                <option value="{{ $classroom->uuid }}"
-                                                    @if ($classroom->uuid == $class->classroom_uuid) selected @endif>
-                                                    {{ $classroom->name }}
-                                                </option>
-                                            @endforeach
+                                                @foreach ($class->rooms as $classroom)
+                                                    <option value="{{ $classroom->uuid }}"
+                                                        @if ($classroom->uuid == $class->classroom_uuid) selected @endif>
+                                                        {{ $classroom->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>

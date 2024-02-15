@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\Schools\SchoolController;
 use Closure;
-use App\Models\Subjects;
+use App\Models\Subject\Subjects;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;

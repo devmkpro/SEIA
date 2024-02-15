@@ -253,7 +253,7 @@
                         </li>
 
                         @php
-                            $notifications = \App\Models\Notifications::where('user_uuid', auth()->user()->uuid)->get();
+                            $notifications = \App\Models\Notification\Notifications::where('user_uuid', auth()->user()->uuid)->get();
                         @endphp
 
                         <li class="nav-item mx-1">

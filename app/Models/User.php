@@ -3,18 +3,24 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\User\DataUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
+use App\Models\School\School;
+use App\Models\Role;
+
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
     protected $primaryKey = 'uuid';
     public $incrementing = false;
+
+    protected $table = 'users';
 
 
     /**
@@ -93,7 +99,7 @@ class User extends Authenticatable
      */
     public function schools()
     {
-      
+
         return $this->belongsToMany(School::class, 'users_schools', 'users_uuid', 'school_uuid')
             ->withPivot('role')
             ->withTimestamps();
@@ -121,7 +127,9 @@ class User extends Authenticatable
 
     public function assignRoleForSchool($role, $schoolUUID)
     {
-        if (!$schoolUUID || !$role) {return;}
+        if (!$schoolUUID || !$role) {
+            return;
+        }
         $role = Role::where('name', $role)->first();
         $this->schools()->syncWithoutDetaching([
             $schoolUUID => [
@@ -193,4 +201,6 @@ class User extends Authenticatable
         }
         return false;
     }
+
+  
 }

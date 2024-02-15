@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Curriculum\Curriculum;
+use App\Models\Subject\Subjects;
 use Illuminate\Database\Seeder;
-use App\Models\Curriculum;
-use App\Models\Subjects;
-
 class SubjectsSeeder extends Seeder
 {
     /**

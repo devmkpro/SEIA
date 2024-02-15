@@ -42,23 +42,25 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \App\Http\Middleware\CheckSchoolCookie::class,
         ],
-        'school_home' => [
-            \App\Http\Middleware\RequireSchoolHome::class,
-        ],
-        'school_year_active' => [
-            \App\Http\Middleware\RequireSchoolYearActive::class,
-        ],
-        'school_curriculum_set' => [
-            \App\Http\Middleware\RequireCurriculumSet::class,
-        ],
-        'check_if_valid_teacher' => [
-            \App\Http\Middleware\CheckIFValidTeacher::class,
-        ],
+
+
+        // Na rota
+            'checkIfClassCurriculumSet' => [
+                \App\Http\Middleware\RequireCurriculumSet::class,
+            ],
+
+        // Na requisição
+            'checkIfSchoolYearActive' => [
+                \App\Http\Middleware\RequireSchoolYearActive::class,
+            ],
+            'checkIfSetSchoolHome' => [
+                \App\Http\Middleware\RequireSchoolHome::class,
+            ],
     ];
 
     /**

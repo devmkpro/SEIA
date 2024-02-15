@@ -11,7 +11,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <x-grid-datatables identifier="statesTable" :columns="['Estado', 'IBGE-CODE', 'Escolas']">
-                    
+
                 </x-grid-datatables>
 
 
@@ -41,24 +41,18 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
                     },
-                    "ajax": {
-                        "url": "{{ route('manage.cities.index') }}",
-                        "type": "GET",
-                        "dataSrc": ""
-                    },
-                    "columns": [{
-                            "data": "name",
-                        },
-                        {
-                            "data": "ibge_code",
-                        },
-                        {
-                            "data": "schools_count",
-                        },
+                    "data": [
+                        @foreach ($cities as $city)
+                            [
+                                `{{ $city['name'] }}`,
+                                `{{ $city['ibge_code'] }}`,
+                                `{{ $city['schools_count'] }}`,
+
+                            ],
+                        @endforeach
                     ]
                 });
             });
-
         </script>
     @endsection
 </x-app-layout>

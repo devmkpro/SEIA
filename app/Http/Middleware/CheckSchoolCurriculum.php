@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\SchoolController;
-use App\Models\Curriculum;
+use App\Http\Controllers\Schools\SchoolController;
+use App\Models\Curriculum\Curriculum;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

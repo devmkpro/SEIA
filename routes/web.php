@@ -1,27 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StateController;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\ClassesController;
-use App\Http\Controllers\CurriculumController;
-use App\Http\Controllers\SchoolController;
-use App\Http\Controllers\SchoolYearController;
-use App\Http\Controllers\SubjectsController;
-use App\Http\Controllers\TeachersController;
-use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Location\CityController;
+use App\Http\Controllers\Location\StateController;
+use App\Http\Controllers\Schools\Classes\ClassesController;
+use App\Http\Controllers\Schools\Curriculums\CurriculumController;
+use App\Http\Controllers\Schools\SchoolController;
+use App\Http\Controllers\Schools\SchoolYearController;
+use App\Http\Controllers\Schools\Subjects\SubjectsController;
+use App\Http\Controllers\Schools\Teachers\TeachersController;
+use App\Http\Controllers\User\Notification\NotificationController;
+use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-| A middleware 'web' possui o middleware 'CheckSchoolCookie' que é responsável por verificar se o usuário tem vinculo com a selecionada,  caso não tenha, ele é redirecionado para a página de escolha de escola e o cookie é deletado.
-| 
-| A middleware 'school_home' possui o middleware 'RequireSchoolHome' que obrigada o usuário a ter uma escola selecionada e com vinculo, e também leva $school_home para as views.
-|
-*/
-
 
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/', function () {
@@ -41,7 +30,7 @@ Route::middleware(['auth', 'web'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'web', 'school_home'])->group(function () {
+Route::middleware(['auth', 'web', 'checkIfSetSchoolHome'])->group(function () {
     // School -> Secretary
     Route::group(['middleware' => ['school.role:secretary']], function () {
         Route::get('/gerenciar/matriz-curricular', [CurriculumController::class, 'curriculum'])->name('manage.curriculum')->middleware('permission:manage-curricula');
@@ -51,17 +40,15 @@ Route::middleware(['auth', 'web', 'school_home'])->group(function () {
 
     // School -> Secretary | Director
     Route::middleware(['school.role:secretary|director'])->group(function () {
-        Route::group(['middleware' => ['school_year_active']], function () {
+        Route::group(['middleware' => ['checkIfSchoolYearActive']], function () {
             Route::get('/gerenciar/turmas', [ClassesController::class, 'classes'])->name('manage.classes')->middleware('permission:manage-classes');
             Route::get('/gerenciar/turmas/{class:code}/editar', [ClassesController::class, 'edit'])->name('manage.classes.edit')->middleware('permission:update-any-class');
-            Route::middleware(['school_curriculum_set'])->group(function () {
+            Route::get('/gerenciar/turmas/{class:code}/professores/{teacher:username}/editar', [TeachersController::class, 'edit'])->name('manage.classes.teachers.edit')->middleware('permission:update-any-teacher');
+            Route::middleware(['checkIfClassCurriculumSet'])->group(function () {
                 Route::get('/gerenciar/turmas/{class:code}/professores', [TeachersController::class, 'teachers'])->name('manage.classes.teachers')->middleware('permission:manage-teachers');
                 Route::get('/gerenciar/turmas/{class:code}/professores/cadastrar', [TeachersController::class, 'create'])->name('manage.classes.teachers.create')->middleware('permission:create-any-teacher');
             });
 
-            Route::middleware(['check_if_valid_teacher'])->group(function () {
-                Route::get('/gerenciar/turmas/{class:code}/professores/{username}/editar', [TeachersController::class, 'edit'])->name('manage.classes.teachers.edit')->middleware('permission:update-any-teacher');
-            });
         });
     });
 });

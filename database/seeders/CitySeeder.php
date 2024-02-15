@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Location\City;
 use Illuminate\Database\Seeder;
-use App\Models\City;
 
 class CitySeeder extends Seeder
 {

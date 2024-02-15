@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\School\SchoolYear;
 
 class SchoolYearProvider extends ServiceProvider
 {
@@ -20,7 +21,7 @@ class SchoolYearProvider extends ServiceProvider
     public function boot(): void
     {
         view()->composer('*', function ($view) {
-            $view->with('school_year', \App\Models\SchoolYear::where('active', 1)->first());
+            $view->with('school_year', SchoolYear::where('active', 1)->first());
         });
     }
 }
