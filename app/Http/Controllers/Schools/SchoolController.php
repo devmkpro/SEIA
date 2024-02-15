@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SchoolHomeChangeRequest;
 use Illuminate\Http\Request;
 use App\Models\City;

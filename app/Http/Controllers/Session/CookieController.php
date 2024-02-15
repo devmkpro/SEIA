@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Session;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
 
 class CookieController extends Controller

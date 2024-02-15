@@ -22,12 +22,13 @@ class RequireSchoolHome
         try{
             $schoolHome = decrypt($request->cookie('school_home'));
         } catch (\Exception $e) {
-            return $this->terminateError($request);
+            return $this->terminateError($request, 'Escola não encontrada', 'school_not_found');
         }
+
         $school = School::where('code', $schoolHome)->first();
 
         if (!$school) {
-            return $this->terminateError($request);
+            return $this->terminateError($request, 'Escola não encontrada', 'school_not_found');
         }
 
         $authGuard = Auth::guard($guard);
@@ -44,14 +45,14 @@ class RequireSchoolHome
         return $next($request);
     }
 
-    public function terminateError ($request) {
+    public function terminateError ($request, $message, $error) {
         if ($request->bearerToken()) {
             return response()->json([
-                'message' => 'School Home nao definida',
-                'error' => 'Escola nao encontrada',
+                'message' => $message,
+                'error' => $error
             ], 404);
         } 
             
-        return redirect()->route('panel')->with(['error' => 'Primeiro selecione uma escola!']);
+        return redirect()->route('panel')->with(['error' => $message]);
     }
 }

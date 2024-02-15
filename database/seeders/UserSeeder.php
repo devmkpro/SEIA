@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Http\Controllers\TeachersController;
+use App\Http\Controllers\Schools\Teachers\TeachersController;
 use App\Models\Classes;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\School;
-use PhpParser\Builder\Class_;
 
 class UserSeeder extends Seeder
 {

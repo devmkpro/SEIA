@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools\Curriculums;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Schools\SchoolController;
 use Illuminate\Http\Request;
 use App\Models\Curriculum;
 use App\Http\Requests\StoreCurriculumRequest;

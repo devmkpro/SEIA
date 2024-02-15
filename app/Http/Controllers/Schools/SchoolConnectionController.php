@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Schools\Teachers\TeachersController;
 use App\Http\Requests\ChangeConnectionRequest;
 use App\Models\Notifications;
 use App\Models\Role;

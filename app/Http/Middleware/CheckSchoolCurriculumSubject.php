@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\Schools\SchoolController;
 use Closure;
 use App\Models\Subjects;
 use Illuminate\Http\Request;

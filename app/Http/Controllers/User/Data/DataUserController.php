@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User\Data;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\DataUserUpdateRequest;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\RedirectResponse;
 
 class DataUserController extends Controller
 {

@@ -1,34 +1,25 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StateController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\SchoolController;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\ClassesController;
-use App\Http\Controllers\CurriculumController;
-use App\Http\Controllers\DataUserController;
-use App\Http\Controllers\GetClassSubjectsController;
-use App\Http\Controllers\LinkTeacherSubjectController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoomsController;
-use App\Http\Controllers\SchoolConnectionController;
-use App\Http\Controllers\SchoolYearController;
-use App\Http\Controllers\SetClassCurriculumController;
-use App\Http\Controllers\SubjectsController;
-use App\Http\Controllers\TeachersController;
-use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\Location\CityController;
+use App\Http\Controllers\Location\StateController;
+use App\Http\Controllers\Schools\Classes\ClassesController;
+use App\Http\Controllers\Schools\Classes\GetClassSubjectsController;
+use App\Http\Controllers\Schools\Classes\SetClassCurriculumController;
+use App\Http\Controllers\Schools\Curriculums\CurriculumController;
+use App\Http\Controllers\Schools\Rooms\RoomsController;
+use App\Http\Controllers\Schools\SchoolConnectionController;
+use App\Http\Controllers\Schools\SchoolController;
+use App\Http\Controllers\Schools\SchoolYearController;
+use App\Http\Controllers\Schools\Subjects\SubjectsController;
+use App\Http\Controllers\Schools\Teachers\TeachersController;
 use App\Http\Controllers\UnlinkTeacherSubjectController;
+use App\Http\Controllers\User\Data\DataUserController;
+use App\Http\Controllers\User\Notification\NotificationController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Schools\Students\StudentsController;
+use App\Http\Controllers\Schools\Teachers\LinkTeacherSubjectController;
+use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Middlewares explained in routes/web.php
-|
-*/
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
@@ -59,7 +50,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
     });
 
     // school_home required
-    Route::group(['middleware' => ['school_home']], function () {
+    Route::group(['middleware' => ['checkIfSetSchoolHome']], function () {
         // School -> Secretary
         Route::group(['middleware' => ['school.role:secretary']], function () {
             Route::get('/verify/curriculum', [CurriculumController::class, 'index'])->name('manage.curriculum.index')->middleware('permission:manage-curricula');
@@ -82,7 +73,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
 
         // School -> Secretary | Director
         Route::middleware(['school.role:secretary|director'])->group(function () {
-            Route::group(['middleware' => ['school_year_active']], function () {
+            Route::group(['middleware' => ['checkIfSchoolYearActive']], function () {
 
                 Route::get('/verify/classes', [ClassesController::class, 'index'])->name('manage.classes.index')->middleware('permission:manage-classes');
                 Route::post('/manage/classes', [ClassesController::class, 'store'])->name('manage.classes.store')->middleware('permission:create-any-class');
@@ -95,8 +86,8 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 Route::put('/manage/rooms', [RoomsController::class, 'update'])->name('manage.rooms.update')->middleware('permission:update-any-room');
                 
                 
-                // school_curriculum_set necessita de class:code valido
-                Route::middleware(['school_curriculum_set'])->group(function () {
+                // checkIfClassCurriculumSet necessita de class:code valido
+                Route::middleware(['checkIfClassCurriculumSet'])->group(function () {
                     Route::post('/manage/classes/{class:code}/teachers/invite', [TeachersController::class, 'invite'])->name('manage.classes.teachers.invite')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers', [TeachersController::class, 'store'])->name('manage.classes.teachers.store')->middleware('permission:create-any-teacher');
                     Route::post('/manage/classes/{class:code}/teachers/subjects', [LinkTeacherSubjectController::class, 'store'])->name('manage.classes.teachers.subjects.link')->middleware('permission:update-any-teacher');
@@ -104,7 +95,7 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
 
                     Route::post('/manage/classes/{class:code}/teachers/schedules', [TeachersController::class, 'linkNewSchedules'])->name('manage.classes.teachers.schedules')->middleware('permission:update-any-teacher');
                     Route::post('/manage/classes/{class:code}/students', [StudentsController::class, 'store'])->name('manage.classes.students.store')->middleware('permission:create-any-student');
-                    Route::get('/manage/classes/{class:code}/subjects/{teacherUsername?}', [GetClassSubjectsController::class, 'store'])->name('manage.classes.subjects.get')->middleware('permission:manage-subjects');
+                    Route::get('/manage/classes/{class:code}/subjects/{teacher:username}', [GetClassSubjectsController::class, 'store'])->name('manage.classes.subjects.get')->middleware('permission:manage-subjects');
                 });
                 
             });

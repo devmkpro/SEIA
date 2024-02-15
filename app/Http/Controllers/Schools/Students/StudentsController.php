@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools\Students;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Schools\SchoolController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Requests\StoreStudentRequest;
 use App\Models\Classes;
 use App\Models\StudentsClass;
@@ -55,8 +58,6 @@ class StudentsController extends Controller
                 'father_name' => $request->nome_pai,
                 'cpf_responsible' => $request->cpf,
                 'deficiency' => $request->deficiencia ? true : false,
-                'zip_code' => $request->cep,
-                'cpf_responsible'=> $request->cpf_responsavel,
                 'name_responsible'=> $request->nome_responsavel,
             ]);
 

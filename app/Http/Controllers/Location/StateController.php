@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Location;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\State;
 
@@ -32,6 +33,13 @@ class StateController extends Controller
         return view('admin.states.index', [
             'title' => 'Gerenciar Estados',
             'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de estados. Todos os estados são efetivamente brasileiros, e possuem um código IBGE único.',
+            'states' => State::all()->map(function ($state) {
+                return [
+                    'name' => $state->name,
+                    'ibge_code' => $state->ibge_code,
+                    'schools_count' => $state->schools()->count(),
+                ];
+            }),
         ]);
     }
 

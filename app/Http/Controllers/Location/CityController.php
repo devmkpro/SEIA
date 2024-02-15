@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Location;
 
+use App\Http\Controllers\Controller;
 use App\Models\City;
 
 class CityController extends Controller
@@ -29,6 +30,13 @@ class CityController extends Controller
         return view('admin.cities.edit', [
             'title' => 'Gerenciar Cidades',
             'slot' => 'Olá, seja bem-vindo(a) ao painel de gerenciamento de cidades. Aqui você pode visualizar as cidades cadastradas. Todas são efetivamente brasileiras, e possuem um código IBGE único.',
+            'cities' => City::all()->map(function ($city) {
+                return [
+                    'name' => $city->name,
+                    'ibge_code' => $city->ibge_code,
+                    'schools_count' => $city->schools->count(),
+                ];
+            }),
         ]);
     }
 

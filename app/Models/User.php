@@ -16,6 +16,8 @@ class User extends Authenticatable
     protected $primaryKey = 'uuid';
     public $incrementing = false;
 
+    protected $table = 'users';
+
 
     /**
      * The "booting" method of the model.
@@ -93,7 +95,7 @@ class User extends Authenticatable
      */
     public function schools()
     {
-      
+
         return $this->belongsToMany(School::class, 'users_schools', 'users_uuid', 'school_uuid')
             ->withPivot('role')
             ->withTimestamps();
@@ -121,7 +123,9 @@ class User extends Authenticatable
 
     public function assignRoleForSchool($role, $schoolUUID)
     {
-        if (!$schoolUUID || !$role) {return;}
+        if (!$schoolUUID || !$role) {
+            return;
+        }
         $role = Role::where('name', $role)->first();
         $this->schools()->syncWithoutDetaching([
             $schoolUUID => [
@@ -193,4 +197,6 @@ class User extends Authenticatable
         }
         return false;
     }
+
+  
 }

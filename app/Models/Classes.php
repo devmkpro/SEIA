@@ -91,20 +91,18 @@ class Classes extends Model
         return $this->belongsTo(Curriculum::class, 'curriculum_uuid', 'uuid');
     }
 
-    /**
-     * Teacher responsible for the class
-     */
-    public function teacher()
-    {
-        return $this->belongsTo(User::class, 'teacher_responsible_uuid', 'uuid');
-    }
 
     /**
      * Teachers of the class
      */
     public function teachers()
     {
-        return $this->hasMany(TeachersSchools::class, 'school_uuid', 'schools_uuid', 'user_uuid', 'user_uuid', 'class_uuid', 'uuid');
+        return $this->belongsToMany(User::class, 'teachers_schools', 'class_uuid', 'user_uuid', 'uuid', 'uuid');
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subjects::class, 'curriculum_uuid', 'curriculum_uuid');
     }
 
     /**

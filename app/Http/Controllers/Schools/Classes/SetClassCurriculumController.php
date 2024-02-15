@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools\Classes;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Schools\SchoolController;
 use App\Http\Requests\UpdateClassCurriculum;
 use App\Models\Classes;
 use App\Models\Curriculum;
@@ -25,6 +27,7 @@ class SetClassCurriculumController extends Controller
         $class->update([
             'curriculum_uuid' => $curriculum->uuid,
         ]);
+
 
         return $this->response($request, 'manage.classes.edit', 'Matriz curricular alterada com sucesso.', 'message', 200, 'class', $class->code);
     }

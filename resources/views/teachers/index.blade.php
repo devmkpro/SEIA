@@ -194,8 +194,6 @@
                 });
             });
 
-
-            // Restante do seu script DataTables
         </script>
     @endsection
 </x-app-layout>

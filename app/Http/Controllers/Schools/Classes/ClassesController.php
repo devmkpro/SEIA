@@ -1,7 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools\Classes;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Schools\Curriculums\CurriculumController;
+use App\Http\Controllers\Schools\SchoolController;
+use App\Http\Controllers\Schools\SchoolYearController;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreClassesRequest;
 use App\Models\Classes;
@@ -94,13 +98,14 @@ class ClassesController extends Controller
     {
         $school_home = (new SchoolController)->getHome($request);
         $curriculumns = Curriculum::where('school_uuid', $school_home->uuid)->get();
-        $curriculumns = $curriculumns->map(function ($curriculum) {
+        $curriculumController = new CurriculumController;
+        $curriculumns = $curriculumns->map(function ($curriculum) use ($curriculumController) {
             return [
                 'uuid' => encrypt($curriculum->uuid),
                 'code' => $curriculum->code,
-                'series' => (new CurriculumController)->formatSeries($curriculum->series),
-                'modality' => (new CurriculumController)->formatModality($curriculum->modality),
-                'turn' => (new CurriculumController)->formatTurn($curriculum->turn),
+                'series' => $curriculumController->formatSeries($curriculum->series),
+                'modality' => $curriculumController->formatModality($curriculum->modality),
+                'turn' => $curriculumController->formatTurn($curriculum->turn),
             ];
         });
 
@@ -108,7 +113,7 @@ class ClassesController extends Controller
             'title' => 'Gerenciar Turma',
             'slot' => 'Você está gerenciando a turma do ' . $class->name . '/' . $class->schoolYear->name,
             'class' => $class,
-            'curriculum_modality' => $class->curriculum ? (new CurriculumController)->formatSeries($class->curriculum->series) : null,
+            'curriculum_modality' => $class->curriculum ? $curriculumController->formatSeries($class->curriculum->series) : null,
             'curriculums' => $curriculumns,
             'alerts' => $this->getAlerts($class),
         ]);

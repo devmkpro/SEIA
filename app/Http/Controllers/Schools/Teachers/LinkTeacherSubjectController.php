@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools\Teachers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LinkTeacherSubjectsRequest;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreTeacherSubjects;
 use App\Models\Classes;
 use App\Models\TeachersSchools;
 use App\Models\TeachersSubjects;

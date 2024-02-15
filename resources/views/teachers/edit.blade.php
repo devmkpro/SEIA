@@ -32,7 +32,7 @@
 
         @endsection
         @section('alerts')
-            @isset ($alerts)
+            @isset($alerts)
                 @foreach ($alerts as $alert)
                     <div class="d-flex align-items-center mb-2 text-dark-seia">
                         @if ($alert['type'] == 'warning')
@@ -57,7 +57,7 @@
                 @endschoolPermission
 
                 @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-                    <a data-bs-toggle="modal" 
+                    <a data-bs-toggle="modal"
                         class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-yellow">
                         CH Semanal
                     </a>
@@ -66,11 +66,11 @@
                 @schoolPermission('update-any-teacher', optional($school_home)->uuid)
                     <a data-bs-toggle="modal" data-bs-target="#manageScheduleModal"
                         class="btn btn-group btn-group-sm align-items-center d-flex justify-content-center btn-seia-darkblue">
-                       horários
+                        horários
                     </a>
                 @endschoolPermission
             </div>
-          
+
         @endsection
         @section('modals')
             @schoolPermission('manage-subjects', optional($school_home)->uuid)
@@ -86,10 +86,10 @@
                 </form>
             @endschoolPermission
             @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-                <x-modal titleModal="Modificar carga horária semanal" idModal="modifySubjectModal" identifier="modifySubjectModal" id="modifySubjectModal">
+                <x-modal titleModal="Modificar carga horária semanal" idModal="modifySubjectModal"
+                    identifier="modifySubjectModal" id="modifySubjectModal">
                     <div class="me-3 ms-3 mt-2">
-                        <form action="#" method="POST"
-                            id="modifySubjectForm">
+                        <form action="#" method="POST" id="modifySubjectForm">
                             @csrf
                             <input type="hidden" name="teacher" value="{{ $user->username }}">
                             <input type="hidden" name="subject" value="">
@@ -97,14 +97,17 @@
 
                             <div class="row mb-3">
                                 <div class="col-12">
-                                   Modificar carga horária semanal do(a) professor(a) <span class="fw-bolder">{{ $user->name }}</span> que atualmente é de <span class="fw-bolder">{{ $teacherSchool->weekly_workload }}</span> horas.
+                                    Modificar carga horária semanal do(a) professor(a) <span
+                                        class="fw-bolder">{{ $user->name }}</span> que atualmente é de <span
+                                        class="fw-bolder">{{ $teacherSchool->weekly_workload }}</span> horas.
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <label for="weeklyHours" class="form-label">Nova carga horária semanal:</label>
-                                    <input type="number" name="weeklyHours" id="weeklyHours" class="form-control rounded-md" required>
+                                    <input type="number" name="weeklyHours" id="weeklyHours" class="form-control rounded-md"
+                                        required>
                                 </div>
                             </div>
                         </form>
@@ -112,25 +115,25 @@
                 </x-modal>
             @endschoolPermission
             @schoolPermission('update-any-teacher', optional($school_home)->uuid)
-            <x-modal titleModal="Modificar horários de aula" idModal="manageScheduleModal" identifier="manageScheduleModal" id="manageScheduleModal">
-                <div class="me-3 ms-3 mt-2">
-                    <form action="#" method="POST"
-                        id="modifySubjectForm">
-                        @csrf
-                        <input type="hidden" name="teacher" value="{{ $user->username }}">
-                        <input type="hidden" name="subject" value="">
-                        <div class="d-flex">
-                            <div class="weekDays">
+                <x-modal titleModal="Modificar horários de aula" idModal="manageScheduleModal" identifier="manageScheduleModal"
+                    id="manageScheduleModal">
+                    <div class="me-3 ms-3 mt-2">
+                        <form action="#" method="POST" id="modifySubjectForm">
+                            @csrf
+                            <input type="hidden" name="teacher" value="{{ $user->username }}">
+                            <input type="hidden" name="subject" value="">
+                            <div class="d-flex">
+                                <div class="weekDays">
 
+                                </div>
+                                <div class="manageSchedule">
+
+                                </div>
                             </div>
-                            <div class="manageSchedule">
-                                
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </x-modal>
-        @endschoolPermission
+                        </form>
+                    </div>
+                </x-modal>
+            @endschoolPermission
         @endsection
     </x-global-manage-layout>
 
@@ -140,37 +143,30 @@
             <script>
                 $(document).ready(function() {
                     $('#teachersSubjectsTable').DataTable({
+                        responsive: true,
                         "language": {
                             "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
                         },
-                        "ajax": {
-                            "url": "{{ route('manage.classes.subjects.get', ['class' => $class->code, 'teacherUsername' => $user->username]) }}",
-                            "type": "GET",
-                            "dataSrc": ""
-                        },
-                        "columns": [{
-                                "data": "code"
-                            },
-                            {
-                                "data": "name"
-                            },
-                            {
-                                "data": "ch_week"
-                            },
-                            {
-                                "data": "isTeacher",
-                                "render": function(data, type, row) {
-                                    if (data == true) {
-                                        return `<a href="#" class="btn btn-sm btn-seia-red">Remover</a>`;
-                                    } else {
-                                        return `<a href="#" class="btn btn-sm btn-seia-green">Adicionar</a>`;
-                                    }
-                                }
-                            }
+
+                        "data": [
+                            @foreach ($subjects as $subject)
+                                [
+                                    `{{$subject['code']}}`,
+                                    `{{$subject['name']}}`,
+                                    `{{$subject['ch_week']}}`,
+                                    `
+                                    @if($subject['isTeacher'])
+                                        <a href='#' class='btn btn-sm btn-seia-red'>Remover</a>
+                                    @else
+                                        <a href='#' class='btn btn-sm btn-seia-green'>Adicionar</a>
+                                    @endif
+                                    `
+                                ],
+                            @endforeach
                         ],
+
                     });
                 });
-
             </script>
         @endschoolPermission
     @endsection

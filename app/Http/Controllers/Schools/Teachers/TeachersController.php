@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Schools\Teachers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Schools\SchoolConnectionController;
+use App\Http\Controllers\Schools\SchoolController;
+use App\Http\Controllers\User\Notification\NotificationController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\StoreSchoolConnectionRequest;
 use App\Http\Requests\StoreTeacherSchedules;
-use App\Http\Requests\StoreTeacherSubjects;
 use App\Models\Classes;
 use App\Models\Role;
 use App\Models\SchoolConnectionRequest;
@@ -38,19 +42,32 @@ class TeachersController extends Controller
     /**
      * Render Edit teacher view.
      */
-    public function edit(Classes $class, $username): \Illuminate\View\View
+    public function edit(Classes $class, User $teacher): \Illuminate\View\View
     {
-        $user = User::where('username', $username)->first();
-        $datauser = $user->datauser;
-        $teacherSchool = TeachersSchools::where('user_uuid', $user->uuid)->where('class_uuid', $class->uuid)->first();
+        $subjects = $class->subjects;
+        $subjects = $subjects->map(function ($subject) use ($teacher) {
+            $teacherSubject = TeachersSubjects::where('user_uuid', $teacher->uuid)->where('subject_uuid', $subject->uuid)->first();
+            return [
+                'isTeacher' => $teacherSubject ? true : false,
+                'code' => $subject->code,
+                'name' => $subject->name,
+                'ch_week' => $subject->ch_week,
+            ];
+        });
+
+        $datauser = $teacher->datauser;
+        $teacherSchool = TeachersSchools::where('user_uuid', $teacher->uuid)->where('class_uuid', $class->uuid)->first();
+
+        
         return view('teachers.edit', [
-            'title' => 'Editando professor(a): ' . $user->name,
+            'title' => 'Editando professor(a): ' . $teacher->name,
             'slot' => 'Turma: ' . $class->name . '/' . $class->schoolYear->name,
             'class' => $class,
-            'user' => $user,
+            'user' => $teacher,
             'datauser' => $datauser,
             'teacherSchool' => $teacherSchool,
             'alerts' => $this->getAlerts($teacherSchool),
+            'subjects' => $subjects,
         ]);
     }
 
@@ -119,7 +136,6 @@ class TeachersController extends Controller
                 'father_name' => $request->nome_pai,
                 'cpf_responsible' => $request->cpf,
                 'deficiency' => $request->deficiencia ? true : false,
-                'zip_code' => $request->cep,
             ]);
 
             $user->assignRole('teacher');
@@ -152,10 +168,10 @@ class TeachersController extends Controller
                 $subjects = $teacher->subjects ? $teacher->subjects->pluck('name')->map(fn ($subject) => ucfirst($subject))->implode(', ') : 'Nenhuma disciplina vinculada';
 
                 return [
-                    'name' => $teacher->user->name,
-                    'email' => $teacher->user->email,
-                    'phone' => $teacher->user->phone,
-                    'username' => $teacher->user->username,
+                    'name' => $teacher->name,
+                    'email' => $teacher->email,
+                    'phone' => $teacher->phone,
+                    'username' => $teacher->username,
                     'subjects' => $subjects,
                 ];
             }),
