@@ -6,11 +6,6 @@ use App\Models\School\School;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\Curriculum\Curriculum;
-use App\Models\Room\Rooms;
-use App\Models\School\Classes\SchoolYear;
-use App\Models\Subject\Subjects;
-use App\Models\User;
 
 class City extends Model
 {
