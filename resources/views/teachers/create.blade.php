@@ -272,7 +272,7 @@
 
 
             function populateCities(element, state_code) {
-                var url = "{{ route('manage.states.cities') }}";
+                var url = "{{ route('manage.location.states.cities') }}";
                 var token = "{{ csrf_token() }}";
                 if (state_code == 0) {
                     $(element).empty();

@@ -17,7 +17,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
     })->name('panel');
-    
+
     Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/perfil/notificacoes', [NotificationController::class, 'page'])->name('profile.notifications');
 
@@ -52,7 +52,5 @@ Route::middleware(['auth', 'web', 'checkIfSetSchoolHome'])->group(function () {
         });
     });
 });
-
-
 
 require __DIR__ . '/auth.php';
