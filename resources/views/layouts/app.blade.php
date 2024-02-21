@@ -181,9 +181,9 @@
                         <i class="ph-fill ph-list fs-3"></i>
                     </button>
                     @if ($school_home)
-                        <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 ">
                             <div class="input-group">
-                                <form action="{{ route('delete-school-home') }}" method="POST">
+                                <form action="{{ route('manage.delete-school-home') }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="d-flex flex-column align-items-start">
@@ -208,7 +208,7 @@
                                     aria-labelledby="searchDropdown">
                                     <div class="me-auto navbar-search w-100">
 
-                                        <form action="{{ route('delete-school-home') }}" method="POST">
+                                        <form action="{{ route('manage.delete-school-home') }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="d-flex flex-column align-items-start">

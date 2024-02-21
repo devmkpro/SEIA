@@ -32,7 +32,7 @@
                                 '{{ $school["city"] }}',
                                 '{{ $school["state"] }}',
                                 `
-                                <form action="{{ route('set-school-home') }}" method="POST">
+                                <form action="{{ route('manage.set-school-home') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="school" value="{{ $school['code'] }}">
                                     <button type="submit" class="btn btn-seia-oceanblue btn-sm">Gerenciar</button>

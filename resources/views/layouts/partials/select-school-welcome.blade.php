@@ -7,7 +7,7 @@
             Para começar, selecione a escola que você está vinculado(a).
         </div>
         <div class="card-body  justify-content-center align-items-center">
-            <form action="{{route('set-school-home')}}" method="POST">
+            <form action="{{route('manage.set-school-home')}}" method="POST">
                 @csrf
                 @method('POST')
 
@@ -19,7 +19,7 @@
                         @endforeach
                     </select>
     
-                    <button type="submit" class="btn btn-seia-oceanblue">Selecionar</button>
+                    <button type="submit" class="btn btn-seia-oceanblue">Selecionar</bjutton>
                 </div>
             </form>
 

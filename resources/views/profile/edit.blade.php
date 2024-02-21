@@ -61,7 +61,7 @@
                     <div class="dados-pessoais ms-2 me-2 row">
 
                         <div class="col-md-6">
-                            <form action="{{ route('profile.update') }}" method="post">
+                            <form action="{{ route('manage.profile.update') }}" method="post">
                                 @csrf
                                 @method('put')
 
