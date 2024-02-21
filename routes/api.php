@@ -124,9 +124,9 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                 });
 
                 Route::prefix('salas')->name('rooms.')->group(function () {
-                    Route::post('', [RoomsController::class, 'store'])->name('store')->middleware('permission:create-any-room');
-                    Route::delete('', [RoomsController::class, 'destroy'])->name('destroy')->middleware('permission:delete-any-room');
-                    Route::put('', [RoomsController::class, 'update'])->name('update')->middleware('permission:update-any-room');
+                    Route::post('adicionar', [RoomsController::class, 'store'])->name('store')->middleware('permission:create-any-room');
+                    Route::delete('deletar', [RoomsController::class, 'destroy'])->name('destroy')->middleware('permission:delete-any-room');
+                    Route::put('atualizar', [RoomsController::class, 'update'])->name('update')->middleware('permission:update-any-room');
                 });
             });
         });
