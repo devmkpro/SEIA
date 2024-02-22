@@ -216,7 +216,7 @@
 
                 $('#state_code').change(function() {
                     var state_code = $(this).val();
-                    var url = "{{ route('manage.states.cities') }}";
+                    var url = "{{ route('manage.location.states.cities') }}";
                     var token = "{{ csrf_token() }}";
                     if (state_code == 0) {
                         $('#city_code').empty();
