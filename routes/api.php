@@ -30,8 +30,8 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
         Route::post('/definir-escola-inicio', [SchoolController::class, 'setHome'])->name('set-school-home')->middleware('to.set.school.home');
         Route::delete('/deletar-escola-inicio', [SchoolController::class, 'deleteHome'])->name('delete-school-home');
         Route::patch('/dados-usuario', [DataUserController::class, 'update'])->name('data-user.update');
-        Route::post('/gerenciar/escola/convite/aceitar', [SchoolConnectionController::class, 'acceptOrReject'])->name('invite.acceptOrReject');
-        Route::put('/gerenciar/notificacao/lida', [NotificationController::class, 'markAsRead'])->name('notification.read');
+        Route::post('/escola/convite/aceitar', [SchoolConnectionController::class, 'acceptOrReject'])->name('invite.acceptOrReject');
+        Route::put('/notificacao/lida', [NotificationController::class, 'markAsRead'])->name('notification.read');
 
         // Rotas abaixo não retornar nenhum dado comprometedor, apenas dados públicos do IBGE
         Route::prefix('localizacao')->name('location.')->group(function () {
