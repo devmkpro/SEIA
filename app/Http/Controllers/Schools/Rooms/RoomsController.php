@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Rooms\DestroyRoomRequest;
 use App\Http\Requests\Rooms\StoreRoomsRequest;
 use App\Http\Requests\Rooms\UpdateRoomsRequest;
+use App\Models\Classes\ClassesRooms;
 use App\Models\Room\Rooms;
 use App\Models\School\School;
 
@@ -13,6 +14,8 @@ use App\Models\School\School;
 class RoomsController extends Controller
 {
     /**
+     *  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
      * Store a newly created resource in storage.
      */
     public function store(StoreRoomsRequest $request): mixed
@@ -31,9 +34,10 @@ class RoomsController extends Controller
      */
     public function update(UpdateRoomsRequest $request): mixed
     {
-        Rooms::where('code', $request->room_code)->update([
-            'name' => $request->name,
-            'description' => $request->description,
+        $Room = Rooms::where('code', $request->room_code)->first();
+        $Room->update([
+            'name' => $request->name != null ? $request->name : $Room->name,
+            'description' => $request->description != null ? $request->description : $Room->description,
         ]);
 
         return $this->response($request, 'manage.rooms', 'Sala atualizada com sucesso.');
@@ -46,9 +50,9 @@ class RoomsController extends Controller
     {
         $room = Rooms::where('code', $request->room_code)->first();
 
-        if ($room->classes) {
-            return $this->response($request, 'manage.rooms', 'Não é possível deletar uma sala que está sendo utilizada.', 'error', 400);
-        }
+        // if ($room->classes) {
+        //     return $this->response($request, 'manage.rooms', 'Não é possível deletar uma sala que está sendo utilizada.', 'error', 400);
+        // }
 
         $room->delete();
         return $this->response($request, 'manage.rooms', 'Sala deletada com sucesso.');

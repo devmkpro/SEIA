@@ -14,10 +14,10 @@ class StoreRoomsRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
             'school_code' => 'required|exists:schools,code',
-            'class_code' => 'required|exists:classes,code',
+            'class_code' =>  'nullable|exists:classes,code',
         ];
     }
 }
