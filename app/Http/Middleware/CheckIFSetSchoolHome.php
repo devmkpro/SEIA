@@ -66,6 +66,6 @@ class CheckIFSetSchoolHome
             ], 404);
         }
 
-        return redirect()->route('manage.curriculum')->withErrors(['error' => $message ?? 'Sem permissão']);
+        return redirect()->route('manage.curriculum')->withErrors(['error' => $message]);
     }
 }

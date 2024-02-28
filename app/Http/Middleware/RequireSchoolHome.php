@@ -22,7 +22,7 @@ class RequireSchoolHome
         try{
             $schoolHome = decrypt($request->cookie('school_home'));
         } catch (\Exception $e) {
-            return $this->terminateError($request, 'Escola nao encontrada', 'Não foi possível encontrar a escola');
+            return $this->terminateError($request, 'Escola não encontrada', 'Não foi possível encontrar a escola');
         }
 
         $school = School::where('code', $schoolHome)->first();

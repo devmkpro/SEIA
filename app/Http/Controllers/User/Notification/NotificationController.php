@@ -8,6 +8,18 @@ use App\Models\Notification\Notifications;
 
 class NotificationController extends Controller
 {
+
+    /**
+     * Render notifications page.
+     */
+    public function index()
+    {
+        return view('profile.notifications.index', [
+            'title' => 'Minhas notificações',
+            'slot' => 'Aqui você pode ver todas as suas notificações.',
+            'notifications' => Notifications::where('user_uuid', auth()->user()->uuid)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
     /**
      * Store a new notification.
      */
@@ -41,16 +53,5 @@ class NotificationController extends Controller
 
     }
 
-    /**
-     * Render notifications page.
-     */
-    public function page()
-    {
-        return view('profile.notifications', [
-            'title' => 'Minhas notificações',
-            'slot' => 'Aqui você pode ver todas as suas notificações.',
-            'notifications' => Notifications::where('user_uuid', auth()->user()->uuid)->orderBy('created_at', 'desc')->get(),
-        ]);
-    }
 
 }

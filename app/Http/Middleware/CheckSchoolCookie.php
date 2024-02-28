@@ -23,13 +23,12 @@ class CheckSchoolCookie
         try {
             $schoolCode = decrypt($request->cookie('school_home'));
         } catch (\Exception $e) {
-            $this->terminate();
+            return $this->terminate($request, 'Escola não definida');
         }
 
         $schoolExists = School::where('code', $schoolCode)->exists();
         if (!$schoolExists) {
-            $this->terminate();
-            return $next($request);
+            return $this->terminate($request, 'Escola não encontrada');
         }
 
         $userHasAdminRole = $request->user()->hasRole('admin');
@@ -37,21 +36,27 @@ class CheckSchoolCookie
 
         if ($userHasAdminRole || $userHasSchool) {
             return $next($request);
-        } elseif (!$userHasSchool) {
-            $this->terminate();
-            return $next($request);
-        }
+        } 
 
-        $this->terminate();
-        return redirect()->route('panel');
+        return $this->terminate($request, 'Você não tem permissão para acessar essa página!');
     }
+
 
     /**
      * Delete the cookie if the user is not an admin or if the school does not exist.
      */
-    public function terminate()
+    public function terminate($request, $message)
     {
         $cookieController = new CookieController();
         $cookieController->deleteCookie('school_home');
+    
+        if ($request->bearerToken()) {
+            return response()->json([
+                'error' => $message,
+            ], 404);
+        }
+
+        return redirect()->back()->withErrors(['error' => $message]);
+
     }
 }
