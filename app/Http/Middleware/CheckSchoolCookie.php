@@ -23,7 +23,7 @@ class CheckSchoolCookie
         try {
             $schoolCode = decrypt($request->cookie('school_home'));
         } catch (\Exception $e) {
-            return $this->terminate($request, 'Escola não definida');
+            return $this->terminate($request, 'Escola não definida ou inválida');
         }
 
         $schoolExists = School::where('code', $schoolCode)->exists();
