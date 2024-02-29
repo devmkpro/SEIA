@@ -85,8 +85,10 @@
                             <span>Turmas</span></a></li>
                 </div>
             @endschoolPermission
+            
 
         </ul>
 
     </div>
+    
 </div>
