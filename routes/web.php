@@ -4,6 +4,7 @@ use App\Http\Controllers\Location\CityController;
 use App\Http\Controllers\Location\StateController;
 use App\Http\Controllers\Schools\Classes\ClassesController;
 use App\Http\Controllers\Schools\Curriculums\CurriculumController;
+use App\Http\Controllers\Schools\Rooms\RoomsController;
 use App\Http\Controllers\Schools\SchoolController;
 use App\Http\Controllers\Schools\SchoolYearController;
 use App\Http\Controllers\Schools\Subjects\SubjectsController;
@@ -49,6 +50,10 @@ Route::middleware(['auth', 'web', 'checkIfSetSchoolHome'])->group(function () {
                 Route::get('/turmas/{class:code}/professores', [TeachersController::class, 'teachers'])->name('classes.teachers')->middleware('permission:manage-teachers');
                 Route::get('/turmas/{class:code}/professores/cadastrar', [TeachersController::class, 'create'])->name('classes.teachers.create')->middleware('permission:create-any-teacher');
             });
+        });
+
+        Route::prefix('salas')->name('rooms.')->group(function () {
+            Route::get('adicionar', [RoomsController::class, 'index'])->name('index')->middleware('permission:manage-rooms');
         });
     });
 });
