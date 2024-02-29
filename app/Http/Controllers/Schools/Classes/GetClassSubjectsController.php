@@ -9,9 +9,8 @@ use App\Models\Classes\Classes;
 class GetClassSubjectsController extends Controller
 {
     /**
-     * Get subjects of a class
+     * Store a newly created resource in storage.
      */
-
     public function store(Classes $class, $user = null)
     {
         $subjects = $class->curriculum->subjects()->get();
