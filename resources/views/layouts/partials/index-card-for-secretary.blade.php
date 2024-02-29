@@ -73,7 +73,8 @@
                     <li>
                         <a href="{{ route('manage.curriculum') }}">
                             <i class="ph-list-checks-fill icons-menu"></i>
-                            <span>Matriz Curricular</span></a></li>
+                            <span>Matriz Curricular</span></a>
+                    </li>
                 </div>
             @endschoolPermission
 
@@ -85,10 +86,33 @@
                             <span>Turmas</span></a></li>
                 </div>
             @endschoolPermission
-            
+
 
         </ul>
 
     </div>
-    
+
+</div>
+
+<div class="col-sm-12 col-md-6">
+    <div class="card text-dark-seia seia-shadow">
+        <div class="title py-1">
+            Escola
+        </div>
+
+        <ul class="list-group list-group-flush">
+            @schoolPermission('manage-rooms', optional($school_home)->uuid)
+                <div class="mt-2">
+                    <li>
+                        <a href="{{ route('manage.rooms.index') }}">
+                            <i class="ph ph-chalkboard icons-menu"></i>
+                            <span>Salas</span></a>
+                    </li>
+                </div>
+            @endschoolPermission
+
+        </ul>
+
+    </div>
+
 </div>

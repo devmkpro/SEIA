@@ -34,7 +34,7 @@
 
     <div class="dropdown-menu collapse navbar-collapse" aria-labelledby="navbarDropdownLocations">
         @schoolPermission('manage-rooms', optional($school_home)->uuid)
-            <a class="dropdown-item red" href="#">
+            <a class="dropdown-item red" href="{{route('manage.rooms.index')}}">
                 <i class="ph ph-list icons-menu"></i>
                 <span class="">Listar</span>
             </a>
