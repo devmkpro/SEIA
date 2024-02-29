@@ -49,10 +49,10 @@ class RoomsController extends Controller
     public function destroy(DestroyRoomRequest $request): mixed
     {
         $room = Rooms::where('code', $request->room_code)->first();
-
-        // if ($room->classes) {
-        //     return $this->response($request, 'manage.rooms', 'Não é possível deletar uma sala que está sendo utilizada.', 'error', 400);
-        // }
+        
+        if ($room->classes->count() > 0){
+            return $this->response($request, 'manage.rooms', 'Não é possível deletar uma sala que está sendo utilizada.', 'error', 400);
+        }
 
         $room->delete();
         return $this->response($request, 'manage.rooms', 'Sala deletada com sucesso.');
