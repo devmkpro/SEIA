@@ -3,8 +3,6 @@
 namespace App\Http\Requests\Classes;
 
 use App\Http\Requests\BaseRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LinkClassToRoomRequest extends BaseRequest
 {
