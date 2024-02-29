@@ -52,9 +52,6 @@ Route::middleware(['auth', 'web', 'checkIfSetSchoolHome'])->group(function () {
             });
         });
 
-        Route::prefix('salas')->name('rooms.')->group(function () {
-            Route::get('adicionar', [RoomsController::class, 'index'])->name('index')->middleware('permission:manage-rooms');
-        });
     });
 });
 

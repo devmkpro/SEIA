@@ -63,9 +63,9 @@ class RoomsController extends Controller
     {
         $room = Rooms::where('code', $request->room_code)->first();
 
-        // if ($room->classes) {
-        //     return $this->response($request, 'manage.rooms', 'Não é possível deletar uma sala que está sendo utilizada.', 'error', 400);
-        // }
+        if ($room->classes) {
+            return $this->response($request, 'manage.rooms', 'Não é possível deletar uma sala que está sendo utilizada.', 'error', 400);
+        }
 
         $room->delete();
         return $this->response($request, 'manage.rooms', 'Sala deletada com sucesso.');

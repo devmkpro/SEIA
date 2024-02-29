@@ -4,6 +4,7 @@ use App\Http\Controllers\Location\CityController;
 use App\Http\Controllers\Location\StateController;
 use App\Http\Controllers\Schools\Classes\ClassesController;
 use App\Http\Controllers\Schools\Classes\GetClassSubjectsController;
+use App\Http\Controllers\Schools\Classes\LinkClassToRoomController;
 use App\Http\Controllers\Schools\Classes\SetClassCurriculumController;
 use App\Http\Controllers\Schools\Curriculums\CurriculumController;
 use App\Http\Controllers\Schools\Rooms\RoomsController;
@@ -127,7 +128,9 @@ Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
                     Route::post('adicionar', [RoomsController::class, 'store'])->name('store')->middleware('permission:create-any-room');
                     Route::delete('deletar', [RoomsController::class, 'destroy'])->name('destroy')->middleware('permission:delete-any-room');
                     Route::put('atualizar', [RoomsController::class, 'update'])->name('update')->middleware('permission:update-any-room');
+                    Route::post('adicionarTurma', [LinkClassToRoomController::class, 'store'])->name('room.class.link')->middleware('permission:update-any-room');
                 });
+
             });
         });
     });

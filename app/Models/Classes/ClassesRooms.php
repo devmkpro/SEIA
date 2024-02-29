@@ -16,8 +16,8 @@ class ClassesRooms extends Model
 
     protected $fillable = [
         'uuid',
-        'classes_uuid',
-        'rooms_uuid',
+        'class_uuid',
+        'room_uuid',
     ];
 
     /**
@@ -37,6 +37,6 @@ class ClassesRooms extends Model
      */
     public function classes()
     {
-        return $this->belongsTo(Classes::class, 'classes_uuid', 'uuid');
+        return $this->belongsTo(Classes::class, 'class_uuid', 'uuid');
     }
 }

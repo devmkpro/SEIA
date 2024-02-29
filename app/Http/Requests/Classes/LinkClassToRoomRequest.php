@@ -3,16 +3,11 @@
 namespace App\Http\Requests\Classes;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LinkClassToRoomRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,8 +17,25 @@ class LinkClassToRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'class_uuid' => 'required|uuid|exists:classes,uuid',
-            'room_uuid' => 'required|uuid|exists:rooms,uuid',
+            'class_code' => 'required|string|exists:classes,code',
+            'room_code' => 'required|string|exists:rooms,code',
         ];
     }
+
+    /**
+     * Return validation errors as JSON response
+     */
+
+     protected function failedValidation(Validator $validator)
+     {
+         if (request()->bearerToken() || request()->expectsJson()) {
+             throw new HttpResponseException(response()->json([
+                 $validator->errors(),
+             ], 422));
+         } else {
+             throw new HttpResponseException(redirect()->back()->withErrors($validator->errors())->withInput());
+         }
+     }
+
+    
 }
