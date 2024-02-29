@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Classes;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LinkClassToRoomRequest extends FormRequest
+class LinkClassToRoomRequest extends BaseRequest
 {
 
     /**
@@ -22,20 +22,6 @@ class LinkClassToRoomRequest extends FormRequest
         ];
     }
 
-    /**
-     * Return validation errors as JSON response
-     */
-
-     protected function failedValidation(Validator $validator)
-     {
-         if (request()->bearerToken() || request()->expectsJson()) {
-             throw new HttpResponseException(response()->json([
-                 $validator->errors(),
-             ], 422));
-         } else {
-             throw new HttpResponseException(redirect()->back()->withErrors($validator->errors())->withInput());
-         }
-     }
 
     
 }

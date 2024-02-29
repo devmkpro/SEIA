@@ -12,7 +12,7 @@ class BaseRequest extends FormRequest
      * Return validation errors as JSON response
      */
 
-    protected function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator)
     {
         if (request()->bearerToken() || request()->expectsJson()) {
             throw new HttpResponseException(response()->json([
