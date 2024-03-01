@@ -124,8 +124,6 @@
                     @include('layouts.partials.nav-li-itens-for-admin')
                 @endrole
 
-                    
-                <hr class="sidebar-divider my-3 shadow-sm">
 
                 <hr class="sidebar-divider my-3 shadow-sm">
                 <span class="menu-title align-self-start">Pessoal</span>
