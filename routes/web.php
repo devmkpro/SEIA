@@ -52,7 +52,13 @@ Route::middleware(['auth', 'web', 'checkIfSetSchoolHome'])->group(function () {
             });
         });
 
+        Route::prefix('salas')->middleware(['checkIfSchoolYearActive'])->name('rooms.')->group(function () {
+            Route::get('/', [RoomsController::class, 'index'])->name('index')->middleware('permission:manage-rooms');
+        });
+
     });
+
+
 });
 
 require __DIR__ . '/auth.php';
