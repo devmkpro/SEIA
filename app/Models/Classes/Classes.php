@@ -123,6 +123,6 @@ class Classes extends Model
      */
     public function rooms()
     {
-        return $this->belongsToMany(Rooms::class, 'classes_rooms', 'class_uuid', 'room_uuid', 'uuid', 'uuid');
+        return $this->belongsToMany(Rooms::class, 'classes_rooms', 'class_uuid', 'rooms_uuid', 'uuid', 'uuid');
     }
 }
