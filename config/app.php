@@ -171,6 +171,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SchoolHomeServiceProvider::class,
         App\Providers\SchoolYearProvider::class,
+        LaravelLegends\PtBrValidator\ValidatorProvider::class,
     ])->toArray(),
 
     /*
